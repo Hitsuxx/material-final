@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEGE0108 — Materials Study Guide</title>
+<title>CEGE0108 — Materials &amp; Fluids Study Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <script>
 MathJax = {
@@ -232,7 +232,15 @@ canvas.ac{display:block;width:100%;touch-action:none}
 .smsg{font-size:12.5px;color:var(--mu);padding:.6rem 1.25rem;min-height:40px;line-height:1.5;background:var(--sur)}
 input[type=range]{flex:1;min-width:80px;max-width:160px;accent-color:var(--ac)}
 
-/* ── Footer ── */
+/* ── Subject tabs ── */
+.stabs{display:flex;gap:4px;background:var(--sur2);border-radius:20px;padding:3px}
+.stab{padding:4px 14px;border-radius:16px;border:none;background:none;color:var(--mu);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;white-space:nowrap}
+.stab.on{background:var(--ac);color:#0d0d0f}
+.stab:not(.on):hover{color:var(--tx)}
+
+/* ── Fluid accent colours ── */
+:root{--flu:#38d9f5;--flu2:#f55f9a;--flu3:#ffd166}
+.tf{background:rgba(56,217,245,.1);color:var(--flu);border:1px solid rgba(56,217,245,.25)}
 footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-align:center;font-size:12px;color:var(--mu);margin-top:2rem}
 
 /* ── Print ── */
@@ -250,26 +258,50 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
   <button class="hbg" id="hbg" onclick="toggleNav()" aria-label="Open navigation menu">
     <span></span><span></span><span></span>
   </button>
-  <span class="logo">CEGE0108 <span>/ Materials study guide</span></span>
-  <span class="hm">Past papers 2019–2025 · UCL Civil Engineering</span>
+  <span class="logo">CEGE0108 <span>/ Study guide</span></span>
+  <div class="stabs">
+    <button class="stab on" id="tabMat" onclick="switchSubject('mat')">Materials</button>
+    <button class="stab" id="tabFlu" onclick="switchSubject('flu')">Fluids</button>
+  </div>
+  <span class="hm">Past papers 2019–2025 · UCL</span>
 </header>
 <div class="mob-overlay" id="overlay" onclick="closeNav()"></div>
 <div class="con">
 <div class="lay">
 <aside>
-  <div class="slbl">Calculations</div>
-  <button class="ni on" onclick="show('stress',this)"><span class="nd"></span>Stress &amp; strain</button>
-  <button class="ni" onclick="show('creep',this)"><span class="nd"></span>Creep</button>
-  <button class="ni" onclick="show('fatigue',this)"><span class="nd"></span>Fatigue</button>
-  <button class="ni" onclick="show('variability',this)"><span class="nd"></span>Characteristic strength</button>
-  <button class="ni" onclick="show('density',this)"><span class="nd"></span>Crystal density</button>
-  <div class="sdiv"></div>
-  <div class="slbl">Theory</div>
-  <button class="ni" onclick="show('timber',this)"><span class="nd"></span>Timber</button>
-  <button class="ni" onclick="show('structure',this)"><span class="nd"></span>Material structure</button>
-  <button class="ni" onclick="show('bitumen',this)"><span class="nd"></span>Bitumen &amp; asphalt</button>
-  <div class="sdiv"></div>
-  <button class="ni" onclick="show('overview',this)"><span class="nd"></span>Module overview</button>
+  <!-- Materials nav -->
+  <div id="navMat">
+    <div class="slbl">Calculations</div>
+    <button class="ni on" onclick="show('stress',this)"><span class="nd"></span>Stress &amp; strain</button>
+    <button class="ni" onclick="show('creep',this)"><span class="nd"></span>Creep</button>
+    <button class="ni" onclick="show('fatigue',this)"><span class="nd"></span>Fatigue</button>
+    <button class="ni" onclick="show('variability',this)"><span class="nd"></span>Characteristic strength</button>
+    <button class="ni" onclick="show('density',this)"><span class="nd"></span>Crystal density</button>
+    <div class="sdiv"></div>
+    <div class="slbl">Theory</div>
+    <button class="ni" onclick="show('timber',this)"><span class="nd"></span>Timber</button>
+    <button class="ni" onclick="show('structure',this)"><span class="nd"></span>Material structure</button>
+    <button class="ni" onclick="show('bitumen',this)"><span class="nd"></span>Bitumen &amp; asphalt</button>
+    <div class="sdiv"></div>
+    <button class="ni" onclick="show('overview',this)"><span class="nd"></span>Module overview</button>
+  </div>
+  <!-- Fluids nav -->
+  <div id="navFlu" style="display:none">
+    <div class="slbl">Basics</div>
+    <button class="ni" onclick="show('f_basics',this)"><span class="nd"></span>Fluid basics</button>
+    <button class="ni" onclick="show('f_hydro',this)"><span class="nd"></span>Hydrostatics</button>
+    <div class="sdiv"></div>
+    <div class="slbl">Moving fluids</div>
+    <button class="ni" onclick="show('f_motion',this)"><span class="nd"></span>Fluid motion</button>
+    <button class="ni" onclick="show('f_bernoulli',this)"><span class="nd"></span>Bernoulli</button>
+    <button class="ni" onclick="show('f_apps',this)"><span class="nd"></span>Bernoulli applications</button>
+    <div class="sdiv"></div>
+    <div class="slbl">Pipe systems</div>
+    <button class="ni" onclick="show('f_pipes',this)"><span class="nd"></span>Pipes &amp; SFEE</button>
+    <button class="ni" onclick="show('f_pumps',this)"><span class="nd"></span>Pumps &amp; systems</button>
+    <div class="sdiv"></div>
+    <button class="ni" onclick="show('f_overview',this)"><span class="nd"></span>Fluids overview</button>
+  </div>
 </aside>
 <main>
 <!-- ══ OVERVIEW ══ -->
@@ -794,6 +826,581 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
 </div>
 </section>
 
+<!-- ══════════════════ FLUIDS OVERVIEW ══════════════════ -->
+<section class="tp" id="f_overview">
+<div class="hero">
+  <span class="ttag tf">Fluids — Full module</span>
+  <h1 class="ttl">Applied Fluid Mechanics overview</h1>
+  <p class="sub">The module flows: definitions → hydrostatics → fluid motion → Bernoulli → real pipe systems.</p>
+</div>
+<div class="card">
+  <div class="ctit">Course flow map</div>
+  <table class="ctbl">
+    <tr><th>Stage</th><th>Topic</th><th>Core idea</th></tr>
+    <tr><td>1</td><td>Fluid basics</td><td>Pressure, density, viscosity, Newtonian law</td></tr>
+    <tr><td>2</td><td>Hydrostatics</td><td>$P = \rho g h$, buoyancy, forces on surfaces</td></tr>
+    <tr><td>3</td><td>Fluid motion</td><td>Streamlines, continuity $Q = AU$, acceleration</td></tr>
+    <tr><td>4</td><td>Bernoulli</td><td>$P + \tfrac{1}{2}\rho U^2 + \rho g Z = \text{const}$</td></tr>
+    <tr><td>5</td><td>Bernoulli applications</td><td>Pitot, Venturi, orifice, weirs</td></tr>
+    <tr><td>6</td><td>Pipes &amp; SFEE</td><td>Darcy losses, Reynolds, Moody, pumps</td></tr>
+  </table>
+</div>
+<div class="card">
+  <div class="ctit">Exam structure — Section A (Fluids, every year)</div>
+  <div class="2c">
+    <div class="ib bl"><b>Q1 — 30 marks:</b> 5–6 short questions (5–6 marks each). Covers viscosity, buoyancy, Bernoulli, Reynolds, pipe friction, manometer — one concept per sub-question.</div>
+    <div class="ib gn"><b>Q2 or Q3 — 20 marks:</b> One extended pipe/Bernoulli problem — SFEE between reservoirs, Darcy losses, parallel/series pipes, pump operating point, or weir discharge.</div>
+  </div>
+  <div class="ib am">Topics in every paper: Reynolds number · Darcy equation · Bernoulli + continuity · buoyancy · manometer reading</div>
+</div>
+</section>
+
+<!-- ══════════════════ FLUID BASICS ══════════════════ -->
+<section class="tp" id="f_basics">
+<div class="hero">
+  <span class="ttag tf">Basics</span>
+  <h1 class="ttl">Fluid basics — pressure, density, viscosity</h1>
+  <p class="sub">Everything else builds on these definitions. A fluid continuously deforms under shear stress — this is what separates it from a solid.</p>
+</div>
+<div class="card">
+  <div class="ctit">Key formulas</div>
+  <table class="ftbl">
+    <tr><th>Quantity</th><th>Formula</th><th>Note</th></tr>
+    <tr><td>Density</td><td>$$\rho = \frac{m}{V}$$</td><td>kg/m³; water ≈ 1000, air ≈ 1.2</td></tr>
+    <tr><td>Pressure</td><td>$$P = \frac{F_n}{A}$$</td><td>Pa = N/m²; normal force per area</td></tr>
+    <tr><td>Shear stress</td><td>$$\tau = \frac{F_\tau}{A}$$</td><td>Pa; tangential force per area</td></tr>
+    <tr><td>Newton's viscosity law</td><td>$$\tau = \mu\,\frac{du}{dy}$$</td><td>$\mu$ = dynamic viscosity (Pa·s)</td></tr>
+    <tr><td>Kinematic viscosity</td><td>$$\nu = \frac{\mu}{\rho}$$</td><td>m²/s; water ≈ $10^{-6}$</td></tr>
+    <tr><td>Mach number</td><td>$$M = \frac{v}{c}$$</td><td>$M \ll 1$ → incompressible assumption valid</td></tr>
+    <tr><td>Knudsen number</td><td>$$Kn = \frac{\lambda}{L} \ll 1$$</td><td>Justifies treating fluid as continuum</td></tr>
+  </table>
+</div>
+
+<!-- ANIMATION: Viscosity — Newton's law visualised -->
+<div class="anim-box">
+  <div class="anim-header">
+    <span class="anim-tag">Animation</span>
+    <span class="anim-title">Newton's law of viscosity — why thick fluids resist shear</span>
+  </div>
+  <canvas id="viscCanvas" class="ac" height="300"></canvas>
+  <div class="smsg" id="viscMsg">Press Play — watch fluid layers slide at different speeds. The velocity gradient du/dy is constant for Newtonian fluid between parallel plates (Couette flow).</div>
+  <div class="ctl" style="flex-wrap:wrap;gap:6px">
+    <button class="btn" id="viscPlay" onclick="viscToggle()">▶ Play</button>
+    <button class="btn" onclick="viscReset()">↺ Reset</button>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:160px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">μ (Pa·s):</span>
+      <input type="range" id="viscMu" min="0.01" max="2" value="0.3" step="0.01" style="flex:1" oninput="setViscosity(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:38px" id="viscLabel">0.30</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:140px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">U_top (m/s):</span>
+      <input type="range" id="viscU" min="0.1" max="3" value="1" step="0.1" style="flex:1" oninput="setViscU(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="viscULabel">1.0</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:120px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">Gap h (mm):</span>
+      <input type="range" id="viscH" min="1" max="10" value="2" step="0.5" style="flex:1" oninput="setViscH(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="viscHLabel">2.0</span>
+    </div>
+  </div>
+  <div style="padding:0.4rem 1.25rem;background:var(--sur);font-size:12px;font-family:monospace;color:var(--ac3);border-top:1px solid var(--bdr)">
+    Live: τ = μ·(U/h) = <span id="viscTauLive">0.00</span> Pa &nbsp;|&nbsp; du/dy = <span id="viscDuDy">0.00</span> s⁻¹ &nbsp;|&nbsp; F on plate = <span id="viscForce">0.00</span> N (per 10cm²)
+  </div>
+</div>
+
+<div class="2c">
+<div class="card">
+  <div class="ctit">Solid vs fluid under shear</div>
+  <div class="ib bl"><b>Solid:</b> applies a shear force → deforms by a fixed amount → stops. The deformation depends on the force.</div>
+  <div class="ib gn"><b>Fluid:</b> applies a shear force → deforms continuously and never stops. The <em>rate</em> of deformation depends on the force: $\tau = \mu\,du/dy$</div>
+  <div class="ib am">Key exam trap: fluids don't have a fixed deformation — they have a fixed <em>rate</em> of deformation under a given shear stress.</div>
+</div>
+<div class="card">
+  <div class="ctit">Units you must know</div>
+  <table class="ctbl">
+    <tr><th>Quantity</th><th>SI unit</th></tr>
+    <tr><td>Pressure $P$</td><td>Pa = N/m²</td></tr>
+    <tr><td>Density $\rho$</td><td>kg/m³</td></tr>
+    <tr><td>Dynamic viscosity $\mu$</td><td>Pa·s = N·s/m²</td></tr>
+    <tr><td>Kinematic viscosity $\nu$</td><td>m²/s</td></tr>
+    <tr><td>Flow rate $Q$</td><td>m³/s</td></tr>
+    <tr><td>Mass flow $\dot{m}$</td><td>kg/s</td></tr>
+  </table>
+</div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked example — Newton's viscosity law (2018/19 Q1a)</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">2018/19 · 2022/23 Q1a type</span><span class="ebt emk">5 marks</span></div>
+    <div class="exq">A gap of <b>1 mm</b> between two parallel plates is filled with fluid of viscosity <b>$\mu = 0.2\,\text{Pa·s}$</b>. The upper plate moves at <b>1 m/s</b>; the lower plate is stationary. The upper plate area is <b>10 cm²</b>. Find the shear force resisting motion.</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asr"><div class="an">Setup</div><div>The velocity varies linearly from 0 at the bottom to $u = 1$ m/s at the top over $y = 1$ mm = 0.001 m. This gives a constant velocity gradient (Couette flow).</div></div>
+      <div class="asr"><div class="an">Step 1</div><div>Velocity gradient: $$\frac{du}{dy} = \frac{u_\text{top} - u_\text{bot}}{h} = \frac{1 - 0}{0.001} = 1000\;\text{s}^{-1}$$</div></div>
+      <div class="asr"><div class="an">Step 2</div><div>Shear stress by Newton's law: $$\tau = \mu\,\frac{du}{dy} = 0.2 \times 1000 = \boxed{200\;\text{Pa}}$$</div></div>
+      <div class="asr"><div class="an">Step 3</div><div>Convert area: $A = 10\;\text{cm}^2 = 10 \times 10^{-4} = 10^{-3}\;\text{m}^2$</div></div>
+      <div class="asr"><div class="an">Step 4</div><div>Shear force: $$F = \tau \times A = 200 \times 10^{-3} = \boxed{0.2\;\text{N}}$$</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════ HYDROSTATICS ══════════════════ -->
+<section class="tp" id="f_hydro">
+<div class="hero">
+  <span class="ttag tf">Hydrostatics</span>
+  <h1 class="ttl">Hydrostatics</h1>
+  <p class="sub">Fluid at rest. Pressure increases with depth. Forces on submerged surfaces. Buoyancy and manometers.</p>
+</div>
+<div class="card">
+  <div class="ctit">Key formulas</div>
+  <table class="ftbl">
+    <tr><th>Quantity</th><th>Formula</th><th>Note</th></tr>
+    <tr><td>Hydrostatic gradient</td><td>$$\frac{dP}{dz} = -\rho g$$</td><td>$z$ upward; pressure rises going down</td></tr>
+    <tr><td>Pressure at depth $h$</td><td>$$P = \rho g h$$</td><td>$h$ = depth below free surface; gauge pressure</td></tr>
+    <tr><td>Gauge vs absolute</td><td>$$P_\text{gauge} = P_\text{abs} - P_\text{atm}$$</td><td>Gauge ignores atmosphere</td></tr>
+    <tr><td>Pressure head</td><td>$$h = \frac{P}{\rho g}$$</td><td>Equivalent height of fluid column</td></tr>
+    <tr><td>Buoyancy force</td><td>$$B = \rho_f g V_\text{disp}$$</td><td>Equals weight of displaced fluid</td></tr>
+    <tr><td>Float condition</td><td>$$B = W \;\Rightarrow\; \rho_f V_\text{sub} = m$$</td><td>Body floats when buoyancy = weight</td></tr>
+    <tr><td>Uniform load on wall</td><td>$$F = PL,\quad x_F = L/2$$</td><td>Rectangular pressure diagram</td></tr>
+    <tr><td>Triangular load on wall</td><td>$$F = \tfrac{1}{2}PL,\quad x_F = L/3\text{ from deep end}$$</td><td>Acts at centroid of triangle</td></tr>
+    <tr><td>Manometer</td><td>$$P - P_a = \rho g h$$</td><td>Height difference → pressure difference</td></tr>
+    <tr><td>Inclined manometer</td><td>$$P - P_a = \rho g\, l\sin\alpha$$</td><td>$l$ = length along tube, $\alpha$ = inclination</td></tr>
+    <tr><td>Differential manometer</td><td>$$\Delta P = (\rho_2 - \rho_1)g h$$</td><td>Two different fluids</td></tr>
+  </table>
+</div>
+
+<!-- ANIMATION: Hydrostatic pressure -->
+<div class="anim-box">
+  <div class="anim-header">
+    <span class="anim-tag">Animation</span>
+    <span class="anim-title">Hydrostatic pressure — how pressure builds with depth</span>
+  </div>
+  <canvas id="hydroCanvas" class="ac" height="320"></canvas>
+  <div class="smsg" id="hydroMsg">Adjust the sliders — watch P = ρgh update live on the pressure diagram.</div>
+  <div class="ctl" style="flex-wrap:wrap;gap:6px">
+    <button class="btn" id="hydroPlay" onclick="hydroToggle()">▶ Play</button>
+    <button class="btn" onclick="hydroReset()">↺ Reset</button>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:140px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">Depth h (m):</span>
+      <input type="range" id="hydroDepth" min="0" max="100" value="0" style="flex:1" oninput="setDepth(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:32px" id="depthLabel">0</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:140px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">ρ (kg/m³):</span>
+      <input type="range" id="hydroRho" min="800" max="13600" value="1000" step="50" style="flex:1" oninput="setHydroRho(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:40px" id="hydroRhoLabel">1000</span>
+    </div>
+  </div>
+  <div style="padding:0.4rem 1.25rem;background:var(--sur);font-size:12px;font-family:monospace;color:var(--ac3);border-top:1px solid var(--bdr)">
+    Live: P = ρgh = <span id="hydroPLive">0.0</span> kPa &nbsp;|&nbsp; Pressure head = <span id="hydroHLive">0.00</span> m &nbsp;|&nbsp; Fluid: <span id="hydroFluidName">Water</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked example — force on submerged wall (every year type)</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">2018/19 Q1b · 2021/22 Q2b type</span><span class="ebt emk">8–12 marks</span></div>
+    <div class="exq">A vertical rectangular dam wall is <b>10 m high</b> and <b>1 m wide</b>. Water ($\rho = 1000$ kg/m³) fills to the top. Find the total horizontal force on the wall and the height of the line of action above the base.</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asl">Pressure diagram setup</div>
+      <div class="asr"><div class="an">Setup</div><div>Pressure varies from $P = 0$ at the top (free surface) to $P = \rho g H = 1000 \times 9.81 \times 10 = 98\,100\;\text{Pa}$ at the base. This is a triangular load.</div></div>
+      <div class="asl">Total force (area under the triangular pressure diagram)</div>
+      <div class="asr"><div class="an">Force</div><div>$$F = \frac{1}{2}\,P_\text{base}\,H\,b = \frac{1}{2} \times 98\,100 \times 10 \times 1 = \boxed{490\,500\;\text{N} = 490.5\;\text{kN}}$$</div></div>
+      <div class="asl">Location of force (centroid of triangle)</div>
+      <div class="asr"><div class="an">Location</div><div>For a triangular load, the resultant acts at $H/3$ from the deep end (base): $$x_F = \frac{H}{3} = \frac{10}{3} = \boxed{3.33\;\text{m above base}}$$</div></div>
+      <div class="asr"><div class="an">Why?</div><div>The centroid of a triangle is at $1/3$ of the height measured from the largest side (the base). Most of the force is near the bottom where pressure is highest, so the resultant is closer to the base than the midpoint.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked example — buoyancy (2022/23 Q1a)</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">2022/23 Q1a type</span><span class="ebt emk">5 marks</span></div>
+    <div class="exq">A body of <b>volume 1 m³</b> and <b>mass 2000 kg</b> is fully submerged in (i) water ($\rho_w = 1000\;\text{kg/m}^3$) and (ii) oil of relative density 0.9. Find the apparent weight in each fluid.</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asr"><div class="an">Weight</div><div>$W = mg = 2000 \times 9.81 = 19\,620\;\text{N}$</div></div>
+      <div class="asr"><div class="an">In water</div><div>$$B_w = \rho_w g V = 1000 \times 9.81 \times 1 = 9\,810\;\text{N}$$ $$W_\text{app} = W - B_w = 19\,620 - 9\,810 = \boxed{9\,810\;\text{N}}$$ (object sinks since $W > B$)</div></div>
+      <div class="asr"><div class="an">In oil</div><div>$\rho_\text{oil} = 0.9 \times 1000 = 900\;\text{kg/m}^3$ $$B_\text{oil} = 900 \times 9.81 \times 1 = 8\,829\;\text{N}$$ $$W_\text{app} = 19\,620 - 8\,829 = \boxed{10\,791\;\text{N}}$$ (heavier apparent weight in less dense fluid)</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════ FLUID MOTION ══════════════════ -->
+<section class="tp" id="f_motion">
+<div class="hero">
+  <span class="ttag tf">Fluid motion</span>
+  <h1 class="ttl">Fluid motion — continuity &amp; acceleration</h1>
+  <p class="sub">Streamlines, the continuity equation, and how fluid particles accelerate. Foundation for Bernoulli.</p>
+</div>
+<div class="card">
+  <div class="ctit">Key formulas</div>
+  <table class="ftbl">
+    <tr><th>Quantity</th><th>Formula</th><th>Note</th></tr>
+    <tr><td>Volumetric flow rate</td><td>$$Q = A U$$</td><td>$U$ = mean velocity; $A$ = cross-section area</td></tr>
+    <tr><td>Mass flow rate</td><td>$$\dot{m} = \rho Q = \rho A U$$</td><td>kg/s</td></tr>
+    <tr><td>Continuity (general)</td><td>$$\rho_1 A_1 U_1 = \rho_2 A_2 U_2$$</td><td>Mass conservation</td></tr>
+    <tr><td>Continuity (incompressible)</td><td>$$A_1 U_1 = A_2 U_2$$</td><td>$Q$ = constant along streamtube</td></tr>
+    <tr><td>Fluid particle acceleration</td><td>$$a = \frac{\partial U}{\partial t} + U\frac{\partial U}{\partial x}$$</td><td>Temporal + convective parts</td></tr>
+    <tr><td>Curved streamline</td><td>$$\frac{dP}{dr} = \frac{\rho V^2}{r}$$</td><td>Centripetal force from pressure gradient</td></tr>
+  </table>
+</div>
+
+<!-- ANIMATION: Continuity — pipe narrowing -->
+<div class="anim-box">
+  <div class="anim-header">
+    <span class="anim-tag">Animation</span>
+    <span class="anim-title">Continuity equation — why velocity increases in a narrower pipe</span>
+  </div>
+  <canvas id="contCanvas" class="ac" height="300"></canvas>
+  <div class="smsg" id="contMsg">A₁U₁ = A₂U₂ — same mass must pass through less area so velocity must increase. Change the ratio and inlet speed to see this live.</div>
+  <div class="ctl" style="flex-wrap:wrap;gap:6px">
+    <button class="btn" id="contPlay" onclick="contToggle()">▶ Play</button>
+    <button class="btn" onclick="contReset()">↺ Reset</button>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:140px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">A₁/A₂ ratio:</span>
+      <input type="range" id="contRatio" min="1.5" max="8" value="3" step="0.5" style="flex:1" oninput="setAreaRatio(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="ratioLabel">3.0</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:140px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">U₁ (m/s):</span>
+      <input type="range" id="contU1" min="0.5" max="5" value="2" step="0.5" style="flex:1" oninput="setContU1(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="contU1Label">2.0</span>
+    </div>
+  </div>
+  <div style="padding:0.4rem 1.25rem;background:var(--sur);font-size:12px;font-family:monospace;color:var(--ac3);border-top:1px solid var(--bdr)">
+    Live: U₁ = <span id="contU1Live">2.0</span> m/s &nbsp;|&nbsp; U₂ = A₁/A₂ × U₁ = <span id="contU2Live">6.0</span> m/s &nbsp;|&nbsp; Q = A₁U₁ = A₂U₂ (constant)
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">Streamlines vs pathlines — key distinction</div>
+  <table class="ctbl">
+    <tr><th>Term</th><th>Definition</th><th>When they're the same</th></tr>
+    <tr><td><b>Streamline</b></td><td>Line whose tangent is parallel to velocity at a given instant</td><td rowspan="2">In steady flow, streamlines = pathlines</td></tr>
+    <tr><td><b>Pathline / trajectory</b></td><td>Path traced by one fluid particle over time</td></tr>
+  </table>
+  <div class="ib am" style="margin-top:.75rem">Exam trap: in unsteady flow, streamlines and pathlines differ. Only in steady flow are they identical.</div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked example — continuity + acceleration</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">Tutorial / exam type</span><span class="ebt emk">5 marks</span></div>
+    <div class="exq">Water flows through a pipe that tapers from diameter <b>$d_1 = 200\;\text{mm}$</b> to <b>$d_2 = 100\;\text{mm}$</b>. The inlet velocity is <b>$U_1 = 2\;\text{m/s}$</b> and is steady. Find $U_2$ and the convective acceleration at section 2 if the taper length is 0.5 m.</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asr"><div class="an">Areas</div><div>$$A_1 = \frac{\pi(0.2)^2}{4} = 0.03142\;\text{m}^2, \quad A_2 = \frac{\pi(0.1)^2}{4} = 0.007854\;\text{m}^2$$</div></div>
+      <div class="asr"><div class="an">$U_2$</div><div>From continuity $A_1 U_1 = A_2 U_2$: $$U_2 = \frac{A_1}{A_2}U_1 = \frac{0.03142}{0.007854}\times 2 = 4\times 2 = \boxed{8\;\text{m/s}}$$</div></div>
+      <div class="asr"><div class="an">Accel.</div><div>Steady flow → $\partial U/\partial t = 0$. Convective acceleration at section 2: $$a = U\frac{\partial U}{\partial x} \approx U_2\frac{U_2 - U_1}{L} = 8\times\frac{8-2}{0.5} = \boxed{96\;\text{m/s}^2}$$</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════ BERNOULLI ══════════════════ -->
+<section class="tp" id="f_bernoulli">
+<div class="hero">
+  <span class="ttag tf">Bernoulli</span>
+  <h1 class="ttl">Bernoulli's equation</h1>
+  <p class="sub">Energy conservation along a streamline. The single most-used equation in fluid mechanics — and the most mis-applied.</p>
+</div>
+<div class="card">
+  <div class="ctit">Key formulas</div>
+  <table class="ftbl">
+    <tr><th>Quantity</th><th>Formula</th><th>Note</th></tr>
+    <tr><td>Bernoulli (pressure form)</td><td>$$P + \tfrac{1}{2}\rho U^2 + \rho g Z = \text{const}$$</td><td>Valid along one streamline</td></tr>
+    <tr><td>Between two points</td><td>$$P_1 + \tfrac{1}{2}\rho U_1^2 + \rho g Z_1 = P_2 + \tfrac{1}{2}\rho U_2^2 + \rho g Z_2$$</td><td>Points 1 and 2 on same streamline</td></tr>
+    <tr><td>Bernoulli (head form)</td><td>$$\frac{P}{\rho g} + \frac{U^2}{2g} + Z = H = \text{const}$$</td><td>All terms in metres</td></tr>
+    <tr><td>Stagnation pressure</td><td>$$P_0 = P + \tfrac{1}{2}\rho U^2$$</td><td>All kinetic energy converted to pressure</td></tr>
+    <tr><td>Reynolds number</td><td>$$Re = \frac{\rho U L}{\mu} = \frac{UL}{\nu}$$</td><td>Large $Re$ → Bernoulli may apply away from walls</td></tr>
+    <tr><td>Pressure coefficient</td><td>$$C_p = \frac{P - P_\infty}{\tfrac{1}{2}\rho U_\infty^2}$$</td><td>$C_p = 1$ at stagnation point</td></tr>
+  </table>
+  <div class="ib am" style="margin-top:.75rem"><b>Bernoulli's four assumptions — must state these in exams:</b> (1) Steady flow (2) Inviscid (no friction) (3) Incompressible (4) Along a single streamline</div>
+</div>
+
+<!-- ANIMATION: Bernoulli — pressure-velocity trade-off -->
+<div class="anim-box">
+  <div class="anim-header">
+    <span class="anim-tag">Animation</span>
+    <span class="anim-title">Bernoulli — pressure and velocity trade off as pipe narrows</span>
+  </div>
+  <canvas id="bernCanvas" class="ac" height="340"></canvas>
+  <div class="smsg" id="bernMsg">Press Play — particles speed up (red) through the constriction; pressure drops (blue bars). Total head H stays constant on every streamline.</div>
+  <div class="ctl" style="flex-wrap:wrap;gap:6px">
+    <button class="btn" id="bernPlay" onclick="bernToggle()">▶ Play</button>
+    <button class="btn" onclick="bernReset()">↺ Reset</button>
+    <button class="btn act" id="bernShowP" onclick="toggleBernPanel()">Hide pressure bars</button>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:130px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">A₁/A₂:</span>
+      <input type="range" id="bernRatio" min="2" max="6" value="3" step="0.5" style="flex:1" oninput="setBernRatio(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="bernRatioLabel">3.0</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:130px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">P₁ (kPa):</span>
+      <input type="range" id="bernP1" min="50" max="500" value="200" step="10" style="flex:1" oninput="setBernP1(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:36px" id="bernP1Label">200</span>
+    </div>
+  </div>
+  <div style="padding:0.4rem 1.25rem;background:var(--sur);font-size:12px;font-family:monospace;color:var(--ac3);border-top:1px solid var(--bdr)">
+    Live (horizontal pipe, ρ=1000): U₁=<span id="bU1">—</span> m/s → U₂=<span id="bU2">—</span> m/s &nbsp;|&nbsp; P₁=<span id="bP1">200</span> kPa → P₂=<span id="bP2">—</span> kPa &nbsp;|&nbsp; ΔP=<span id="bDP">—</span> kPa
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked example — Bernoulli between two points (every year)</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">Core exam type — every year</span><span class="ebt emk">8–10 marks</span></div>
+    <div class="exq">A pipe narrows from $d_1 = 100\;\text{mm}$ (section 1) to $d_2 = 50\;\text{mm}$ (section 2). Both sections are horizontal. The pressure at section 1 is $P_1 = 200\;\text{kPa}$ gauge and the flow rate is $Q = 0.015\;\text{m}^3\text{/s}$. Find the pressure at section 2. ($\rho = 1000\;\text{kg/m}^3$)</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asr"><div class="an">Areas</div><div>$$A_1 = \frac{\pi(0.1)^2}{4} = 7.854\times10^{-3}\;\text{m}^2,\quad A_2 = \frac{\pi(0.05)^2}{4} = 1.963\times10^{-3}\;\text{m}^2$$</div></div>
+      <div class="asr"><div class="an">Velocities</div><div>$$U_1 = \frac{Q}{A_1} = \frac{0.015}{7.854\times10^{-3}} = 1.910\;\text{m/s},\quad U_2 = \frac{Q}{A_2} = \frac{0.015}{1.963\times10^{-3}} = 7.639\;\text{m/s}$$</div></div>
+      <div class="asr"><div class="an">Bernoulli</div><div>Horizontal pipe → $Z_1 = Z_2$, so elevation terms cancel: $$P_2 = P_1 + \tfrac{1}{2}\rho(U_1^2 - U_2^2) = 200\,000 + \tfrac{1}{2}\times1000\times(1.910^2 - 7.639^2)$$ $$P_2 = 200\,000 + 500\times(3.648 - 58.35) = 200\,000 - 27\,350 = \boxed{172\,650\;\text{Pa} \approx 172.7\;\text{kPa}}$$</div></div>
+      <div class="asr"><div class="an">Check</div><div>$P_2 < P_1$ ✓ — pressure must drop where velocity increases (energy conservation).</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════ BERNOULLI APPLICATIONS ══════════════════ -->
+<section class="tp" id="f_apps">
+<div class="hero">
+  <span class="ttag tf">Applications</span>
+  <h1 class="ttl">Bernoulli applications — Pitot, Venturi, orifice, weirs</h1>
+  <p class="sub">Practical flow measurement devices, all derived from Bernoulli + continuity.</p>
+</div>
+<div class="card">
+  <div class="ctit">Key formulas</div>
+  <table class="ftbl">
+    <tr><th>Device</th><th>Formula</th><th>Note</th></tr>
+    <tr><td>Pitot tube velocity</td><td>$$U = \sqrt{\frac{2(P_0 - P)}{\rho}}$$</td><td>$P_0$ = stagnation, $P$ = static pressure</td></tr>
+    <tr><td>Venturi (ideal)</td><td>$$Q_\text{ideal} = A_1 A_2\sqrt{\frac{2(P_1-P_2)}{\rho(A_1^2-A_2^2)}}$$</td><td>$A_1$ = large section, $A_2$ = throat</td></tr>
+    <tr><td>Venturi (real)</td><td>$$Q = C_d\,Q_\text{ideal}$$</td><td>$C_d$ accounts for viscous losses</td></tr>
+    <tr><td>Sharp orifice discharge</td><td>$$Q = C_d\,\frac{\pi d^2}{4}\sqrt{2gh}$$</td><td>$h$ = head above orifice centre</td></tr>
+    <tr><td>Discharge coefficients</td><td>$$C_d = C_v \cdot C_c$$</td><td>$C_v$ = velocity coeff., $C_c$ = contraction coeff.; typical $C_d \approx 0.6$</td></tr>
+    <tr><td>Tank emptying time</td><td>$$T = \frac{1}{C_d}\frac{D^2}{d^2}\sqrt{\frac{2H}{g}}$$</td><td>$D$ = tank diam., $d$ = orifice diam.</td></tr>
+    <tr><td>Rectangular weir</td><td>$$Q = C_d\,\tfrac{2}{3}\sqrt{2g}\,b\,h^{3/2}$$</td><td>$b$ = width, $h$ = head above crest</td></tr>
+    <tr><td>V-notch weir</td><td>$$Q = C_d\,\tfrac{8}{15}\tan\alpha\sqrt{2g}\,h^{5/2}$$</td><td>$\alpha$ = half-angle; very sensitive to $h$</td></tr>
+  </table>
+</div>
+
+<!-- ANIMATION: Venturi meter flow -->
+<div class="anim-box">
+  <div class="anim-header">
+    <span class="anim-tag">Animation</span>
+    <span class="anim-title">Venturi meter — how throat pressure drop measures flow rate</span>
+  </div>
+  <canvas id="venturiCanvas" class="ac" height="320"></canvas>
+  <div class="smsg" id="venturiMsg">Adjust diameter ratio and Cd. The manometer height difference is proportional to ΔP, which gives Q via the Venturi formula.</div>
+  <div class="ctl" style="flex-wrap:wrap;gap:6px">
+    <button class="btn" id="venturiPlay" onclick="venturiToggle()">▶ Play</button>
+    <button class="btn" onclick="venturiReset()">↺ Reset</button>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:130px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">d₁/d₂:</span>
+      <input type="range" id="venturiDRatio" min="1.5" max="4" value="2" step="0.1" style="flex:1" oninput="setVenturiDRatio(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="venturiDRatioLabel">2.0</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:120px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">Cd:</span>
+      <input type="range" id="venturiCd" min="0.8" max="1" value="0.95" step="0.01" style="flex:1" oninput="setVenturiCd(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:32px" id="venturiCdLabel">0.95</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:120px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">U₁ (m/s):</span>
+      <input type="range" id="venturiU1" min="0.5" max="5" value="2" step="0.1" style="flex:1" oninput="setVenturiU1(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="venturiU1Label">2.0</span>
+    </div>
+  </div>
+  <div style="padding:0.4rem 1.25rem;background:var(--sur);font-size:12px;font-family:monospace;color:var(--ac3);border-top:1px solid var(--bdr)">
+    Live: U₂=<span id="vU2">—</span> m/s &nbsp;|&nbsp; ΔP=<span id="vDP">—</span> kPa &nbsp;|&nbsp; Manometer Δh=<span id="vDh">—</span> mm water &nbsp;|&nbsp; Q=<span id="vQ">—</span> m³/s
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked examples</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">Pitot tube — 2023/24 Q1e type</span><span class="ebt emk">5 marks</span></div>
+    <div class="exq">A Pitot-static tube is placed in an airflow ($\rho = 1.3\;\text{kg/m}^3$). A connected manometer shows a pressure difference of <b>20 mm of water</b>. Find the air velocity.</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asr"><div class="an">Convert</div><div>Pressure difference in Pa: $$\Delta P = \rho_w g h = 1000 \times 9.81 \times 0.020 = 196.2\;\text{Pa}$$</div></div>
+      <div class="asr"><div class="an">Velocity</div><div>$$U = \sqrt{\frac{2\Delta P}{\rho_\text{air}}} = \sqrt{\frac{2\times196.2}{1.3}} = \sqrt{302.0} = \boxed{17.4\;\text{m/s}}$$</div></div>
+      <div class="asr"><div class="an">Key step</div><div>The manometer reads a water height, but we substitute into the Pitot formula using the fluid density of <em>air</em> — not water — because we want the air speed.</div></div>
+    </div>
+  </div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">Rectangular weir — 2023/24 Q2b/c type</span><span class="ebt emk">8 marks</span></div>
+    <div class="exq">A rectangular sharp-edged weir is <b>10 m wide</b> and the head above the crest is <b>$h = 0.12\;\text{m}$</b>. $C_d = 0.60$, $g = 9.81\;\text{m/s}^2$. Calculate $Q$. Does $C_d$ depend on water level?</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asr"><div class="an">Formula</div><div>$$Q = C_d\,\frac{2}{3}\sqrt{2g}\,b\,h^{3/2} = 0.60\times\frac{2}{3}\times\sqrt{2\times9.81}\times10\times(0.12)^{3/2}$$</div></div>
+      <div class="asr"><div class="an">Compute</div><div>$\sqrt{2\times9.81} = 4.429$; $(0.12)^{3/2} = 0.12\times\sqrt{0.12} = 0.12\times0.3464 = 0.04157$ $$Q = 0.60\times\frac{2}{3}\times4.429\times10\times0.04157 = 0.40\times4.429\times0.4157 = \boxed{0.737\;\text{m}^3\text{/s}}$$</div></div>
+      <div class="asr"><div class="an">$C_d$?</div><div>$C_d$ depends on the ratio $h/b$ — as water level changes, $h/b$ changes, so strictly $C_d$ is not constant. In practice for wide weirs at moderate $h$, the variation is small and $C_d \approx 0.60$ is used.</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════ PIPES & SFEE ══════════════════ -->
+<section class="tp" id="f_pipes">
+<div class="hero">
+  <span class="ttag tf">Pipes &amp; SFEE</span>
+  <h1 class="ttl">Pipes — SFEE, Darcy, Reynolds, losses</h1>
+  <p class="sub">Real pipe flow with friction. The SFEE extends Bernoulli to include head losses and pump/turbine work.</p>
+</div>
+<div class="card">
+  <div class="ctit">Key formulas</div>
+  <table class="ftbl">
+    <tr><th>Quantity</th><th>Formula</th><th>Note</th></tr>
+    <tr><td>Total head</td><td>$$H = \frac{P}{\rho g} + \frac{U^2}{2g} + z$$</td><td>Pressure + velocity + elevation heads</td></tr>
+    <tr><td>SFEE</td><td>$$H_1 + \Delta H = H_2 + h_f$$</td><td>$\Delta H$ = pump head; $h_f$ = total head loss</td></tr>
+    <tr><td>Horizontal pipe loss</td><td>$$P_1 - P_2 = \rho g\,h_f$$</td><td>Pressure drop = friction head loss</td></tr>
+    <tr><td>Reynolds number (pipe)</td><td>$$Re = \frac{\rho U d}{\mu} = \frac{Ud}{\nu}$$</td><td>$Re < 2000$: laminar; $> 4000$: turbulent</td></tr>
+    <tr><td>Friction factor (laminar)</td><td>$$f = \frac{16}{Re}$$</td><td>Only valid for $Re < 2000$</td></tr>
+    <tr><td>Darcy equation</td><td>$$h_f = 4f\,\frac{L}{d}\,\frac{U^2}{2g}$$</td><td>This course uses $4f$ convention</td></tr>
+    <tr><td>Loss coefficient</td><td>$$h_i = K_i\,\frac{U^2}{2g}$$</td><td>For bends, valves, contractions etc.</td></tr>
+    <tr><td>Pipe friction coefficient</td><td>$$K_f = \frac{4fL}{d}$$</td><td>$h_f = K_f U^2/(2g)$</td></tr>
+    <tr><td>Poiseuille (laminar)</td><td>$$Q = \frac{\pi R^4\,\Delta P}{8\mu L} = \frac{\pi d^4\,\Delta P}{128\mu L}$$</td><td>$Q \propto \Delta P$ for laminar flow</td></tr>
+    <tr><td>Series pipes</td><td>$$h_{f,\text{total}} = \sum h_i = Q^2\sum \kappa_i$$</td><td>Same $Q$, losses add</td></tr>
+    <tr><td>Parallel pipes</td><td>$$Q = \sum Q_i,\quad \kappa_i Q_i^2 = h_f$$</td><td>Same head loss, flows add</td></tr>
+    <tr><td>Wall shear stress balance</td><td>$$\frac{\pi d^2}{4}(P_1-P_2) = \pi d L\,\tau_w$$</td><td>Pressure force = wall friction force</td></tr>
+  </table>
+</div>
+
+<!-- ANIMATION: Laminar vs turbulent -->
+<div class="anim-box">
+  <div class="anim-header">
+    <span class="anim-tag">Animation</span>
+    <span class="anim-title">Laminar vs turbulent pipe flow — what Reynolds number tells you</span>
+  </div>
+  <canvas id="flowCanvas" class="ac" height="320"></canvas>
+  <div class="smsg" id="flowMsg">Change U or d to compute Re live. Below 2000 = laminar (parabolic profile, f=16/Re). Above 4000 = turbulent (plug-like, use Moody). Between = unpredictable transition.</div>
+  <div class="ctl" style="flex-wrap:wrap;gap:6px">
+    <button class="btn" id="flowPlay" onclick="flowToggle()">▶ Play</button>
+    <button class="btn" onclick="flowReset()">↺ Reset</button>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:130px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">U (m/s):</span>
+      <input type="range" id="flowU" min="0.01" max="0.5" value="0.02" step="0.005" style="flex:1" oninput="setFlowU(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:36px" id="flowULabel">0.020</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:130px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">d (mm):</span>
+      <input type="range" id="flowD" min="5" max="100" value="100" step="5" style="flex:1" oninput="setFlowD(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:36px" id="flowDLabel">100</span>
+    </div>
+  </div>
+  <div style="padding:0.4rem 1.25rem;background:var(--sur);font-size:12px;font-family:monospace;color:var(--ac3);border-top:1px solid var(--bdr)">
+    Live (ν=10⁻⁶ m²/s): Re = Ud/ν = <span id="reLive">2000</span> &nbsp;|&nbsp; <span id="reRegime" style="font-weight:600">Transition</span> &nbsp;|&nbsp; f = <span id="fLive">—</span> &nbsp;|&nbsp; U_max/U_mean = <span id="uRatioLive">—</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked example — pipe SFEE with Darcy losses (every year)</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">2018/19 Q1f · 2022/23 Q2b type</span><span class="ebt emk">10–16 marks</span></div>
+    <div class="exq">Two large open reservoirs are connected by a horizontal pipe <b>100 m long, 10 cm diameter</b>. The water level in reservoir A is <b>2 m higher</b> than in B. Friction factor $f = 0.005$. Neglect entry/exit losses. Find the flow velocity and flow rate.</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asl">SFEE setup: reservoir A (point 1) to reservoir B (point 2)</div>
+      <div class="asr"><div class="an">Simplify</div><div>Large open reservoirs: $P_1 = P_2 = 0$ (gauge), $U_1 \approx U_2 \approx 0$. SFEE reduces to: $$z_1 - z_2 = h_f \quad\Rightarrow\quad 2\;\text{m} = h_f$$</div></div>
+      <div class="asr"><div class="an">Darcy</div><div>$$h_f = 4f\,\frac{L}{d}\,\frac{U^2}{2g} \quad\Rightarrow\quad 2 = 4\times0.005\times\frac{100}{0.1}\times\frac{U^2}{2\times9.81}$$</div></div>
+      <div class="asr"><div class="an">Solve</div><div>$$2 = 4\times0.005\times1000\times\frac{U^2}{19.62} = 20\times\frac{U^2}{19.62} = 1.020\,U^2$$ $$U^2 = \frac{2}{1.020} = 1.961 \quad\Rightarrow\quad \boxed{U = 1.40\;\text{m/s}}$$</div></div>
+      <div class="asr"><div class="an">Flow rate</div><div>$$Q = A\,U = \frac{\pi(0.1)^2}{4}\times1.40 = 7.854\times10^{-3}\times1.40 = \boxed{1.10\times10^{-2}\;\text{m}^3\text{/s}}$$</div></div>
+      <div class="asr"><div class="an">Check Re</div><div>$$Re = \frac{Ud}{\nu} = \frac{1.40\times0.1}{10^{-6}} = 140\,000 \gg 4000\quad\checkmark\text{ turbulent, Moody needed for precise }f$$</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked example — laminar pipe flow + Reynolds number</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">2018/19 Q1e · 2024/25 Q1e type</span><span class="ebt emk">5–6 marks</span></div>
+    <div class="exq">Water ($\mu = 10^{-3}\;\text{Pa·s}$) flows through a pipe of <b>diameter 1 cm</b> at a flow rate of <b>1 litre/min</b>. Is the flow laminar or turbulent? If laminar, find $f$.</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asr"><div class="an">Convert</div><div>$Q = 1\;\text{litre/min} = \frac{1\times10^{-3}}{60} = 1.667\times10^{-5}\;\text{m}^3\text{/s}$</div></div>
+      <div class="asr"><div class="an">Velocity</div><div>$$U = \frac{Q}{A} = \frac{1.667\times10^{-5}}{\pi(0.01)^2/4} = \frac{1.667\times10^{-5}}{7.854\times10^{-5}} = 0.212\;\text{m/s}$$</div></div>
+      <div class="asr"><div class="an">Reynolds</div><div>$$Re = \frac{\rho U d}{\mu} = \frac{1000\times0.212\times0.01}{10^{-3}} = \boxed{2120}$$</div></div>
+      <div class="asr"><div class="an">Regime</div><div>$Re = 2120$ is in the <b>transition zone</b> (2000–4000). Nominally close to laminar; if strictly laminar: $$f = \frac{16}{Re} = \frac{16}{2120} = \boxed{0.00755}$$</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════ PUMPS & SYSTEMS ══════════════════ -->
+<section class="tp" id="f_pumps">
+<div class="hero">
+  <span class="ttag tf">Pumps &amp; systems</span>
+  <h1 class="ttl">Pumps, operating points &amp; parallel/series pipes</h1>
+  <p class="sub">How pumps interact with pipe systems. Series and parallel configurations. The operating point is where the pump curve meets the system curve.</p>
+</div>
+<div class="card">
+  <div class="ctit">Key formulas</div>
+  <table class="ftbl">
+    <tr><th>Quantity</th><th>Formula</th><th>Note</th></tr>
+    <tr><td>Pump water power</td><td>$$P_w = \rho g Q\,\Delta H$$</td><td>Useful power delivered to water</td></tr>
+    <tr><td>Pump efficiency</td><td>$$\eta = \frac{P_w}{P_s} = \frac{\rho g Q\,\Delta H}{P_s}$$</td><td>$P_s$ = shaft (input) power</td></tr>
+    <tr><td>Pump external head</td><td>$$\Delta H = \frac{P}{\rho g Q}$$</td><td>Convert power to head</td></tr>
+    <tr><td>System curve</td><td>$$\Delta H_\text{sys}(Q) = H_0 + \kappa Q^2$$</td><td>$H_0$ = static lift; $\kappa Q^2$ = friction losses</td></tr>
+    <tr><td>Operating point</td><td>$$\Delta H_\text{pump}(Q) = \Delta H_\text{sys}(Q)$$</td><td>Intersection of pump and system curves</td></tr>
+    <tr><td>Three-reservoir junction</td><td>$$z_1 - H_0 = \kappa_1 Q_1^2,\quad Q_1 = Q_2 + Q_3$$</td><td>Guess $H_0$, iterate for continuity</td></tr>
+  </table>
+</div>
+
+<!-- ANIMATION: Pump operating point -->
+<div class="anim-box">
+  <div class="anim-header">
+    <span class="anim-tag">Animation</span>
+    <span class="anim-title">Pump operating point — where pump curve meets system curve</span>
+  </div>
+  <canvas id="pumpCanvas" class="ac" height="330"></canvas>
+  <div class="smsg" id="pumpMsg">Press Play to trace through different operating points as valve resistance increases, then decreases. Or drag sliders manually.</div>
+  <div class="ctl" style="flex-wrap:wrap;gap:6px">
+    <button class="btn" id="pumpPlay" onclick="pumpToggle()">▶ Play</button>
+    <button class="btn" onclick="pumpReset()">↺ Reset</button>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:130px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">κ (system):</span>
+      <input type="range" id="pumpKappa" min="0.5" max="10" value="3" step="0.5" style="flex:1" oninput="setPumpKappa(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="kappaLabel">3.0</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:130px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">H₀ static lift (m):</span>
+      <input type="range" id="pumpH0" min="0" max="30" value="5" step="1" style="flex:1" oninput="setPumpH0(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="pumpH0Label">5</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:130px">
+      <span style="font-size:11px;color:var(--mu);white-space:nowrap">η efficiency:</span>
+      <input type="range" id="pumpEta" min="0.3" max="0.95" value="0.7" step="0.05" style="flex:1" oninput="setPumpEta(this.value)">
+      <span style="font-size:11px;color:var(--ac);font-family:monospace;min-width:28px" id="pumpEtaLabel">0.70</span>
+    </div>
+  </div>
+  <div style="padding:0.4rem 1.25rem;background:var(--sur);font-size:12px;font-family:monospace;color:var(--ac3);border-top:1px solid var(--bdr)">
+    Live: Q* = <span id="pumpQLive">—</span> m³/s &nbsp;|&nbsp; H* = <span id="pumpHLive">—</span> m &nbsp;|&nbsp; P_water = <span id="pumpPwLive">—</span> kW &nbsp;|&nbsp; P_shaft = <span id="pumpPsLive">—</span> kW
+  </div>
+</div>
+
+<div class="card">
+  <div class="ctit">Worked example — pump power and efficiency</div>
+  <div class="ex">
+    <div class="exh"><span class="ebt eyr">2021/22 Q1b type</span><span class="ebt emk">8 marks</span></div>
+    <div class="exq">A pump delivers water at <b>$Q = 0.037\;\text{m}^3\text{/s}$</b> through two parallel pipes each 45 m long, 100 mm diameter, $f = 0.008$. One pipe discharges to a reservoir 6 m above the pump; the other to a reservoir 8 m above. The pump inlet is 0.6 m below the lower reservoir. Pump efficiency $\eta = 0.6$. Find the shaft power.</div>
+    <button class="rvb" onclick="rv(this)">▾ Show full worked answer</button>
+    <div class="ans">
+      <div class="asr"><div class="an">Setup</div><div>Two parallel pipes from the same pump outlet. Each pipe has the same $d$, $L$, $f$. They share the total head at the pump outlet but lead to different reservoir levels.</div></div>
+      <div class="asr"><div class="an">Each pipe $\kappa$</div><div>$$\kappa_i = \frac{4fL}{d}\frac{1}{2gA^2} = \frac{4\times0.008\times45}{0.1}\times\frac{1}{2\times9.81\times(7.854\times10^{-3})^2} = 14.4\times\frac{1}{1.208\times10^{-3}} = \frac{14.4}{1.208\times10^{-3}}$$</div></div>
+      <div class="asr"><div class="an">Parallel</div><div>Both pipes have same $\kappa$. Parallel condition: $\kappa Q_1^2 = \Delta H - 6$ and $\kappa Q_2^2 = \Delta H - 8$ and $Q_1 + Q_2 = 0.037$. With pump head $\Delta H$ and numerical $\kappa$, solve iteratively or use the SFEE approach as shown in the full tutorial solution.</div></div>
+      <div class="asr"><div class="an">Power</div><div>Once $\Delta H$ is found: $$P_w = \rho g Q\,\Delta H,\quad P_s = \frac{P_w}{\eta}$$</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
 </main>
 </div>
 </div>
@@ -801,557 +1408,792 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
 
 <script>
 /* ── Navigation ── */
-function toggleNav(){
-  const a=document.querySelector('aside'),o=document.getElementById('overlay'),h=document.getElementById('hbg');
-  const open=a.classList.toggle('mob-open');
-  o.classList.toggle('show',open);
-  h.classList.toggle('open',open);
-  document.body.style.overflow=open?'hidden':'';
-}
-function closeNav(){
-  const a=document.querySelector('aside'),o=document.getElementById('overlay'),h=document.getElementById('hbg');
-  a.classList.remove('mob-open');o.classList.remove('show');h.classList.remove('open');
-  document.body.style.overflow='';
-}
-function show(id,btn){
-  document.querySelectorAll('.tp').forEach(s=>s.classList.remove('on'));
-  document.querySelectorAll('.ni').forEach(b=>b.classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-  if(btn) btn.classList.add('on');
-  closeNav();
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(window.MathJax) MathJax.typesetPromise();
-}
-function rv(btn){
-  const a=btn.nextElementSibling;
-  const open=a.classList.toggle('on');
-  btn.textContent=open?'▴ Hide answer':'▾ Show full worked answer';
-  if(open && window.MathJax) MathJax.typesetPromise([a]);
-}
+let currentSubject='mat';
+function toggleNav(){const a=document.querySelector('aside'),o=document.getElementById('overlay'),h=document.getElementById('hbg');const open=a.classList.toggle('mob-open');o.classList.toggle('show',open);h.classList.toggle('open',open);document.body.style.overflow=open?'hidden':'';}
+function closeNav(){const a=document.querySelector('aside'),o=document.getElementById('overlay'),h=document.getElementById('hbg');a.classList.remove('mob-open');o.classList.remove('show');h.classList.remove('open');document.body.style.overflow='';}
+function show(id,btn){document.querySelectorAll('.tp').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.ni').forEach(b=>b.classList.remove('on'));const sec=document.getElementById(id);if(sec)sec.classList.add('on');if(btn)btn.classList.add('on');closeNav();window.scrollTo({top:0,behavior:'smooth'});if(window.MathJax)MathJax.typesetPromise();}
+function switchSubject(sub){currentSubject=sub;document.getElementById('navMat').style.display=sub==='mat'?'block':'none';document.getElementById('navFlu').style.display=sub==='flu'?'block':'none';document.getElementById('tabMat').classList.toggle('on',sub==='mat');document.getElementById('tabFlu').classList.toggle('on',sub==='flu');document.querySelectorAll('.tp').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.ni').forEach(b=>b.classList.remove('on'));if(sub==='mat'){document.getElementById('stress').classList.add('on');document.querySelector('#navMat .ni').classList.add('on');}else{document.getElementById('f_overview').classList.add('on');document.querySelector('#navFlu .ni').classList.add('on');}closeNav();window.scrollTo({top:0,behavior:'smooth'});if(window.MathJax)MathJax.typesetPromise();}
+function rv(btn){const a=btn.nextElementSibling;const open=a.classList.toggle('on');btn.textContent=open?'▴ Hide answer':'▾ Show full worked answer';if(open&&window.MathJax)MathJax.typesetPromise([a]);}
 document.querySelector('.ni').classList.add('on');
 
-function canvasH(base){return window.innerWidth<480?Math.round(base*0.72):window.innerWidth<768?Math.round(base*0.85):base;}
+/* ── Canvas helpers ── */
 function dpr(){return window.devicePixelRatio||1;}
-function setupCanvas(id,baseH){
-  const c=document.getElementById(id);
-  if(!c) return null;
-  const h=canvasH(baseH);
-  const W=c.offsetWidth||Math.min(window.innerWidth-32,700);
-  c.width=W*dpr(); c.height=h*dpr();
-  c.style.height=h+'px';
-  const ctx=c.getContext('2d');
-  ctx.scale(dpr(),dpr());
-  return {c,ctx,W,H:h};
-}
+function canvasH(base){return window.innerWidth<480?Math.round(base*0.72):window.innerWidth<768?Math.round(base*0.85):base;}
+function setupCanvas(id,baseH){const c=document.getElementById(id);if(!c)return null;const h=canvasH(baseH);const W=c.offsetWidth||Math.min(window.innerWidth-32,700);c.width=W*dpr();c.height=h*dpr();c.style.height=h+'px';const ctx=c.getContext('2d');ctx.scale(dpr(),dpr());return{c,ctx,W,H:h};}
 function isDark(){return window.matchMedia('(prefers-color-scheme:dark)').matches;}
-function colors(){
-  return isDark()?{
-    bg:'#1e1e24',axis:'#888885',curve:'#7eb8f7',
-    proof:'#c8f04c',secant:'#f7a07e',text:'#f0efe8',
-    muted:'#666663',hl:'#c8f04c',elastic:'rgba(200,240,76,0.15)',
-    plastic:'rgba(126,184,247,0.1)',fail:'#ff6b6b',
-    atom:'#4a90d9',disloc:'#e8954a',shifted:'#6abf69',
-    slipFill:'rgba(255,200,100,0.12)',stress:'#f7a07e',
-    gridLine:'rgba(255,255,255,0.05)'
-  }:{
-    bg:'#f5f5f0',axis:'#555',curve:'#2a6db5',
-    proof:'#6a9c0a',secant:'#c05020',text:'#222',
-    muted:'#888',hl:'#4a7c00',elastic:'rgba(100,150,0,0.1)',
-    plastic:'rgba(40,100,200,0.07)',fail:'#cc2200',
-    atom:'#3578c7',disloc:'#d4721e',shifted:'#3a8e3a',
-    slipFill:'rgba(200,140,0,0.1)',stress:'#c05020',
-    gridLine:'rgba(0,0,0,0.04)'
-  };
-}
+function C(){return isDark()?{axis:'#888885',curve:'#7eb8f7',proof:'#c8f04c',text:'#f0efe8',muted:'#555552',ac:'#c8f04c',ac2:'#7eb8f7',ac3:'#f7a07e',ac4:'#b89cff',rd:'#ff6b6b',gn:'#4cffa0',sur:'#16161a',sur2:'#1e1e24',bdr:'rgba(255,255,255,0.06)',grid:'rgba(255,255,255,0.04)',fluid:'rgba(56,150,220,0.28)',throat:'rgba(56,210,230,0.20)'}:{axis:'#666',curve:'#2a6db5',proof:'#5a8c0a',text:'#111',muted:'#aaa',ac:'#5a8c0a',ac2:'#2a6db5',ac3:'#c05020',ac4:'#7040cc',rd:'#cc2200',gn:'#007744',sur:'#fff',sur2:'#f2f2ed',bdr:'rgba(0,0,0,0.08)',grid:'rgba(0,0,0,0.04)',fluid:'rgba(56,120,200,0.18)',throat:'rgba(0,160,180,0.14)'};}
+function el(id){return document.getElementById(id);}
+function setText(id,val){const e=el(id);if(e)e.textContent=val;}
+function drawArrow(ctx,x1,y1,x2,y2,col,w){ctx.strokeStyle=col;ctx.lineWidth=w||2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();const ang=Math.atan2(y2-y1,x2-x1);ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-8*Math.cos(ang-0.4),y2-8*Math.sin(ang-0.4));ctx.lineTo(x2-8*Math.cos(ang+0.4),y2-8*Math.sin(ang+0.4));ctx.closePath();ctx.fill();}
+function drawAxes(ctx,px,py,pw,ph,col){ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,py+ph+5);ctx.stroke();ctx.beginPath();ctx.moveTo(px-5,py+ph);ctx.lineTo(px+pw,py+ph);ctx.stroke();}
+function gridLines(ctx,px,py,pw,ph,col){ctx.strokeStyle=col;ctx.lineWidth=1;for(let i=0;i<=5;i++){const x=px+i*pw/5;ctx.beginPath();ctx.moveTo(x,py);ctx.lineTo(x,py+ph);ctx.stroke();const y=py+i*ph/5;ctx.beginPath();ctx.moveTo(px,y);ctx.lineTo(px+pw,y);ctx.stroke();}}
 
-/* ══════════════════════════════════════
-   ANIMATION 1: PROOF STRESS CONSTRUCTION
-══════════════════════════════════════ */
-let proofTimer=null, proofPhase=0, proofT=0;
-const proofData=[
-  [0,0],[0.2,31.8],[0.44,63.7],[0.7,95.5],[1.07,127.3],
-  [1.53,159.2],[2.13,190.9],[3.2,222.8],[4.4,238.7]
-];
-const proofMsgs=[
-  "Step 1: Plot stress–strain data points from the load–extension table. Convert each load ÷ area for σ, each extension ÷ L for ε.",
-  "Step 2: Draw the initial elastic line through the first few linear points. The slope of this line equals Young's modulus E = σ/ε.",
-  "Step 3: Mark the 0.1% offset: ε = 0.001 on the strain axis. This is 0.1% = 0.1/100 = 0.001 — not 0.1!",
-  "Step 4: Draw a line parallel to the elastic slope, starting from ε = 0.001. Keep the same gradient.",
-  "Step 5: Where the parallel line intersects the σ–ε curve — that is the 0.1% proof stress ≈ 197 MPa. Read it from the graph."
-];
-
-function proofCoords(W,H){
-  const px=70,py=30,pw=W-px-30,ph=H-py-55;
-  const sx=pw/4.8, sy=ph/250;
-  return {px,py,pw,ph,sx,sy};
-}
-function drawProofBase(ctx,W,H,phase){
-  const C=colors(), {px,py,pw,ph,sx,sy}=proofCoords(W,H);
+/* ═════════════════════════════════════════
+   MATERIALS ANIM 1 — PROOF STRESS
+═════════════════════════════════════════ */
+let proofTimer=null,proofPhase=0,proofT=0;
+const PD=[[0,0],[0.20,31.8],[0.44,63.7],[0.70,95.5],[1.07,127.3],[1.53,159.2],[2.13,190.9],[3.20,222.8],[4.40,238.7]];
+const PMsgs=['Step 1: Plot data points — σ = load÷area (MPa), ε = extension÷L (dimensionless).','Step 2: Identify the linear elastic region and draw its slope. That slope is E = σ/ε.','Step 3: Mark the 0.1% strain offset on x-axis: ε = 0.001. (0.1% = 0.001, NOT 0.1!)','Step 4: Draw a line parallel to the elastic slope, starting from ε = 0.001.','Step 5: The parallel line crosses the stress-strain curve → that is the 0.1% proof stress ≈ 197 MPa.'];
+function proofCoords(W,H){const px=70,py=28,pw=W-px-30,ph=H-py-55;return{px,py,pw,ph,sx:pw/4.8,sy:ph/260};}
+function proofDraw(t){
+  const R=setupCanvas('proofCanvas',340);if(!R)return;
+  const{ctx,W,H}=R;const c=C();const{px,py,pw,ph,sx,sy}=proofCoords(W,H);
   ctx.clearRect(0,0,W,H);
-  // grid
-  ctx.strokeStyle=C.gridLine; ctx.lineWidth=1;
-  for(let i=0;i<=5;i++){const x=px+i*(pw/5);ctx.beginPath();ctx.moveTo(x,py);ctx.lineTo(x,py+ph);ctx.stroke();}
-  for(let i=0;i<=5;i++){const y=py+i*(ph/5);ctx.beginPath();ctx.moveTo(px,y);ctx.lineTo(px+pw,y);ctx.stroke();}
-  // axes
-  ctx.strokeStyle=C.axis; ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,py+ph+5);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(px-5,py+ph);ctx.lineTo(px+pw,py+ph);ctx.stroke();
-  // axis labels
-  ctx.fillStyle=C.muted; ctx.font='11px DM Mono,monospace'; ctx.textAlign='center';
-  for(let v=0;v<=200;v+=50){
-    const y=py+ph-v*sy;
-    ctx.fillText(v,px-22,y+4);
-    ctx.beginPath();ctx.moveTo(px-4,y);ctx.lineTo(px,y);ctx.strokeStyle=C.axis;ctx.lineWidth=1;ctx.stroke();
-  }
-  for(let v=0;v<=4;v++){
-    const x=px+v*sx;
-    ctx.fillText(v.toFixed(1)+'‰',x,py+ph+16);
-    ctx.beginPath();ctx.moveTo(x,py+ph);ctx.lineTo(x,py+ph+4);ctx.stroke();
-  }
-  ctx.fillStyle=C.muted; ctx.font='12px DM Sans,sans-serif';
-  ctx.save();ctx.translate(px-40,py+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('σ (MPa)',0,0);ctx.restore();
-  ctx.fillText('ε (×10⁻³)',px+pw/2,py+ph+32);
-  // shading
-  if(phase>=1){
-    ctx.fillStyle=C.elastic;
-    ctx.beginPath();ctx.moveTo(px,py+ph);
-    const cutIdx=4;
-    for(let i=0;i<=cutIdx;i++){const[e,s]=proofData[i];ctx.lineTo(px+e*sx,py+ph-s*sy);}
-    ctx.lineTo(px+proofData[cutIdx][0]*sx,py+ph);ctx.closePath();ctx.fill();
-  }
-  if(phase>=1){
-    ctx.fillStyle=C.plastic;
-    ctx.beginPath();ctx.moveTo(px+proofData[4][0]*sx,py+ph);
-    for(let i=4;i<proofData.length;i++){const[e,s]=proofData[i];ctx.lineTo(px+e*sx,py+ph-s*sy);}
-    ctx.lineTo(px+proofData[proofData.length-1][0]*sx,py+ph);ctx.closePath();ctx.fill();
-  }
-  // data points (phase 0+)
-  if(phase>=0){
-    ctx.fillStyle=C.curve;
-    proofData.forEach(([e,s])=>{
-      ctx.beginPath();ctx.arc(px+e*sx,py+ph-s*sy,3.5,0,Math.PI*2);ctx.fill();
-    });
-  }
-}
-function drawProofPhase(ctx,W,H,phase,t){
-  const C=colors(), {px,py,ph,sx,sy}=proofCoords(W,H);
-  // draw curve up to t (phase 0)
-  if(phase===0){
-    const n=Math.min(proofData.length,Math.round(t*proofData.length));
-    ctx.strokeStyle=C.curve; ctx.lineWidth=2.5; ctx.lineJoin='round';
-    ctx.beginPath();
-    for(let i=0;i<n;i++){
-      const[e,s]=proofData[i];
-      i===0?ctx.moveTo(px+e*sx,py+ph-s*sy):ctx.lineTo(px+e*sx,py+ph-s*sy);
-    }
-    ctx.stroke();
-    return;
+  gridLines(ctx,px,py,pw,ph,c.grid);
+  drawAxes(ctx,px,py,pw,ph,c.axis);
+  ctx.fillStyle=c.muted;ctx.font='10px DM Mono,monospace';ctx.textAlign='right';
+  [0,50,100,150,200,250].forEach(v=>{const y=py+ph-v*sy;ctx.fillText(v,px-5,y+4);ctx.beginPath();ctx.moveTo(px-3,y);ctx.lineTo(px,y);ctx.strokeStyle=c.axis;ctx.lineWidth=1;ctx.stroke();});
+  ctx.textAlign='center';[0,1,2,3,4].forEach(v=>{const x=px+v*sx;ctx.fillText(v+'‰',x,py+ph+14);ctx.beginPath();ctx.moveTo(x,py+ph);ctx.lineTo(x,py+ph+3);ctx.stroke();});
+  ctx.save();ctx.translate(px-44,py+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Stress σ (MPa)',0,0);ctx.restore();
+  ctx.fillText('Strain ε (×10⁻³)',px+pw/2,py+ph+30);
+  // elastic shading
+  if(proofPhase>=1){ctx.fillStyle=isDark()?'rgba(200,240,76,0.10)':'rgba(100,150,0,0.08)';ctx.beginPath();ctx.moveTo(px,py+ph);PD.slice(0,5).forEach(([e,s])=>ctx.lineTo(px+e*sx,py+ph-s*sy));ctx.lineTo(px+PD[4][0]*sx,py+ph);ctx.closePath();ctx.fill();}
+  if(proofPhase>=1){ctx.fillStyle=isDark()?'rgba(126,184,247,0.08)':'rgba(40,100,200,0.06)';ctx.beginPath();ctx.moveTo(px+PD[4][0]*sx,py+ph);PD.slice(4).forEach(([e,s])=>ctx.lineTo(px+e*sx,py+ph-s*sy));ctx.lineTo(px+PD[PD.length-1][0]*sx,py+ph);ctx.closePath();ctx.fill();}
+  // data points
+  ctx.fillStyle=c.curve;PD.forEach(([e,s])=>{ctx.beginPath();ctx.arc(px+e*sx,py+ph-s*sy,3.5,0,Math.PI*2);ctx.fill();});
+  if(proofPhase===0){
+    const n=Math.max(2,Math.round(t*PD.length));
+    ctx.strokeStyle=c.curve;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.beginPath();
+    PD.slice(0,n).forEach(([e,s],i)=>i===0?ctx.moveTo(px+e*sx,py+ph-s*sy):ctx.lineTo(px+e*sx,py+ph-s*sy));ctx.stroke();return;
   }
   // full curve
-  ctx.strokeStyle=C.curve; ctx.lineWidth=2.5; ctx.lineJoin='round';
-  ctx.beginPath();
-  proofData.forEach(([e,s],i)=>{
-    i===0?ctx.moveTo(px+e*sx,py+ph-s*sy):ctx.lineTo(px+e*sx,py+ph-s*sy);
-  });
-  ctx.stroke();
-  // failure dot
-  const[fe,fs]=proofData[proofData.length-1];
-  ctx.fillStyle=C.fail; ctx.beginPath();ctx.arc(px+fe*sx,py+ph-fs*sy,5,0,Math.PI*2);ctx.fill();
-  // phase 1: elastic line
-  if(phase>=1){
-    const slope=(proofData[3][1]-proofData[0][1])/(proofData[3][0]-proofData[0][0]);
-    const ex=Math.min(proofData[3][0]*1.2*t,proofData[3][0]*1.2);
-    ctx.strokeStyle=C.muted; ctx.lineWidth=1.5; ctx.setLineDash([5,4]);
-    ctx.beginPath();ctx.moveTo(px,py+ph);ctx.lineTo(px+ex*sx,py+ph-ex*slope*sy);ctx.stroke();
-    ctx.setLineDash([]);
-    if(t>0.6){
-      ctx.fillStyle=C.muted; ctx.font='11px DM Sans,sans-serif'; ctx.textAlign='left';
-      ctx.fillText('Elastic slope = E',px+ex*sx+4,py+ph-ex*slope*sy);
-    }
+  ctx.strokeStyle=c.curve;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.beginPath();
+  PD.forEach(([e,s],i)=>i===0?ctx.moveTo(px+e*sx,py+ph-s*sy):ctx.lineTo(px+e*sx,py+ph-s*sy));ctx.stroke();
+  const[fe,fs]=PD[PD.length-1];ctx.fillStyle=c.rd;ctx.beginPath();ctx.arc(px+fe*sx,py+ph-fs*sy,5,0,Math.PI*2);ctx.fill();
+  if(proofPhase>=1){
+    const slope=PD[3][1]/PD[3][0];const ext=PD[3][0]*1.3*Math.min(t,1);
+    ctx.strokeStyle=c.muted;ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(px,py+ph);ctx.lineTo(px+ext*sx,py+ph-ext*slope*sy);ctx.stroke();ctx.setLineDash([]);
+    if(t>0.5){ctx.fillStyle=c.muted;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='left';ctx.fillText('E = slope',px+ext*sx+4,py+ph-ext*slope*sy-2);}
   }
-  // phase 2: offset marker
-  if(phase>=2){
-    const ox=0.001*sx;
-    ctx.strokeStyle=C.proof; ctx.lineWidth=1.5;
-    ctx.beginPath();ctx.moveTo(px+ox,py+ph+8);ctx.lineTo(px+ox,py+ph-8);ctx.stroke();
-    ctx.fillStyle=C.proof; ctx.font='11px DM Mono,monospace'; ctx.textAlign='center';
-    ctx.fillText('ε=0.001',px+ox,py+ph+22);
+  if(proofPhase>=2){
+    ctx.strokeStyle=c.proof;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(px+0.001*sx,py+ph+8);ctx.lineTo(px+0.001*sx,py+ph-10);ctx.stroke();
+    ctx.fillStyle=c.proof;ctx.font='10px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('0.001',px+0.001*sx,py+ph+22);
   }
-  // phase 3: parallel line
-  if(phase>=3){
-    const slope=(proofData[3][1]-proofData[0][1])/(proofData[3][0]-proofData[0][0]);
-    const ox=0.001;
-    const extent=Math.min(2.5*t,2.5);
-    ctx.strokeStyle=C.proof; ctx.lineWidth=1.8; ctx.setLineDash([6,4]);
-    ctx.beginPath();ctx.moveTo(px+ox*sx,py+ph);ctx.lineTo(px+(ox+extent)*sx,py+ph-extent*slope*sy);ctx.stroke();
-    ctx.setLineDash([]);
+  if(proofPhase>=3){
+    const slope=PD[3][1]/PD[3][0];const ext=2.6*Math.min(t,1);
+    ctx.strokeStyle=c.proof;ctx.lineWidth=2;ctx.setLineDash([7,4]);ctx.beginPath();ctx.moveTo(px+0.001*sx,py+ph);ctx.lineTo(px+(0.001+ext)*sx,py+ph-ext*slope*sy);ctx.stroke();ctx.setLineDash([]);
   }
-  // phase 4: intersection point
-  if(phase>=4){
-    const slope=(proofData[3][1]-proofData[0][1])/(proofData[3][0]-proofData[0][0]);
-    const ox=0.001;
-    // approximate intersection: parallel line hits curve around e=1.73, s=197
-    const pe=1.73, ps=197;
-    ctx.strokeStyle=C.proof; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+  if(proofPhase>=4){
+    const pe=1.72,ps=197;
+    ctx.strokeStyle=c.proof;ctx.lineWidth=1.2;ctx.setLineDash([3,3]);
     ctx.beginPath();ctx.moveTo(px+pe*sx,py+ph-ps*sy);ctx.lineTo(px+pe*sx,py+ph);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(px,py+ph-ps*sy);ctx.lineTo(px+pe*sx,py+ph-ps*sy);ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle=C.proof; ctx.beginPath();ctx.arc(px+pe*sx,py+ph-ps*sy,5,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle=C.proof; ctx.font='bold 12px DM Mono,monospace'; ctx.textAlign='left';
-    ctx.fillText('0.1% proof stress ≈ 197 MPa',px+pe*sx+8,py+ph-ps*sy-4);
+    ctx.beginPath();ctx.moveTo(px,py+ph-ps*sy);ctx.lineTo(px+pe*sx,py+ph-ps*sy);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c.proof;ctx.beginPath();ctx.arc(px+pe*sx,py+ph-ps*sy,7,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=isDark()?'#fff':'#000';ctx.font='bold 10px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('✓',px+pe*sx,py+ph-ps*sy+4);
+    ctx.fillStyle=c.proof;ctx.font='bold 12px DM Mono,monospace';ctx.textAlign='left';
+    ctx.fillText('0.1% proof stress ≈ 197 MPa',px+pe*sx+10,py+ph-ps*sy-4);
   }
+  setText('proofStep',proofPhase);
 }
-function proofDraw(t){
-  const R=setupCanvas('proofCanvas',340);
-  if(!R) return;
-  drawProofBase(R.ctx,R.W,R.H,proofPhase);
-  drawProofPhase(R.ctx,R.W,R.H,proofPhase,t);
-}
-function proofAnimate(){
-  proofT+=0.018;
-  proofDraw(proofT);
-  if(proofT>=1){
-    proofT=1; proofDraw(1);
-    if(proofPhase<4){
-      setTimeout(()=>{proofPhase++;proofT=0;document.getElementById('proofMsg').textContent=proofMsgs[proofPhase];proofTimer=requestAnimationFrame(proofAnimate);},600);
-    } else {
-      cancelAnimationFrame(proofTimer);
-      document.getElementById('proofPlay').textContent='▶ Play';
-    }
-  } else {
-    proofTimer=requestAnimationFrame(proofAnimate);
-  }
-}
-function proofToggle(){
-  if(proofTimer){cancelAnimationFrame(proofTimer);proofTimer=null;document.getElementById('proofPlay').textContent='▶ Play';}
-  else{document.getElementById('proofMsg').textContent=proofMsgs[proofPhase];proofTimer=requestAnimationFrame(proofAnimate);}
-}
-function proofReset(){
-  cancelAnimationFrame(proofTimer);proofTimer=null;proofPhase=0;proofT=0;
-  document.getElementById('proofPlay').textContent='▶ Play';
-  document.getElementById('proofStep').textContent='0';
-  document.getElementById('proofMsg').textContent='Press Play to watch the proof stress construction drawn step by step.';
-  proofDraw(0);
-}
-window.addEventListener('load',()=>{ setTimeout(proofDraw,200); });
+function proofAnimate(){proofT+=0.018;proofDraw(proofT);if(proofT>=1){proofT=1;if(proofPhase<4){setTimeout(()=>{proofPhase++;proofT=0;setText('proofMsg',PMsgs[proofPhase]);proofTimer=requestAnimationFrame(proofAnimate);},700);}else{proofTimer=null;setText('proofPlay','▶ Play');}}else proofTimer=requestAnimationFrame(proofAnimate);}
+function proofToggle(){if(proofTimer){cancelAnimationFrame(proofTimer);proofTimer=null;setText('proofPlay','▶ Play');}else{setText('proofMsg',PMsgs[proofPhase]);proofTimer=requestAnimationFrame(proofAnimate);}}
+function proofReset(){cancelAnimationFrame(proofTimer);proofTimer=null;proofPhase=0;proofT=0;setText('proofPlay','▶ Play');setText('proofStep','0');setText('proofMsg','Press Play to watch the proof stress construction drawn step by step.');proofDraw(0);}
 
-/* ══════════════════════════════════════
-   ANIMATION 2: CREEP ACCUMULATION
-══════════════════════════════════════ */
-let creepTimer=null, creepT=0, showCompare=false;
+/* ═════════════════════════════════════════
+   MATERIALS ANIM 2 — CREEP
+═════════════════════════════════════════ */
+let creepTimer=null,creepT=0,showCompare=false;
 function creepDraw(t){
-  const R=setupCanvas('creepCanvas',300);
-  if(!R) return;
-  const {ctx,W,H}=R, C=colors();
+  const R=setupCanvas('creepCanvas',300);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
   ctx.clearRect(0,0,W,H);
-  const px=65,py=25,pw=W-px-40,ph=H-py-50;
-  // axes
-  ctx.strokeStyle=C.axis; ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,py+ph);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(px,py+ph);ctx.lineTo(px+pw,py+ph);ctx.stroke();
-  ctx.fillStyle=C.muted; ctx.font='11px DM Sans,sans-serif'; ctx.textAlign='center';
-  ctx.fillText('Time',px+pw/2,py+ph+35);
-  ctx.save();ctx.translate(px-40,py+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Strain',0,0);ctx.restore();
+  const px=65,py=22,pw=W-px-38,ph=H-py-48;
+  drawAxes(ctx,px,py,pw,ph,c.axis);
+  ctx.fillStyle=c.muted;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('Time',px+pw/2,py+ph+34);
+  ctx.save();ctx.translate(px-38,py+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Strain ε',0,0);ctx.restore();
   if(!showCompare){
-    // creep curve: elastic jump + primary + secondary + tertiary
-    const elasticH=60, primaryEnd=0.35, secondaryEnd=0.75;
-    // elastic jump at t=0
-    ctx.strokeStyle=C.ac2; ctx.lineWidth=2.5;
-    ctx.beginPath();ctx.moveTo(px,py+ph);ctx.lineTo(px,py+ph-elasticH);ctx.stroke();
-    // labels
-    ctx.fillStyle=C.muted; ctx.font='10px DM Mono,monospace'; ctx.textAlign='left';
-    ctx.fillText('ε_e (elastic)',px+4,py+ph-elasticH-4);
-    // draw curve up to t
+    const eH=58,p1=0.32,p2=0.72;
+    // elastic jump — labelled
+    ctx.strokeStyle=c.ac2;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(px,py+ph);ctx.lineTo(px,py+ph-eH);ctx.stroke();
+    ctx.fillStyle=c.ac2;ctx.font='10px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('ε_elastic',px+3,py+ph-eH-3);
     const drawTo=Math.min(t,1);
-    ctx.strokeStyle=C.curve; ctx.lineWidth=2.5; ctx.lineJoin='round';
-    ctx.beginPath(); ctx.moveTo(px,py+ph-elasticH);
-    for(let i=0;i<=200;i++){
-      const frac=i/200;
-      if(frac>drawTo) break;
-      const x=px+frac*pw;
-      let y;
-      if(frac<primaryEnd){
-        const u=frac/primaryEnd;
-        y=py+ph-elasticH-(50*Math.pow(u,0.45));
-      } else if(frac<secondaryEnd){
-        const u=(frac-primaryEnd)/(secondaryEnd-primaryEnd);
-        y=py+ph-elasticH-50-(30*u);
-      } else {
-        const u=(frac-secondaryEnd)/(1-secondaryEnd);
-        y=py+ph-elasticH-80-(60*Math.pow(u,2));
+    // colour segments by stage
+    const stageColors=[isDark()?'#c8f04c':'#5a8c0a',isDark()?'#f7a07e':'#c05020',isDark()?'#ff6b6b':'#cc2200'];
+    ctx.lineWidth=3;ctx.lineJoin='round';
+    // draw curve in three coloured segments
+    const segs=[[0,p1,0],[p1,p2,1],[p2,1,2]];
+    segs.forEach(([s,e,si])=>{
+      if(drawTo<=s)return;
+      ctx.strokeStyle=stageColors[si];ctx.beginPath();
+      let started=false;
+      for(let i=0;i<=300;i++){
+        const frac=i/300;if(frac<s||frac>Math.min(e,drawTo))continue;
+        const x=px+frac*pw;let y;
+        if(frac<p1){const u=frac/p1;y=py+ph-eH-52*Math.pow(u,0.42);}
+        else if(frac<p2){const u=(frac-p1)/(p2-p1);y=py+ph-eH-52-32*u;}
+        else{const u=(frac-p2)/(1-p2);y=py+ph-eH-84-65*Math.pow(u,2.2);}
+        if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);
       }
-      ctx.lineTo(x,y);
-    }
-    ctx.stroke();
-    // stage labels
-    if(drawTo>0.1){
-      ctx.fillStyle=C.ac; ctx.font='11px DM Sans,sans-serif'; ctx.textAlign='center';
-      ctx.fillText('Primary',px+pw*0.15,py+15);
-      ctx.fillStyle=C.muted; ctx.font='10px DM Mono,monospace';
-      ctx.fillText('(rate ↓)',px+pw*0.15,py+28);
-    }
-    if(drawTo>0.5){
-      ctx.fillStyle=C.ac3; ctx.font='11px DM Sans,sans-serif';
-      ctx.fillText('Secondary',px+pw*0.55,py+15);
-      ctx.fillStyle=C.muted; ctx.font='10px DM Mono,monospace';
-      ctx.fillText('(const. rate)',px+pw*0.55,py+28);
-    }
-    if(drawTo>0.85){
-      ctx.fillStyle=C.rd; ctx.font='11px DM Sans,sans-serif';
-      ctx.fillText('Tertiary',px+pw*0.9,py+15);
-      ctx.fillStyle=C.muted; ctx.font='10px DM Mono,monospace';
-      ctx.fillText('(rate ↑)',px+pw*0.9,py+28);
-    }
-    // vertical markers
-    [primaryEnd,secondaryEnd].forEach(f=>{
-      if(drawTo>f+0.05){
-        ctx.strokeStyle=C.muted; ctx.lineWidth=1; ctx.setLineDash([4,3]);
-        ctx.beginPath();ctx.moveTo(px+f*pw,py+ph);ctx.lineTo(px+f*pw,py+30);ctx.stroke();
-        ctx.setLineDash([]);
-      }
+      ctx.stroke();
     });
+    // stage labels
+    if(drawTo>0.08){ctx.fillStyle=stageColors[0];ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('Primary',px+pw*0.14,py+12);ctx.fillStyle=c.muted;ctx.font='9px DM Mono,monospace';ctx.fillText('(rate ↓)',px+pw*0.14,py+24);}
+    if(drawTo>0.45){ctx.fillStyle=stageColors[1];ctx.font='11px DM Sans,sans-serif';ctx.fillText('Secondary',px+pw*0.52,py+12);ctx.fillStyle=c.muted;ctx.font='9px DM Mono,monospace';ctx.fillText('(constant rate)',px+pw*0.52,py+24);}
+    if(drawTo>0.8){ctx.fillStyle=stageColors[2];ctx.font='11px DM Sans,sans-serif';ctx.fillText('Tertiary → rupture',px+pw*0.88,py+12);ctx.fillStyle=c.muted;ctx.font='9px DM Mono,monospace';ctx.fillText('(rate ↑)',px+pw*0.88,py+24);}
+    [p1,p2].forEach(f=>{if(drawTo>f+0.05){ctx.strokeStyle=c.muted;ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(px+f*pw,py+ph);ctx.lineTo(px+f*pw,py+28);ctx.stroke();ctx.setLineDash([]);}});
   } else {
-    // compare mode: creep vs relaxation side by side
-    const hw=pw/2-10;
-    // creep
-    ctx.fillStyle=C.ac; ctx.font='12px DM Sans,sans-serif'; ctx.textAlign='center';
-    ctx.fillText('Creep (constant σ)',px+hw/2,py+14);
-    ctx.strokeStyle=C.ac3; ctx.lineWidth=1.5; ctx.setLineDash([5,3]);
-    ctx.beginPath();ctx.moveTo(px,py+ph/2);ctx.lineTo(px+hw,py+ph/2);ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle=C.ac3; ctx.font='10px DM Mono,monospace'; ctx.textAlign='right';
-    ctx.fillText('σ = const',px+hw-2,py+ph/2-4);
-    ctx.strokeStyle=C.curve; ctx.lineWidth=2.5;
-    ctx.beginPath();ctx.moveTo(px,py+ph);ctx.lineTo(px,py+ph*0.7);
-    for(let i=1;i<=100;i++){
-      const f=i/100,x=px+f*hw,y=py+ph*0.7-30*Math.pow(f,0.55)*Math.min(creepT*2,1);
-      ctx.lineTo(x,y);
-    }
-    ctx.stroke();
-    ctx.fillStyle=C.curve; ctx.font='10px DM Mono,monospace'; ctx.textAlign='left';
-    ctx.fillText('ε grows',px+hw-50,py+ph*0.35);
-    // relaxation
-    const rx=px+hw+20;
-    ctx.fillStyle=C.ac4; ctx.font='12px DM Sans,sans-serif'; ctx.textAlign='center';
-    ctx.fillText('Relaxation (constant ε)',rx+hw/2,py+14);
-    ctx.strokeStyle=C.ac; ctx.lineWidth=1.5; ctx.setLineDash([5,3]);
-    ctx.beginPath();ctx.moveTo(rx,py+ph*0.75);ctx.lineTo(rx+hw,py+ph*0.75);ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle=C.ac; ctx.font='10px DM Mono,monospace'; ctx.textAlign='right';
-    ctx.fillText('ε = const',rx+hw-2,py+ph*0.75-4);
-    ctx.strokeStyle=C.ac4; ctx.lineWidth=2.5;
-    ctx.beginPath();ctx.moveTo(rx,py+ph*0.3);
-    for(let i=1;i<=100;i++){
-      const f=i/100,x=rx+f*hw,y=py+ph*0.3+60*Math.pow(f,0.55)*Math.min(creepT*2,1);
-      ctx.lineTo(x,y);
-    }
-    ctx.stroke();
-    ctx.fillStyle=C.ac4; ctx.font='10px DM Mono,monospace'; ctx.textAlign='left';
-    ctx.fillText('σ drops',rx+hw-50,py+ph*0.7);
+    const hw=pw/2-12;
+    // Creep
+    ctx.fillStyle=c.ac;ctx.font='12px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('CREEP  (σ = constant)',px+hw/2,py+14);
+    ctx.strokeStyle=c.ac3;ctx.lineWidth=1.5;ctx.setLineDash([5,3]);ctx.beginPath();ctx.moveTo(px,py+ph*0.52);ctx.lineTo(px+hw,py+ph*0.52);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c.ac3;ctx.font='10px DM Mono,monospace';ctx.textAlign='right';ctx.fillText('σ = const →',px+hw,py+ph*0.52-4);
+    ctx.strokeStyle=c.curve;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(px,py+ph);ctx.lineTo(px,py+ph*0.72);
+    for(let i=1;i<=100;i++){const f=i/100;ctx.lineTo(px+f*hw,py+ph*0.72-28*Math.pow(f,0.50)*Math.min(creepT*2,1));}ctx.stroke();
+    ctx.fillStyle=c.curve;ctx.font='10px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('ε increases →',px+4,py+ph*0.45);
+    // Relaxation
+    const rx=px+hw+24;
+    ctx.fillStyle=c.ac4;ctx.font='12px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('RELAXATION  (ε = constant)',rx+hw/2,py+14);
+    ctx.strokeStyle=c.ac;ctx.lineWidth=1.5;ctx.setLineDash([5,3]);ctx.beginPath();ctx.moveTo(rx,py+ph*0.72);ctx.lineTo(rx+hw,py+ph*0.72);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c.ac;ctx.font='10px DM Mono,monospace';ctx.textAlign='right';ctx.fillText('ε = const →',rx+hw,py+ph*0.72-4);
+    ctx.strokeStyle=c.ac4;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(rx,py+ph*0.28);
+    for(let i=1;i<=100;i++){const f=i/100;ctx.lineTo(rx+f*hw,py+ph*0.28+55*Math.pow(f,0.50)*Math.min(creepT*2,1));}ctx.stroke();
+    ctx.fillStyle=c.ac4;ctx.font='10px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('σ decreases ↓',rx+4,py+ph*0.38);
+    // Labels
+    ctx.fillStyle=c.muted;ctx.font='10px DM Sans,sans-serif';ctx.textAlign='center';
+    ctx.fillText('(constant stress → deformation grows)',px+hw/2,py+ph+14);
+    ctx.fillText('(constant strain → stress relaxes away)',rx+hw/2,py+ph+14);
   }
 }
-function creepAnimate(){
-  creepT+=0.008;
-  creepDraw(creepT);
-  if(creepT<1) creepTimer=requestAnimationFrame(creepAnimate);
-  else{creepTimer=null;document.getElementById('creepPlay').textContent='▶ Play';}
-}
-function creepToggle(){
-  if(creepTimer){cancelAnimationFrame(creepTimer);creepTimer=null;document.getElementById('creepPlay').textContent='▶ Play';}
-  else{document.getElementById('creepPlay').textContent='⏸ Pause';creepTimer=requestAnimationFrame(creepAnimate);}
-}
-function creepReset(){cancelAnimationFrame(creepTimer);creepTimer=null;creepT=0;document.getElementById('creepPlay').textContent='▶ Play';creepDraw(0);}
-function toggleCompare(){showCompare=!showCompare;creepT=0;document.getElementById('cmpBtn').classList.toggle('act',showCompare);creepDraw(0);}
-window.addEventListener('load',()=>setTimeout(()=>creepDraw(0),300));
+function creepAnimate(){creepT+=0.008;creepDraw(creepT);if(creepT<1)creepTimer=requestAnimationFrame(creepAnimate);else{creepTimer=null;setText('creepPlay','▶ Play');}}
+function creepToggle(){if(creepTimer){cancelAnimationFrame(creepTimer);creepTimer=null;setText('creepPlay','▶ Play');}else{setText('creepPlay','⏸ Pause');creepTimer=requestAnimationFrame(creepAnimate);}}
+function creepReset(){cancelAnimationFrame(creepTimer);creepTimer=null;creepT=0;setText('creepPlay','▶ Play');creepDraw(0);}
+function toggleCompare(){showCompare=!showCompare;creepT=0;el('cmpBtn').classList.toggle('act',showCompare);creepDraw(0);}
 
-/* ══════════════════════════════════════
-   ANIMATION 3: FATIGUE CYCLES + S-N CURVE
-══════════════════════════════════════ */
-let fatigueTimer=null, fatigueT=0, fatigueS=250;
+/* ═════════════════════════════════════════
+   MATERIALS ANIM 3 — FATIGUE
+═════════════════════════════════════════ */
+let fatigueTimer=null,fatigueT=0,fatigueS=250;
 function fatigueDraw(t){
-  const R=setupCanvas('fatigueCanvas',320);
-  if(!R) return;
-  const {ctx,W,H}=R, C=colors();
+  const R=setupCanvas('fatigueCanvas',320);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
   ctx.clearRect(0,0,W,H);
-  // left panel: stress cycle
-  const lw=W*0.45, px=50, py=20, ph=H-py-50;
-  ctx.strokeStyle=C.axis; ctx.lineWidth=1.5;
+  const lW=Math.floor(W*0.48),px=44,py=22,ph=H-py-50;
+  // Left: stress cycle
+  ctx.strokeStyle=c.axis;ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,py+ph);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(px,py+ph/2);ctx.lineTo(px+lw,py+ph/2);ctx.stroke();
-  ctx.fillStyle=C.muted; ctx.font='11px DM Sans,sans-serif'; ctx.textAlign='center';
-  ctx.fillText('Time',px+lw/2,py+ph+14);
-  ctx.save();ctx.translate(px-30,py+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Stress',0,0);ctx.restore();
-  // sine wave up to t
-  const amp=(fatigueS/400)*ph*0.35;
-  const cycles=Math.min(t*6,6);
-  ctx.strokeStyle=C.curve; ctx.lineWidth=2.5;
-  ctx.beginPath();
-  for(let i=0;i<=300;i++){
-    const f=i/300,x=px+f*lw;
-    if(f*6>cycles) break;
-    const y=py+ph/2-amp*Math.sin(f*6*2*Math.PI);
-    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-  }
+  ctx.beginPath();ctx.moveTo(px,py+ph/2);ctx.lineTo(px+lW,py+ph/2);ctx.stroke();
+  ctx.fillStyle=c.muted;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('Time →',px+lW/2,py+ph+14);
+  ctx.save();ctx.translate(px-28,py+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Stress',0,0);ctx.restore();
+  const amp=(fatigueS/400)*ph*0.38;const cycles=Math.min(t*7,7);
+  ctx.strokeStyle=c.curve;ctx.lineWidth=2.5;ctx.beginPath();
+  let first=true;
+  for(let i=0;i<=500;i++){const f=i/500;if(f*7>cycles)break;const x=px+f*lW;const y=py+ph/2-amp*Math.sin(f*7*2*Math.PI);if(first){ctx.moveTo(x,y);first=false;}else ctx.lineTo(x,y);}
   ctx.stroke();
-  // σ_max / σ_min lines
   if(t>0.1){
-    ctx.strokeStyle=C.ac3; ctx.lineWidth=1; ctx.setLineDash([4,3]);
-    ctx.beginPath();ctx.moveTo(px,py+ph/2-amp);ctx.lineTo(px+lw,py+ph/2-amp);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(px,py+ph/2+amp);ctx.lineTo(px+lw,py+ph/2+amp);ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle=C.ac3; ctx.font='10px DM Mono,monospace'; ctx.textAlign='left';
-    ctx.fillText('σ_max',px+lw+3,py+ph/2-amp+4);
-    ctx.fillText('σ_min',px+lw+3,py+ph/2+amp+4);
-    ctx.fillText('S = σ_max − σ_min',px+4,py+12);
-    // S arrow
-    ctx.strokeStyle=C.ac4; ctx.lineWidth=1.5;
-    ctx.beginPath();ctx.moveTo(px+lw-8,py+ph/2-amp);ctx.lineTo(px+lw-8,py+ph/2+amp);ctx.stroke();
-    ctx.fillStyle=C.ac4; ctx.textAlign='right';
-    ctx.fillText('S = '+fatigueS+' MPa',px+lw-12,py+ph/2);
+    ctx.strokeStyle=c.ac3;ctx.lineWidth=1;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(px,py+ph/2-amp);ctx.lineTo(px+lW,py+ph/2-amp);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(px,py+ph/2+amp);ctx.lineTo(px+lW,py+ph/2+amp);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c.ac3;ctx.font='9px DM Mono,monospace';ctx.textAlign='left';
+    ctx.fillText('σ_max = +'+fatigueS/2,px+lW+3,py+ph/2-amp+4);
+    ctx.fillText('σ_min = -'+fatigueS/2,px+lW+3,py+ph/2+amp+4);
+    ctx.fillStyle=c.ac4;ctx.font='10px DM Mono,monospace';ctx.textAlign='left';
+    ctx.fillText('S = '+fatigueS+' MPa',px+4,py+12);
+    // double-headed S arrow
+    drawArrow(ctx,px+lW-6,py+ph/2-amp,px+lW-6,py+ph/2+amp,c.ac4,1.5);
+    drawArrow(ctx,px+lW-6,py+ph/2+amp,px+lW-6,py+ph/2-amp,c.ac4,1.5);
   }
-  // right panel: damage accumulation bar
-  const rx=W*0.55+10, rw=W*0.4-15;
-  ctx.fillStyle=C.muted; ctx.font='11px DM Sans,sans-serif'; ctx.textAlign='center';
-  ctx.fillText('Cumulative damage D = Σ(n/N)',rx+rw/2,py+12);
-  // damage bar bg
-  ctx.fillStyle=C.gridLine; ctx.strokeStyle=C.axis; ctx.lineWidth=1;
-  ctx.fillRect(rx,py+25,rw,ph-35);
-  ctx.strokeRect(rx,py+25,rw,ph-35);
-  // N from S-N-like formula: N = (500/S)^4 * 1e6
-  const N=Math.pow(500/fatigueS,4)*1e6;
-  const n=Math.min(t*0.9,0.9)*N;
-  const D=Math.min(n/N,1);
-  const barH=(ph-35)*D;
-  // color changes as D increases
-  const r=Math.round(D*255), g=Math.round((1-D)*200);
-  ctx.fillStyle=`rgb(${r},${g},80)`;
-  ctx.fillRect(rx,py+25+(ph-35)*(1-D),rw,barH);
-  ctx.fillStyle=C.text; ctx.font='bold 14px DM Mono,monospace'; ctx.textAlign='center';
-  ctx.fillText('D = '+D.toFixed(3),rx+rw/2,py+25+(ph-35)/2);
+  // Right: damage bar
+  const rx=px+lW+16,rw=W-rx-12;
+  ctx.fillStyle=c.muted;ctx.font='10px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('Miner damage D = Σ(n/N)',rx+rw/2,py+11);
+  ctx.strokeStyle=c.bdr;ctx.lineWidth=1;ctx.strokeRect(rx,py+18,rw,ph-24);
+  const N=Math.pow(450/Math.max(fatigueS,50),3.5)*8e5;
+  const D=Math.min(Math.min(t*0.92,0.92)*N/N,1);
+  const barH=(ph-24)*D;
+  // gradient fill for the damage bar
+  const grad=ctx.createLinearGradient(0,py+18+(ph-24)*(1-D),0,py+18+ph-24);
+  grad.addColorStop(0,isDark()?'rgba(200,240,76,0.8)':'rgba(100,150,0,0.7)');
+  grad.addColorStop(0.6,isDark()?'rgba(255,160,70,0.8)':'rgba(200,120,0,0.7)');
+  grad.addColorStop(1,isDark()?'rgba(255,80,80,0.9)':'rgba(200,0,0,0.8)');
+  ctx.fillStyle=grad;ctx.fillRect(rx,py+18+(ph-24)*(1-D),rw,barH);
   // failure line
-  ctx.strokeStyle=C.rd; ctx.lineWidth=2; ctx.setLineDash([5,3]);
-  ctx.beginPath();ctx.moveTo(rx-5,py+25);ctx.lineTo(rx+rw+5,py+25);ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle=C.rd; ctx.font='10px DM Mono,monospace'; ctx.textAlign='left';
-  ctx.fillText('FAILURE (D=1)',rx,py+22);
-  if(D>=0.98){
-    ctx.fillStyle=C.rd; ctx.font='bold 13px DM Sans,sans-serif'; ctx.textAlign='center';
-    ctx.fillText('⚠ FAILURE',rx+rw/2,py+25+(ph-35)/2+20);
-  }
-  // cycle count
-  ctx.fillStyle=C.muted; ctx.font='10px DM Mono,monospace'; ctx.textAlign='center';
-  ctx.fillText('n = '+Math.round(n/1000)+'k cycles / N = '+Math.round(N/1000)+'k',rx+rw/2,py+ph+12);
+  ctx.strokeStyle=c.rd;ctx.lineWidth=2;ctx.setLineDash([5,3]);ctx.beginPath();ctx.moveTo(rx-5,py+18);ctx.lineTo(rx+rw+5,py+18);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=c.rd;ctx.font='9px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('FAILURE (D=1)',rx,py+16);
+  ctx.fillStyle=c.text;ctx.font='bold 14px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('D = '+D.toFixed(3),rx+rw/2,py+18+(ph-24)/2+5);
+  if(D>=0.98){ctx.fillStyle=c.rd;ctx.font='bold 13px DM Sans,sans-serif';ctx.fillText('⚠ FAILURE',rx+rw/2,py+18+(ph-24)/2+22);}
+  ctx.fillStyle=c.muted;ctx.font='9px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('N = '+Math.round(N/1e3)+'k cycles to fail',rx+rw/2,py+ph+14);
 }
-function fatigueAnimate(){
-  fatigueT+=0.005;
-  fatigueDraw(fatigueT);
-  if(fatigueT<1) fatigueTimer=requestAnimationFrame(fatigueAnimate);
-  else{fatigueTimer=null;document.getElementById('fatiguePlay').textContent='▶ Play';}
-}
-function fatigueToggle(){
-  if(fatigueTimer){cancelAnimationFrame(fatigueTimer);fatigueTimer=null;document.getElementById('fatiguePlay').textContent='▶ Play';}
-  else{document.getElementById('fatiguePlay').textContent='⏸ Pause';fatigueTimer=requestAnimationFrame(fatigueAnimate);}
-}
-function fatigueReset(){cancelAnimationFrame(fatigueTimer);fatigueTimer=null;fatigueT=0;document.getElementById('fatiguePlay').textContent='▶ Play';fatigueDraw(0);}
-function updateS(v){fatigueS=parseInt(v);document.getElementById('sVal').textContent=v;fatigueDraw(fatigueT);}
-window.addEventListener('load',()=>setTimeout(()=>fatigueDraw(0),400));
+function fatigueAnimate(){fatigueT+=0.005;fatigueDraw(fatigueT);if(fatigueT<1)fatigueTimer=requestAnimationFrame(fatigueAnimate);else{fatigueTimer=null;setText('fatiguePlay','▶ Play');}}
+function fatigueToggle(){if(fatigueTimer){cancelAnimationFrame(fatigueTimer);fatigueTimer=null;setText('fatiguePlay','▶ Play');}else{setText('fatiguePlay','⏸ Pause');fatigueTimer=requestAnimationFrame(fatigueAnimate);}}
+function fatigueReset(){cancelAnimationFrame(fatigueTimer);fatigueTimer=null;fatigueT=0;setText('fatiguePlay','▶ Play');fatigueDraw(0);}
+function updateS(v){fatigueS=parseInt(v);setText('sVal',v);fatigueDraw(fatigueT);}
 
-/* ══════════════════════════════════════
-   ANIMATION 4: DISLOCATION GLIDE
-══════════════════════════════════════ */
-let dislocTimer=null, dislocPos=0, dislocPlaying=false;
-const COLS=13, ROWS=8, SLIP=4;
+/* ═════════════════════════════════════════
+   MATERIALS ANIM 4 — DISLOCATION
+═════════════════════════════════════════ */
+let dislocTimer=null,dislocPos=0;
+const DC=13,DR=8,DS=4;
 function dislocDraw(){
-  const R=setupCanvas('dislocCanvas',300);
-  if(!R) return;
-  const {ctx,W,H}=R, C=colors();
+  const R=setupCanvas('dislocCanvas',300);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
   ctx.clearRect(0,0,W,H);
-  const padX=50, padY=20, colW=(W-padX*2)/(COLS-1), rowH=(H-padY*2-55)/(ROWS-1);
-  const slipY=padY+SLIP*rowH;
-  // slip plane highlight
-  ctx.fillStyle=C.slipFill;
-  ctx.fillRect(padX-15,slipY-rowH*0.45,(COLS-1)*colW+30,rowH*0.9);
+  const px=48,py=18,cW=(W-px*2)/(DC-1),rH=(H-py*2-52)/(DR-1);
+  const sY=py+DS*rH;
+  // slip plane
+  ctx.fillStyle=isDark()?'rgba(255,200,100,0.10)':'rgba(200,140,0,0.07)';
+  ctx.fillRect(px-14,sY-rH*0.44,(DC-1)*cW+28,rH*0.88);
+  ctx.fillStyle=c.muted;ctx.font='9px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('Slip plane →',px+(DC-1)*cW+8,sY+3);
   // stress arrows
-  ctx.strokeStyle=C.stress; ctx.lineWidth=2.5;
-  const arrLen=30;
-  // top: →, bottom: ←
-  [[10,padY+15,'→'],[10,padY+SLIP*rowH+rowH*1.5,'←']].forEach(([x,y,dir])=>{
-    ctx.beginPath();
-    if(dir==='→'){ctx.moveTo(x,y);ctx.lineTo(x+arrLen,y);}
-    else{ctx.moveTo(x+arrLen,y);ctx.lineTo(x,y);}
-    ctx.stroke();
-    ctx.fillStyle=C.stress; ctx.font='10px DM Mono,monospace'; ctx.textAlign='center';
-    ctx.fillText('τ',x+arrLen/2,y-4);
-  });
+  drawArrow(ctx,8,py+12,38,py+12,c.ac3,2);
+  ctx.fillStyle=c.ac3;ctx.font='9px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('τ →',22,py+8);
+  drawArrow(ctx,W-8,py+DS*rH+rH*1.6,W-38,py+DS*rH+rH*1.6,c.ac3,2);
+  ctx.fillText('← τ',W-22,py+DS*rH+rH*1.6-4);
   // atoms
-  for(let r=0;r<ROWS;r++){
-    for(let c=0;c<COLS;c++){
-      let x=padX+c*colW, y=padY+r*rowH;
-      let col=C.atom, r2=7;
-      // disloc pos: fractional column where extra half-plane terminates
-      const dp=dislocPos;
-      const isExtraPlane = (r <= SLIP) && (c === Math.round(dp));
-      const isShifted = (r <= SLIP) && (c < Math.round(dp));
-      if(r < SLIP && c > Math.floor(dp) && c <= Math.ceil(dp+0.5)){
-        col=C.disloc; r2=8;
-      }
-      if(isShifted && r<SLIP) col=C.shifted;
-      // draw atom
-      ctx.beginPath();ctx.arc(x,y,r2,0,Math.PI*2);
-      ctx.fillStyle=col+'cc';ctx.fill();
-      ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.stroke();
+  const dp=dislocPos;
+  for(let r=0;r<DR;r++){
+    for(let cc=0;cc<DC;cc++){
+      const x=px+cc*cW,y=py+r*rH;
+      let col,rad=7;
+      const isDisloc=(r<=DS)&&(Math.abs(cc-dp)<0.8);
+      const isShifted=(r<DS)&&(cc<Math.round(dp));
+      if(isDisloc){col=isDark()?'#ff9a45':'#d4721e';rad=9;}
+      else if(isShifted){col=isDark()?'#6abf69':'#3a9e3a';}
+      else{col=isDark()?'#4a90d9':'#3578c7';}
+      ctx.beginPath();ctx.arc(x,y,rad,0,Math.PI*2);
+      ctx.fillStyle=col+'bb';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.stroke();
     }
   }
-  // dislocation ⊥ symbol
-  const dxPx=padX+dislocPos*colW;
-  ctx.fillStyle=C.disloc; ctx.font='bold 20px DM Mono,monospace'; ctx.textAlign='center';
-  ctx.fillText('⊥',dxPx,slipY+rowH*0.25);
-  // slip plane label
-  ctx.fillStyle=C.muted; ctx.font='10px DM Mono,monospace'; ctx.textAlign='left';
-  ctx.fillText('Slip plane',padX+(COLS-1)*colW+8,slipY+4);
+  // ⊥ symbol
+  ctx.fillStyle=isDark()?'#ff9a45':'#d4721e';ctx.font='bold 22px DM Mono,monospace';ctx.textAlign='center';
+  ctx.fillText('⊥',px+dislocPos*cW,sY+rH*0.32);
   // legend
-  const ly=H-38;
-  [[C.atom,'Normal'],[C.disloc,'Dislocation'],[C.shifted,'Shifted (plastic)']].forEach(([col,lbl],i)=>{
-    const lx=padX+i*(W-padX*2)/3;
-    ctx.beginPath();ctx.arc(lx+6,ly,5,0,Math.PI*2);ctx.fillStyle=col+'cc';ctx.fill();
-    ctx.strokeStyle=col;ctx.lineWidth=1;ctx.stroke();
-    ctx.fillStyle=C.muted; ctx.font='10px DM Sans,sans-serif'; ctx.textAlign='left';
-    ctx.fillText(lbl,lx+14,ly+4);
+  const ly=H-34;
+  [['#4a90d9','Normal atom'],['#ff9a45','Dislocation core'],['#6abf69','Shifted (plastic)']].forEach(([col,lbl],i)=>{
+    const lx=10+i*(W-10)/3;
+    ctx.beginPath();ctx.arc(lx+5,ly,5,0,Math.PI*2);ctx.fillStyle=col+'bb';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=1.2;ctx.stroke();
+    ctx.fillStyle=c.muted;ctx.font='9px DM Sans,sans-serif';ctx.textAlign='left';ctx.fillText(lbl,lx+13,ly+3);
   });
   // progress
-  const pct=Math.round(dislocPos/(COLS-1)*100);
-  ctx.fillStyle=C.muted; ctx.font='10px DM Mono,monospace'; ctx.textAlign='right';
-  ctx.fillText(pct+'% swept',W-10,20);
-  if(dislocPos>=COLS-1.5){
-    ctx.fillStyle=C.gn; ctx.font='bold 12px DM Sans,sans-serif'; ctx.textAlign='center';
-    ctx.fillText('✓ Complete — top shifted 1 atomic spacing = permanent plastic deformation',W/2,H-8);
+  const pct=Math.round(dislocPos/(DC-1)*100);
+  ctx.fillStyle=c.ac;ctx.font='10px DM Mono,monospace';ctx.textAlign='right';ctx.fillText(pct+'% traversed',W-8,18);
+  if(dislocPos>=DC-1.5){ctx.fillStyle=c.gn;ctx.font='bold 11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('✓ One atomic spacing of permanent plastic deformation achieved',W/2,H-8);}
+}
+function dislocAnimate(){const spd=parseFloat(el('dislocSpd').value)*0.04;dislocPos+=spd;dislocDraw();if(dislocPos<DC-1)dislocTimer=requestAnimationFrame(dislocAnimate);else{dislocPos=DC-1;dislocDraw();dislocTimer=null;setText('dislocPlay','▶ Play');}}
+function dislocToggle(){if(dislocTimer){cancelAnimationFrame(dislocTimer);dislocTimer=null;setText('dislocPlay','▶ Play');}else{if(dislocPos>=DC-1)dislocPos=0;setText('dislocPlay','⏸ Pause');dislocTimer=requestAnimationFrame(dislocAnimate);}}
+function dislocReset(){cancelAnimationFrame(dislocTimer);dislocTimer=null;dislocPos=0;setText('dislocPlay','▶ Play');dislocDraw();}
+
+/* ═════════════════════════════════════════
+   FLUID ANIM 1 — VISCOSITY (Couette flow)
+═════════════════════════════════════════ */
+let viscTimer=null,viscT=0,viscMu=0.3,viscU=1.0,viscGap=0.002; // gap in metres
+function setViscosity(v){viscMu=parseFloat(v);setText('viscLabel',parseFloat(v).toFixed(2));updateViscLive();viscDraw();}
+function setViscU(v){viscU=parseFloat(v);setText('viscULabel',parseFloat(v).toFixed(1));updateViscLive();viscDraw();}
+function setViscH(v){viscGap=parseFloat(v)/1000;setText('viscHLabel',parseFloat(v).toFixed(1));updateViscLive();viscDraw();}
+function updateViscLive(){
+  const dudy=viscU/viscGap;
+  const tau=viscMu*dudy;
+  const A=0.01; // 10cm² = 0.01 m²
+  setText('viscTauLive',tau.toFixed(1));
+  setText('viscDuDy',dudy.toFixed(0));
+  setText('viscForce',(tau*A).toFixed(3));
+}
+function viscDraw(){
+  const R=setupCanvas('viscCanvas',300);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
+  ctx.clearRect(0,0,W,H);
+  const px=36,py=34,pw=W-px-100,ph=H-py-56;
+  const layers=14;
+  // plates
+  ctx.fillStyle=isDark()?'rgba(200,240,76,0.35)':'rgba(90,140,10,0.3)';
+  ctx.fillRect(px,py,pw,10);
+  ctx.fillStyle=isDark()?'rgba(126,184,247,0.25)':'rgba(40,100,180,0.2)';
+  ctx.fillRect(px,py+ph+8,pw,10);
+  // moving plate arrow
+  const plateShift=pw*0.45*(1-Math.exp(-viscT*2.5));
+  drawArrow(ctx,px+10,py+5,px+10+Math.max(5,plateShift*0.7),py+5,c.ac,2);
+  ctx.fillStyle=c.ac;ctx.font='10px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('u = U = '+viscU.toFixed(1)+'m/s',px,py-4);
+  ctx.fillStyle=c.muted;ctx.textAlign='left';ctx.fillText('u = 0 (fixed)',px,py+ph+24);
+  // fluid layers — Couette flow: linear velocity profile u(y) = U·(y/h)
+  for(let i=0;i<layers;i++){
+    const frac=i/(layers-1); // 0=bottom fixed, 1=top moving
+    const y=py+10+(1-frac)*(ph-2);
+    const layH=Math.max(1,(ph-2)/layers-1);
+    const vel=frac*(1-Math.exp(-viscT*2.5));
+    const shift=vel*pw*0.45;
+    ctx.fillStyle=isDark()?`rgba(126,184,247,${0.25+frac*0.25})`:`rgba(40,100,180,${0.18+frac*0.2})`;
+    ctx.fillRect(px+shift,y,pw-shift,layH);
+    // velocity arrows every other layer
+    if(i%2===0&&shift>6){
+      drawArrow(ctx,px+pw-shift-2,y+layH/2,px+pw-2,y+layH/2,c.ac,1.3);
+    }
+  }
+  // du/dy indicator on right
+  if(viscT>0.4){
+    const bx=W-88;
+    ctx.strokeStyle=c.ac3;ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(bx,py+10);ctx.lineTo(bx,py+ph+8);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(bx-4,py+10);ctx.lineTo(bx+4,py+10);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(bx-4,py+ph+8);ctx.lineTo(bx+4,py+ph+8);ctx.stroke();
+    ctx.fillStyle=c.ac3;ctx.font='10px DM Mono,monospace';ctx.textAlign='center';
+    ctx.fillText('h='+Math.round(viscGap*1000)+'mm',bx,py+ph/2+4);
+    ctx.fillText('du/dy',bx,py+ph/2-8);
+    // velocity profile line
+    ctx.strokeStyle=c.ac;ctx.lineWidth=2;ctx.beginPath();
+    const profileX=bx+30;
+    for(let i=0;i<=30;i++){const frac=i/30;const y=py+10+(1-frac)*(ph-2);const u=frac*(1-Math.exp(-viscT*2.5));if(i===0)ctx.moveTo(profileX,y);else ctx.lineTo(profileX+u*40,y);}
+    ctx.stroke();
+    ctx.fillStyle=c.ac;ctx.font='9px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('u(y)',profileX+42,py+14);
   }
 }
-function dislocAnimate(){
-  const spd=parseFloat(document.getElementById('dislocSpd').value)*0.04;
-  dislocPos+=spd;
-  dislocDraw();
-  if(dislocPos<COLS-1){dislocTimer=requestAnimationFrame(dislocAnimate);}
-  else{dislocPos=COLS-1;dislocDraw();dislocTimer=null;document.getElementById('dislocPlay').textContent='▶ Play';}
-}
-function dislocToggle(){
-  if(dislocTimer){cancelAnimationFrame(dislocTimer);dislocTimer=null;document.getElementById('dislocPlay').textContent='▶ Play';}
-  else{if(dislocPos>=COLS-1)dislocPos=0;document.getElementById('dislocPlay').textContent='⏸ Pause';dislocTimer=requestAnimationFrame(dislocAnimate);}
-}
-function dislocReset(){cancelAnimationFrame(dislocTimer);dislocTimer=null;dislocPos=0;document.getElementById('dislocPlay').textContent='▶ Play';dislocDraw();}
-window.addEventListener('load',()=>setTimeout(dislocDraw,500));
+function viscAnimate(){viscT+=0.014;viscDraw();if(viscT<2.5)viscTimer=requestAnimationFrame(viscAnimate);else{viscTimer=null;setText('viscPlay','▶ Play');}}
+function viscToggle(){if(viscTimer){cancelAnimationFrame(viscTimer);viscTimer=null;setText('viscPlay','▶ Play');}else{setText('viscPlay','⏸ Pause');viscTimer=requestAnimationFrame(viscAnimate);}}
+function viscReset(){cancelAnimationFrame(viscTimer);viscTimer=null;viscT=0;setText('viscPlay','▶ Play');viscDraw();}
 
-/* ── Single debounced resize handler for all canvases ── */
-let resizeTimer;
-window.addEventListener('resize',()=>{
-  clearTimeout(resizeTimer);
-  resizeTimer=setTimeout(()=>{
-    proofDraw(proofT);
-    creepDraw(creepT);
-    fatigueDraw(fatigueT);
-    dislocDraw();
-  },120);
+/* ═════════════════════════════════════════
+   FLUID ANIM 2 — HYDROSTATIC PRESSURE
+═════════════════════════════════════════ */
+let hydroTimer=null,hydroDepthVal=0,hydroRhoVal=1000;
+function setDepth(v){hydroDepthVal=parseInt(v);setText('depthLabel',v);hydroDraw();}
+function setHydroRho(v){hydroRhoVal=parseInt(v);setText('hydroRhoLabel',v);const name={800:'Oil (~800)',900:'Oil (~900)',1000:'Water',1025:'Sea water',13600:'Mercury'}[v]||v+' kg/m³';setText('hydroFluidName',name);hydroDraw();}
+function hydroDraw(){
+  const R=setupCanvas('hydroCanvas',320);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
+  ctx.clearRect(0,0,W,H);
+  const tX=W*0.05,tW=W*0.35,tTop=22,tH=H-70,wH=tH-10;
+  // water
+  ctx.fillStyle=isDark()?'rgba(56,150,220,0.28)':'rgba(56,120,200,0.18)';
+  ctx.fillRect(tX+2,tTop+2,tW-4,wH);
+  // tank
+  ctx.strokeStyle=c.axis;ctx.lineWidth=2;ctx.strokeRect(tX,tTop,tW,tH);
+  // depth probe line and dot
+  const depthFrac=hydroDepthVal/100;
+  const mY=tTop+2+wH*depthFrac;
+  ctx.strokeStyle=c.ac3;ctx.lineWidth=1.5;ctx.setLineDash([5,4]);
+  ctx.beginPath();ctx.moveTo(tX+tW/2,tTop+2);ctx.lineTo(tX+tW/2,mY);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=c.ac3;ctx.beginPath();ctx.arc(tX+tW/2,mY,7,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=isDark()?'#0d0d0f':'#fff';ctx.font='bold 9px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('P',tX+tW/2,mY+3);
+  const depth=depthFrac*10;
+  ctx.fillStyle=c.ac3;ctx.font='11px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('h = '+depth.toFixed(2)+' m',tX+tW/2+10,mY+4);
+  ctx.fillStyle=c.ac2;ctx.textAlign='center';ctx.font='10px DM Sans,sans-serif';ctx.fillText('Free surface  P = 0',tX+tW/2,tTop-5);
+  // pressure axis
+  const bX=tX+tW+32,bTop=tTop,bH=wH,bW=W-bX-14;
+  ctx.strokeStyle=c.axis;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(bX,bTop);ctx.lineTo(bX,bTop+bH);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(bX,bTop+bH);ctx.lineTo(bX+bW,bTop+bH);ctx.stroke();
+  // P_max at bottom
+  const Pmax=hydroRhoVal*9.81*10; // at h=10m
+  // triangular profile fill
+  ctx.fillStyle=isDark()?'rgba(200,240,76,0.12)':'rgba(100,160,0,0.10)';
+  ctx.beginPath();ctx.moveTo(bX,bTop);ctx.lineTo(bX+bW*0.92,bTop+bH);ctx.lineTo(bX,bTop+bH);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=c.ac;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(bX,bTop);ctx.lineTo(bX+bW*0.92,bTop+bH);ctx.stroke();
+  // current depth horizontal line
+  const pCurr=hydroRhoVal*9.81*depth;
+  const pLine=(pCurr/Pmax)*bW*0.92;
+  ctx.strokeStyle=c.ac4;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(bX,mY);ctx.lineTo(bX+pLine,mY);ctx.stroke();
+  ctx.fillStyle=c.ac4;ctx.beginPath();ctx.arc(bX+pLine,mY,5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=c.ac4;ctx.font='11px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('P='+(pCurr/1000).toFixed(2)+'kPa',bX+pLine+7,mY+4);
+  // axis labels
+  ctx.fillStyle=c.muted;ctx.font='10px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('P = ρgh',bX+bW/2,bTop+bH+18);
+  ctx.save();ctx.translate(bX-24,bTop+bH/2);ctx.rotate(-Math.PI/2);ctx.fillText('Depth  h',0,0);ctx.restore();
+  ctx.fillText('0',bX-8,bTop+4);ctx.fillText(Math.round(Pmax/1000)+'kPa',bX+bW*0.88,bTop+bH+14);
+  // live readout
+  setText('hydroPLive',(pCurr/1000).toFixed(2));
+  setText('hydroHLive',(pCurr/(hydroRhoVal*9.81)).toFixed(2));
+}
+function hydroAnimate(){hydroDepthVal=Math.min(100,hydroDepthVal+0.7);el('hydroDepth').value=hydroDepthVal;setText('depthLabel',Math.round(hydroDepthVal));hydroDraw();if(hydroDepthVal<100)hydroTimer=requestAnimationFrame(hydroAnimate);else{hydroTimer=null;setText('hydroPlay','▶ Play');}}
+function hydroToggle(){if(hydroTimer){cancelAnimationFrame(hydroTimer);hydroTimer=null;setText('hydroPlay','▶ Play');}else{setText('hydroPlay','⏸ Pause');hydroTimer=requestAnimationFrame(hydroAnimate);}}
+function hydroReset(){cancelAnimationFrame(hydroTimer);hydroTimer=null;hydroDepthVal=0;el('hydroDepth').value=0;setText('depthLabel','0');setText('hydroPlay','▶ Play');hydroDraw();}
+
+/* ═════════════════════════════════════════
+   FLUID ANIM 3 — CONTINUITY
+═════════════════════════════════════════ */
+let contRunning=false,contParticles=[],contRatioVal=3,contU1Val=2;
+function setAreaRatio(v){contRatioVal=parseFloat(v);setText('ratioLabel',parseFloat(v).toFixed(1));updateContLive();contInitParticles();contDraw();}
+function setContU1(v){contU1Val=parseFloat(v);setText('contU1Label',parseFloat(v).toFixed(1));updateContLive();contDraw();}
+function updateContLive(){setText('contU1Live',contU1Val.toFixed(1));setText('contU2Live',(contU1Val*contRatioVal).toFixed(1));}
+function contPHW(fx){if(fx<0.35)return 0.46;if(fx>0.58)return 0.46/contRatioVal;const t=(fx-0.35)/0.23;return 0.46-t*(0.46-0.46/contRatioVal);}
+function contInitParticles(){contParticles=[];for(let i=0;i<24;i++)contParticles.push({x:Math.random(),y:0.2+Math.random()*0.6});}
+function contDraw(){
+  const R=setupCanvas('contCanvas',300);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
+  ctx.clearRect(0,0,W,H);
+  const py=H*0.10,ph=H*0.70;
+  // fluid fill
+  ctx.fillStyle=c.fluid;
+  ctx.beginPath();ctx.moveTo(0,py+ph/2-contPHW(0)*ph);
+  for(let i=0;i<=100;i++){const f=i/100;ctx.lineTo(f*W,py+ph/2-contPHW(f)*ph);}
+  for(let i=100;i>=0;i--){const f=i/100;ctx.lineTo(f*W,py+ph/2+contPHW(f)*ph);}
+  ctx.closePath();ctx.fill();
+  // walls
+  ctx.strokeStyle=c.axis;ctx.lineWidth=2.5;
+  [false,true].forEach(bot=>{ctx.beginPath();for(let i=0;i<=100;i++){const f=i/100;const hw=contPHW(f)*ph;const y=bot?py+ph/2+hw:py+ph/2-hw;i===0?ctx.moveTo(0,y):ctx.lineTo(f*W,y);}ctx.stroke();});
+  // particles
+  contParticles.forEach(p=>{
+    const hw=contPHW(p.x)*ph;
+    const localU=p.x<0.35?1:p.x>0.58?contRatioVal:(1+(p.x-0.35)/0.23*(contRatioVal-1));
+    const speed=localU/contRatioVal;
+    ctx.fillStyle=isDark()?`rgba(126,184,247,${0.5+speed*0.4})`:`rgba(40,100,180,${0.5+speed*0.4})`;
+    ctx.beginPath();ctx.arc(p.x*W,py+ph/2+(p.y-0.5)*hw*2,3.5,0,Math.PI*2);ctx.fill();
+  });
+  // velocity arrows
+  [[0.15,contU1Val,'U₁ = '+contU1Val.toFixed(1)+' m/s','A₁'],[0.78,contU1Val*contRatioVal,'U₂ = '+(contU1Val*contRatioVal).toFixed(1)+' m/s','A₂']].forEach(([fx,u,ulbl,albl])=>{
+    const hw=contPHW(fx)*ph,ax=fx*W;
+    const arrLen=Math.min(48,u*14);
+    drawArrow(ctx,ax,py+ph/2,ax+arrLen,py+ph/2,c.ac,2.5);
+    ctx.fillStyle=c.ac;ctx.font='11px DM Mono,monospace';ctx.textAlign='center';ctx.fillText(ulbl,ax+arrLen/2,py+ph/2-hw-10);
+    ctx.fillStyle=c.muted;ctx.font='10px DM Mono,monospace';ctx.fillText(albl,ax,py+ph/2+hw+14);
+  });
+  // continuity label
+  ctx.fillStyle=c.muted;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('A₁U₁ = A₂U₂  (mass conserved)',W/2,H-8);
+}
+function contStep(){
+  contParticles.forEach(p=>{
+    const localU=p.x<0.35?1:p.x>0.58?contRatioVal:(1+(p.x-0.35)/0.23*(contRatioVal-1));
+    p.x+=localU*contU1Val*0.003;
+    if(p.x>1.05){p.x=-0.05;p.y=0.2+Math.random()*0.6;}
+  });
+  contDraw();
+}
+function contLoop(){if(!contRunning)return;contStep();requestAnimationFrame(contLoop);}
+function contToggle(){if(contRunning){contRunning=false;setText('contPlay','▶ Play');}else{contRunning=true;setText('contPlay','⏸ Pause');contInitParticles();contLoop();}}
+function contReset(){contRunning=false;setText('contPlay','▶ Play');contInitParticles();contDraw();}
+
+/* ═════════════════════════════════════════
+   FLUID ANIM 4 — BERNOULLI
+═════════════════════════════════════════ */
+let bernRunning=false,bernParticles=[],bernShowPanels=true,bernRatioVal=3,bernP1Val=200;
+function toggleBernPanel(){bernShowPanels=!bernShowPanels;el('bernShowP').textContent=bernShowPanels?'Hide pressure bars':'Show pressure bars';el('bernShowP').classList.toggle('act',bernShowPanels);bernDraw();}
+function setBernRatio(v){bernRatioVal=parseFloat(v);setText('bernRatioLabel',parseFloat(v).toFixed(1));updateBernLive();bernInitParticles();bernDraw();}
+function setBernP1(v){bernP1Val=parseFloat(v);setText('bernP1Label',v);updateBernLive();bernDraw();}
+function bernPHW(fx){if(fx<0.30)return 0.46;if(fx>0.56)return 0.46/bernRatioVal;const t=(fx-0.30)/0.26;return 0.46-t*(0.46-0.46/bernRatioVal);}
+function updateBernLive(){
+  // A2/A1 = 1/ratio² (area ratio from diameter ratio squared... actually ratio is A1/A2)
+  const U1=2; // reference
+  const U2=U1*bernRatioVal;
+  const rho=1000;
+  const P2=bernP1Val*1000+0.5*rho*(U1*U1-U2*U2);
+  setText('bU1',U1.toFixed(1));setText('bU2',U2.toFixed(1));
+  setText('bP1',bernP1Val);setText('bP2',(P2/1000).toFixed(1));
+  setText('bDP',((bernP1Val*1000-P2)/1000).toFixed(1));
+}
+function bernInitParticles(){bernParticles=[];for(let i=0;i<28;i++)bernParticles.push({x:Math.random(),y:0.25+Math.random()*0.5});}
+function bernDraw(){
+  const R=setupCanvas('bernCanvas',340);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
+  ctx.clearRect(0,0,W,H);
+  const py=16,ph=H*(bernShowPanels?0.44:0.60);
+  // fluid fill
+  ctx.fillStyle=c.fluid;
+  ctx.beginPath();ctx.moveTo(0,py+ph/2-bernPHW(0)*ph);
+  for(let i=0;i<=100;i++){const f=i/100;ctx.lineTo(f*W,py+ph/2-bernPHW(f)*ph);}
+  for(let i=100;i>=0;i--){const f=i/100;ctx.lineTo(f*W,py+ph/2+bernPHW(f)*ph);}
+  ctx.closePath();ctx.fill();
+  // walls
+  ctx.strokeStyle=c.axis;ctx.lineWidth=2.5;
+  [false,true].forEach(bot=>{ctx.beginPath();for(let i=0;i<=100;i++){const f=i/100;const hw=bernPHW(f)*ph;const y=bot?py+ph/2+hw:py+ph/2-hw;i===0?ctx.moveTo(0,y):ctx.lineTo(f*W,y);}ctx.stroke();});
+  // particles — colour by velocity
+  bernParticles.forEach(p=>{
+    const hw=bernPHW(p.x)*ph;
+    const localU=p.x<0.30?1:p.x>0.56?bernRatioVal:(1+(p.x-0.30)/0.26*(bernRatioVal-1));
+    const t=Math.min(1,(localU-1)/(bernRatioVal-1));
+    const r=Math.round(60+t*195),b=Math.round(220-t*180);
+    ctx.fillStyle=`rgba(${r},130,${b},0.85)`;
+    ctx.beginPath();ctx.arc(p.x*W,py+ph/2+(p.y-0.5)*hw*2,3.2,0,Math.PI*2);ctx.fill();
+  });
+  // section labels
+  const U1=2,U2=U1*bernRatioVal;
+  const rho=1000;
+  const P1kPa=bernP1Val;
+  const P2kPa=P1kPa+0.5*rho*(U1*U1-U2*U2)/1000;
+  const sections=[{fx:0.12,u:U1,p:P1kPa,lbl:'Section 1'},{fx:0.74,u:U2,p:P2kPa,lbl:'Section 2'}];
+  sections.forEach(({fx,u,p,lbl})=>{
+    const hw=bernPHW(fx)*ph,ax=fx*W;
+    ctx.fillStyle=c.ac;ctx.font='10px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('U='+u.toFixed(1)+'m/s',ax,py+ph/2-hw-14);
+    ctx.fillStyle=c.ac2;ctx.fillText('P='+p.toFixed(0)+'kPa',ax,py+ph/2-hw-3);
+  });
+  // total head label
+  ctx.fillStyle=c.ac;ctx.font='11px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('H = P/ρg + U²/2g + z = constant',W/2,py+ph+10);
+  // pressure/velocity bar panels
+  if(bernShowPanels){
+    const panTop=py+ph+20,panH=H-panTop-22,maxU=Math.max(U2,10),maxP=Math.max(P1kPa,10);
+    sections.forEach(({fx,u,p})=>{
+      const ax=fx*W,bW=26;
+      // velocity bar (red)
+      const uH=panH*(u/maxU);ctx.fillStyle=`rgba(220,90,90,${0.3+u/maxU*0.5})`;ctx.fillRect(ax-bW-2,panTop+panH-uH,bW,uH);
+      ctx.strokeStyle=c.rd;ctx.lineWidth=1;ctx.strokeRect(ax-bW-2,panTop,bW,panH);
+      ctx.fillStyle=c.rd;ctx.font='8px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('U',ax-bW/2-2,panTop+panH+12);
+      ctx.fillText(u.toFixed(1),ax-bW/2-2,panTop+panH-uH-3);
+      // pressure bar (blue)
+      const pFrac=Math.max(0,p/maxP);const pH2=panH*pFrac;
+      ctx.fillStyle=`rgba(80,150,240,${0.2+pFrac*0.5})`;ctx.fillRect(ax+2,panTop+panH-pH2,bW,pH2);
+      ctx.strokeStyle=c.ac2;ctx.lineWidth=1;ctx.strokeRect(ax+2,panTop,bW,panH);
+      ctx.fillStyle=c.ac2;ctx.font='8px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('P',ax+bW/2+2,panTop+panH+12);
+      ctx.fillText(p.toFixed(0),ax+bW/2+2,panTop+panH-pH2-3);
+    });
+    ctx.fillStyle=c.muted;ctx.font='10px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('Velocity ↑  →  Pressure ↓   (Bernoulli)',W/2,H-6);
+  }
+}
+function bernStep(){
+  bernParticles.forEach(p=>{
+    const localU=p.x<0.30?1:p.x>0.56?bernRatioVal:(1+(p.x-0.30)/0.26*(bernRatioVal-1));
+    p.x+=localU*0.005;if(p.x>1.05){p.x=-0.05;p.y=0.25+Math.random()*0.5;}
+  });
+  bernDraw();
+}
+function bernLoop(){if(!bernRunning)return;bernStep();requestAnimationFrame(bernLoop);}
+function bernToggle(){if(bernRunning){bernRunning=false;setText('bernPlay','▶ Play');}else{bernRunning=true;setText('bernPlay','⏸ Pause');bernInitParticles();bernLoop();}}
+function bernReset(){bernRunning=false;setText('bernPlay','▶ Play');bernInitParticles();bernDraw();}
+
+/* ═════════════════════════════════════════
+   FLUID ANIM 5 — VENTURI METER
+═════════════════════════════════════════ */
+let venturiRunning=false,venturiParticles=[],venturiDRatio=2.0,venturiCdVal=0.95,venturiU1Val=2.0;
+function setVenturiDRatio(v){venturiDRatio=parseFloat(v);setText('venturiDRatioLabel',parseFloat(v).toFixed(1));updateVenturiLive();venturiInitP();venturiDraw();}
+function setVenturiCd(v){venturiCdVal=parseFloat(v);setText('venturiCdLabel',parseFloat(v).toFixed(2));updateVenturiLive();venturiDraw();}
+function setVenturiU1(v){venturiU1Val=parseFloat(v);setText('venturiU1Label',parseFloat(v).toFixed(1));updateVenturiLive();venturiDraw();}
+function updateVenturiLive(){
+  const AR=venturiDRatio*venturiDRatio; // A1/A2 = (d1/d2)²
+  const U2=venturiU1Val*AR;
+  const rho=1000;
+  const dP=0.5*rho*(U2*U2-venturiU1Val*venturiU1Val); // Pa
+  const dh=dP/(rho*9.81)*1000; // mm water
+  const A1=Math.PI*(0.1*0.1)/4; // d1=0.1m reference
+  const A2=A1/(AR);
+  const Qideal=A1*venturiU1Val;
+  const Q=venturiCdVal*Qideal;
+  setText('vU2',U2.toFixed(2));
+  setText('vDP',(dP/1000).toFixed(2));
+  setText('vDh',dh.toFixed(0));
+  setText('vQ',Q.toFixed(4));
+}
+function venturiPHW2(fx){const ar=venturiDRatio;if(fx<0.25||fx>0.75)return 0.44;const t=fx<0.5?(fx-0.25)/0.25:(0.75-fx)/0.25;return 0.44-t*(0.44-0.44/ar);}
+function venturiInitP(){venturiParticles=[];for(let i=0;i<24;i++)venturiParticles.push({x:Math.random(),y:0.25+Math.random()*0.5});}
+function venturiDraw(){
+  const R=setupCanvas('venturiCanvas',320);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
+  ctx.clearRect(0,0,W,H);
+  const py=20,ph=H*0.42;
+  const AR=venturiDRatio*venturiDRatio;
+  const U2=venturiU1Val*AR;
+  const dP=0.5*1000*(U2*U2-venturiU1Val*venturiU1Val);
+  const Pmax=dP*1.2;
+  // fluid fill
+  ctx.fillStyle=c.throat;
+  ctx.beginPath();ctx.moveTo(0,py+ph/2-venturiPHW2(0)*ph);
+  for(let i=0;i<=100;i++){const f=i/100;ctx.lineTo(f*W,py+ph/2-venturiPHW2(f)*ph);}
+  for(let i=100;i>=0;i--){const f=i/100;ctx.lineTo(f*W,py+ph/2+venturiPHW2(f)*ph);}
+  ctx.closePath();ctx.fill();
+  // walls
+  ctx.strokeStyle=c.axis;ctx.lineWidth=2.5;
+  [false,true].forEach(bot=>{ctx.beginPath();for(let i=0;i<=100;i++){const f=i/100;const hw=venturiPHW2(f)*ph;const y=bot?py+ph/2+hw:py+ph/2-hw;i===0?ctx.moveTo(0,y):ctx.lineTo(f*W,y);}ctx.stroke();});
+  // particles
+  venturiParticles.forEach(p=>{
+    const hw=venturiPHW2(p.x)*ph;
+    const localU=venturiPHW2(0.1)/venturiPHW2(p.x)*venturiU1Val;
+    const t=Math.min(1,(localU-venturiU1Val)/(U2-venturiU1Val+0.01));
+    const r=Math.round(80+t*160);
+    ctx.fillStyle=`rgba(${r},160,240,0.85)`;
+    ctx.beginPath();ctx.arc(p.x*W,py+ph/2+(p.y-0.5)*hw*2,3.2,0,Math.PI*2);ctx.fill();
+  });
+  // labels on pipe
+  ctx.fillStyle=c.ac;ctx.font='10px DM Mono,monospace';ctx.textAlign='center';
+  ctx.fillText('P₁ = high',W*0.14,py+ph/2-venturiPHW2(0.14)*ph-8);
+  ctx.fillText('P₂ = low',W*0.5,py+ph/2-venturiPHW2(0.5)*ph-8);
+  ctx.fillStyle=c.ac2;ctx.fillText('U₁='+venturiU1Val.toFixed(1),W*0.14,py+ph/2+venturiPHW2(0.14)*ph+13);
+  ctx.fillText('U₂='+U2.toFixed(1),W*0.5,py+ph/2+venturiPHW2(0.5)*ph+13);
+  // manometer
+  const tA=W*0.15,tB=W*0.5;
+  const mBase=py+ph+10,mH=H-mBase-22;
+  ctx.strokeStyle=c.axis;ctx.lineWidth=1.5;
+  [[tA,0.15],[tB,0.5]].forEach(([tx,fx])=>{ctx.beginPath();ctx.moveTo(tx,py+ph/2+venturiPHW2(fx)*ph);ctx.lineTo(tx,mBase+mH);ctx.stroke();});
+  ctx.beginPath();ctx.moveTo(tA,mBase+mH);ctx.lineTo(tB,mBase+mH);ctx.stroke();
+  // actual fluid levels proportional to pressure
+  const levelA=mH*0.05;
+  const levelB=mH*0.05+Math.min(mH*0.82,dP/Pmax*mH*0.82);
+  ctx.fillStyle=isDark()?'rgba(56,200,220,0.65)':'rgba(0,150,180,0.55)';
+  ctx.fillRect(tA-9,mBase+levelA,18,mH-levelA);
+  ctx.fillRect(tB-9,mBase+levelB,18,mH-levelB);
+  // Δh label
+  ctx.strokeStyle=c.ac4;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(tA+12,mBase+levelA);ctx.lineTo(tB-12,mBase+levelB);ctx.stroke();
+  ctx.fillStyle=c.ac4;ctx.font='10px DM Mono,monospace';ctx.textAlign='center';
+  ctx.fillText('Δh = '+(dP/(1000*9.81)*1000).toFixed(0)+' mm  →  ΔP = '+(dP/1000).toFixed(1)+' kPa',tA+(tB-tA)/2,mBase+levelA-6);
+  ctx.fillStyle=c.muted;ctx.font='9px DM Sans,sans-serif';ctx.textAlign='center';
+  ctx.fillText('Q = Cd·A₁A₂·√[2ΔP/ρ(A₁²-A₂²)]',W/2,H-4);
+}
+function venturiStep(){
+  venturiParticles.forEach(p=>{const u=venturiPHW2(0.1)/venturiPHW2(p.x)*venturiU1Val;p.x+=u*0.004;if(p.x>1.05){p.x=-0.05;p.y=0.25+Math.random()*0.5;}});
+  venturiDraw();
+}
+function venturiLoop(){if(!venturiRunning)return;venturiStep();requestAnimationFrame(venturiLoop);}
+function venturiToggle(){if(venturiRunning){venturiRunning=false;setText('venturiPlay','▶ Play');}else{venturiRunning=true;setText('venturiPlay','⏸ Pause');venturiInitP();venturiLoop();}}
+function venturiReset(){venturiRunning=false;setText('venturiPlay','▶ Play');venturiInitP();venturiDraw();}
+
+/* ═════════════════════════════════════════
+   FLUID ANIM 6 — LAMINAR vs TURBULENT
+═════════════════════════════════════════ */
+let flowRunning=false,flowParticles=[],flowUVal=0.02,flowDVal=0.1;
+function setFlowU(v){flowUVal=parseFloat(v);setText('flowULabel',parseFloat(v).toFixed(3));updateFlowLive();flowInitParticles();flowDraw();}
+function setFlowD(v){flowDVal=parseFloat(v)/1000;setText('flowDLabel',v);updateFlowLive();flowInitParticles();flowDraw();}
+function updateFlowLive(){
+  const nu=1e-6;
+  const Re=flowUVal*flowDVal/nu;
+  setText('reLive',Math.round(Re));
+  const reg=Re<2000?'LAMINAR':Re>4000?'TURBULENT':'TRANSITION';
+  const col=Re<2000?'var(--gn)':Re>4000?'var(--rd)':'var(--ac3)';
+  const reEl=el('reRegime');if(reEl){reEl.textContent=reg;reEl.style.color=col;}
+  const fVal=Re<2000?'16/Re = '+(16/Re).toFixed(4):Re>4000?'Moody diagram':'—';
+  setText('fLive',fVal);
+  setText('uRatioLive',Re<2000?'2.0 (parabolic)':Re>4000?'~1.2 (turbulent)':'between');
+}
+function flowGetRe(){const nu=1e-6;return flowUVal*flowDVal/nu;}
+function flowProfile(yFrac,Re){const r=Math.abs(yFrac-0.5)*2;if(Re<2000)return Math.max(0,1-r*r);if(Re>4000)return Math.max(0,1-Math.pow(r,1/7));const t=(Re-2000)/2000;return Math.max(0,(1-r*r)*(1-t)+(1-Math.pow(r,1/7))*t);}
+function flowInitParticles(){flowParticles=[];for(let i=0;i<36;i++)flowParticles.push({x:Math.random(),y:0.06+Math.random()*0.88});}
+function flowDraw(){
+  const R=setupCanvas('flowCanvas',320);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
+  ctx.clearRect(0,0,W,H);
+  const Re=flowGetRe();
+  const py=32,ph=H*0.54;
+  // pipe walls
+  ctx.strokeStyle=c.axis;ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(0,py);ctx.lineTo(W,py);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,py+ph);ctx.lineTo(W,py+ph);ctx.stroke();
+  // fluid fill
+  ctx.fillStyle=c.fluid;ctx.fillRect(0,py,W,ph);
+  // velocity profile on left
+  const profW=W*0.16;
+  ctx.fillStyle=isDark()?'rgba(200,240,76,0.08)':'rgba(90,140,0,0.06)';
+  ctx.beginPath();ctx.moveTo(0,py);
+  for(let i=0;i<=60;i++){const yF=i/60;const u=flowProfile(yF,Re);ctx.lineTo(u*profW,py+yF*ph);}
+  ctx.lineTo(0,py+ph);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=c.ac;ctx.lineWidth=2.5;ctx.beginPath();
+  for(let i=0;i<=60;i++){const yF=i/60;const u=flowProfile(yF,Re);i===0?ctx.moveTo(u*profW,py+yF*ph):ctx.lineTo(u*profW,py+yF*ph);}ctx.stroke();
+  ctx.fillStyle=c.ac;ctx.font='10px DM Mono,monospace';ctx.textAlign='left';ctx.fillText(Re<2000?'Parabolic (laminar)':Re>4000?'1/7 power law (turbulent)':'Mixed (transition)',4,py-8);
+  // centreline label
+  ctx.strokeStyle=c.muted;ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(profW,py+ph/2);ctx.lineTo(W,py+ph/2);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=c.muted;ctx.font='9px DM Mono,monospace';ctx.textAlign='right';ctx.fillText('centreline',W-4,py+ph/2-3);
+  // particles
+  flowParticles.forEach(p=>{
+    const u=flowProfile(p.y,Re);const cx=profW+p.x*(W-profW);const cy=py+p.y*ph;
+    if(cy<py||cy>py+ph)return;
+    ctx.fillStyle=isDark()?`rgba(126,184,247,${0.4+u*0.55})`:`rgba(40,100,180,${0.35+u*0.55})`;
+    ctx.beginPath();ctx.arc(cx,cy,3,0,Math.PI*2);ctx.fill();
+  });
+  // info box
+  const bx=W*0.62,bw=W*0.36;
+  ctx.fillStyle=c.sur2;ctx.fillRect(bx,py+6,bw,62);ctx.strokeStyle=c.bdr;ctx.lineWidth=1;ctx.strokeRect(bx,py+6,bw,62);
+  const rc=Re<2000?c.gn:Re>4000?c.rd:c.ac3;
+  ctx.fillStyle=rc;ctx.font='bold 13px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText(Re<2000?'LAMINAR':Re>4000?'TURBULENT':'TRANSITION',bx+bw/2,py+26);
+  ctx.fillStyle=c.muted;ctx.font='11px DM Mono,monospace';ctx.fillText('Re = '+Math.round(Re),bx+bw/2,py+42);ctx.fillText(Re<2000?'f = 16/Re = '+(16/Re).toFixed(4):Re>4000?'Use Moody diagram':'2000–4000: unstable',bx+bw/2,py+57);
+}
+function flowStep(){
+  const Re=flowGetRe();const turbI=Math.max(0,(Re-2000)/9000);
+  flowParticles.forEach(p=>{p.x+=flowProfile(p.y,Re)*0.008;if(turbI>0){p.y+=(Math.random()-0.5)*turbI*0.028;p.y=Math.max(0.04,Math.min(0.96,p.y));}if(p.x>1.02){p.x=0;p.y=0.06+Math.random()*0.88;}});
+  flowDraw();
+}
+function flowLoop(){if(!flowRunning)return;flowStep();requestAnimationFrame(flowLoop);}
+function flowToggle(){if(flowRunning){flowRunning=false;setText('flowPlay','▶ Play');}else{flowRunning=true;setText('flowPlay','⏸ Pause');flowInitParticles();flowLoop();}}
+function flowReset(){flowRunning=false;setText('flowPlay','▶ Play');flowInitParticles();flowDraw();}
+
+/* ═════════════════════════════════════════
+   FLUID ANIM 7 — PUMP OPERATING POINT
+   Fixed: uses continuous running flag, not one-shot animation
+═════════════════════════════════════════ */
+let pumpRunning=false,pumpKappaVal=3,pumpH0Val=5,pumpEtaVal=0.70,pumpAnimDir=1,pumpAnimKappa=3;
+function setPumpKappa(v){pumpKappaVal=parseFloat(v);setText('kappaLabel',parseFloat(v).toFixed(1));pumpDraw();updatePumpLive();}
+function setPumpH0(v){pumpH0Val=parseFloat(v);setText('pumpH0Label',v);pumpDraw();updatePumpLive();}
+function setPumpEta(v){pumpEtaVal=parseFloat(v);setText('pumpEtaLabel',parseFloat(v).toFixed(2));pumpDraw();updatePumpLive();}
+function pumpIntersect(kappa,H0){
+  // pump: H = 50 - 80Q²   system: H = H0 + kappa*100*Q²
+  // 50 - 80Q² = H0 + kappa*100*Q²  →  Q² = (50-H0)/(80+kappa*100)
+  const disc=(50-H0)/(80+kappa*100);
+  if(disc<=0)return{q:0,h:H0};
+  const q=Math.sqrt(disc);
+  const h=50-80*q*q;
+  return{q,h};
+}
+function updatePumpLive(){
+  const{q,h}=pumpIntersect(pumpKappaVal,pumpH0Val);
+  const Pw=1000*9.81*q*h;
+  const Ps=Pw/pumpEtaVal;
+  setText('pumpQLive',q.toFixed(4));
+  setText('pumpHLive',h.toFixed(1));
+  setText('pumpPwLive',(Pw/1000).toFixed(2));
+  setText('pumpPsLive',(Ps/1000).toFixed(2));
+}
+function pumpDraw(){
+  const R=setupCanvas('pumpCanvas',330);if(!R)return;
+  const{ctx,W,H}=R;const c=C();
+  ctx.clearRect(0,0,W,H);
+  const px=60,py=22,pw=W-px-28,ph=H-py-62;
+  gridLines(ctx,px,py,pw,ph,c.grid);
+  drawAxes(ctx,px,py,pw,ph,c.axis);
+  // axis labels
+  ctx.fillStyle=c.muted;ctx.font='11px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('Flow rate  Q  (m³/s)',px+pw/2,py+ph+30);
+  ctx.save();ctx.translate(px-42,py+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Head  H  (m)',0,0);ctx.restore();
+  const Hmax=50,Qmax=0.8,Hs=ph/Hmax,Qs=pw/Qmax;
+  // tick marks
+  ctx.fillStyle=c.muted;ctx.font='10px DM Mono,monospace';
+  [0,10,20,30,40,50].forEach(v=>{const y=py+ph-v*Hs;ctx.textAlign='right';ctx.fillText(v,px-5,y+4);ctx.beginPath();ctx.moveTo(px-3,y);ctx.lineTo(px,y);ctx.strokeStyle=c.axis;ctx.lineWidth=1;ctx.stroke();});
+  [0,0.2,0.4,0.6,0.8].forEach(v=>{const x=px+v*Qs;ctx.textAlign='center';ctx.fillText(v.toFixed(1),x,py+ph+14);ctx.beginPath();ctx.moveTo(x,py+ph);ctx.lineTo(x,py+ph+3);ctx.stroke();});
+  // pump curve: H = 50 - 80Q²
+  ctx.strokeStyle=c.ac2;ctx.lineWidth=3;ctx.beginPath();
+  for(let i=0;i<=100;i++){const q=i/100*Qmax;const h=Math.max(0,Hmax-80*q*q);i===0?ctx.moveTo(px+q*Qs,py+ph-h*Hs):ctx.lineTo(px+q*Qs,py+ph-h*Hs);}ctx.stroke();
+  ctx.fillStyle=c.ac2;ctx.font='bold 11px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('Pump curve  H = 50 − 80Q²',px+4,py+12);
+  // system curve (use animated kappa if running, else static)
+  const dispKappa=pumpRunning?pumpAnimKappa:pumpKappaVal;
+  ctx.strokeStyle=c.ac3;ctx.lineWidth=3;ctx.beginPath();let first=true;
+  for(let i=0;i<=100;i++){const q=i/100*Qmax;const h=pumpH0Val+dispKappa*100*q*q;if(h>Hmax+8)break;const y=py+ph-Math.min(h,Hmax)*Hs;if(first){ctx.moveTo(px+q*Qs,y);first=false;}else ctx.lineTo(px+q*Qs,y);}ctx.stroke();
+  ctx.fillStyle=c.ac3;ctx.font='bold 11px DM Mono,monospace';ctx.textAlign='left';ctx.fillText('System curve  H = '+pumpH0Val+' + '+dispKappa.toFixed(1)+'·100·Q²',px+4,py+27);
+  // operating point
+  const{q:qOp,h:hOp}=pumpIntersect(dispKappa,pumpH0Val);
+  if(qOp>0){
+    const xOp=px+qOp*Qs,yOp=py+ph-hOp*Hs;
+    // dashed crosshairs
+    ctx.strokeStyle=c.gn;ctx.lineWidth=1.2;ctx.setLineDash([5,3]);
+    ctx.beginPath();ctx.moveTo(xOp,yOp);ctx.lineTo(xOp,py+ph);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(xOp,yOp);ctx.lineTo(px,yOp);ctx.stroke();ctx.setLineDash([]);
+    // dot
+    ctx.beginPath();ctx.arc(xOp,yOp,9,0,Math.PI*2);ctx.fillStyle=c.gn;ctx.fill();ctx.strokeStyle=isDark()?'#0d0d0f':'#fff';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle=isDark()?'#0d0d0f':'#fff';ctx.font='bold 11px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('★',xOp,yOp+4);
+    // value box
+    const bx=Math.min(xOp+14,W-130),by=Math.max(yOp-50,py+2);
+    ctx.fillStyle=c.sur2;ctx.strokeStyle=c.bdr;ctx.lineWidth=1;
+    ctx.fillRect(bx,by,120,46);ctx.strokeRect(bx,by,120,46);
+    ctx.fillStyle=c.gn;ctx.font='10px DM Mono,monospace';ctx.textAlign='left';
+    ctx.fillText('Q* = '+qOp.toFixed(3)+' m³/s',bx+6,by+14);
+    ctx.fillText('H* = '+hOp.toFixed(1)+' m',bx+6,by+26);
+    const Pw=1000*9.81*qOp*hOp/1000;
+    ctx.fillText('Pw = '+Pw.toFixed(2)+' kW',bx+6,by+38);
+    ctx.fillStyle=c.gn;ctx.font='9px DM Mono,monospace';ctx.textAlign='center';ctx.fillText('Q*',xOp,py+ph+24);
+    ctx.textAlign='right';ctx.fillText('H*',px-4,yOp+4);
+    // efficiency overlay
+    ctx.fillStyle=c.muted;ctx.font='10px DM Mono,monospace';ctx.textAlign='right';ctx.fillText('η = '+pumpEtaVal.toFixed(2)+' → Pshaft = '+(Pw/pumpEtaVal).toFixed(2)+' kW',W-px-2,py+ph+46);
+  } else {
+    ctx.fillStyle=c.rd;ctx.font='12px DM Sans,sans-serif';ctx.textAlign='center';ctx.fillText('No intersection — static lift too high',W/2,py+ph/2);
+  }
+  if(!pumpRunning) updatePumpLive();
+}
+function pumpLoop(){
+  if(!pumpRunning)return;
+  pumpAnimKappa+=pumpAnimDir*0.03;
+  if(pumpAnimKappa>9){pumpAnimDir=-1;}
+  if(pumpAnimKappa<0.6){pumpAnimDir=1;}
+  const{q,h}=pumpIntersect(pumpAnimKappa,pumpH0Val);
+  const Pw=1000*9.81*q*h;const Ps=Pw/pumpEtaVal;
+  setText('pumpQLive',q.toFixed(4));setText('pumpHLive',h.toFixed(1));
+  setText('pumpPwLive',(Pw/1000).toFixed(2));setText('pumpPsLive',(Ps/1000).toFixed(2));
+  pumpDraw();
+  requestAnimationFrame(pumpLoop);
+}
+function pumpToggle(){
+  if(pumpRunning){pumpRunning=false;setText('pumpPlay','▶ Play');}
+  else{pumpRunning=true;pumpAnimKappa=pumpKappaVal;pumpAnimDir=1;setText('pumpPlay','⏸ Pause');pumpLoop();}
+}
+function pumpReset(){pumpRunning=false;pumpAnimKappa=pumpKappaVal;setText('pumpPlay','▶ Play');pumpDraw();}
+
+/* ── Page load renders ── */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{proofDraw(0);creepDraw(0);fatigueDraw(0);dislocDraw();},100);
+  setTimeout(()=>{viscDraw();updateViscLive();hydroDraw();},200);
+  setTimeout(()=>{contInitParticles();contDraw();updateContLive();bernInitParticles();bernShowPanels=true;bernDraw();updateBernLive();},300);
+  setTimeout(()=>{venturiInitP();venturiDraw();updateVenturiLive();flowInitParticles();flowDraw();updateFlowLive();},400);
+  setTimeout(()=>{pumpDraw();updatePumpLive();},500);
 });
+
+/* ── Debounced resize ── */
+let resizeTimer;
+window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{proofDraw(proofT);creepDraw(creepT);fatigueDraw(fatigueT);dislocDraw();viscDraw();hydroDraw();contInitParticles();contDraw();bernInitParticles();bernDraw();venturiInitP();venturiDraw();flowInitParticles();flowDraw();pumpDraw();},150);});
 </script>
 </body>
 </html>
