@@ -258,6 +258,51 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
 .sketch-wrap svg{width:100%;height:auto}
 .sketch-title{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);margin-bottom:.5rem;text-align:center}
 .sketch-caption{font-size:11px;color:var(--mu);text-align:center;margin-top:.4rem;line-height:1.4}
+
+/* ── Symbol legend — inside card, clearly visible ── */
+.sym-legend{
+  margin-top:.85rem;
+  padding:.75rem 1rem;
+  background:var(--sur2);
+  border:1px solid var(--bdr2);
+  border-left:3px solid var(--ac);
+  border-radius:var(--rsm);
+}
+.sym-legend-title{
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ac);margin-bottom:.55rem;display:flex;align-items:center;gap:6px;
+}
+.sym-legend-title::after{content:'';flex:1;height:1px;background:var(--bdr2);}
+.sym-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));
+  gap:3px 16px;
+}
+.sym{display:flex;align-items:baseline;gap:6px;font-size:12.5px;line-height:1.55;padding:1px 0}
+.sym-key{font-family:'DM Mono',monospace;color:var(--ac);font-size:12px;white-space:nowrap;flex-shrink:0}
+.sym-val{color:var(--mu);font-size:12px;}
+
+/* ── Formula row click-to-expand ── */
+.ftbl tbody tr:not(.fsx){cursor:pointer;transition:background .12s}
+.ftbl tbody tr:not(.fsx):hover td{background:rgba(200,240,76,0.06)}
+.ftbl tbody tr.frow-open td{background:rgba(200,240,76,0.10)!important}
+.ftbl tbody tr:not(.fsx) td:first-child::after{content:' ⓘ';font-size:9px;color:var(--mu);opacity:.5;margin-left:4px}
+.ftbl tbody tr.frow-open td:first-child::after{content:' ▾';color:var(--ac);opacity:1}
+.fsx td{padding:0!important;border-bottom:2px solid var(--ac)!important}
+.fsx-inner{
+  padding:.6rem 1rem .7rem 1rem;
+  background:var(--sur2);
+  border-left:3px solid var(--ac);
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));
+  gap:2px 14px;
+}
+.fsx-title{grid-column:1/-1;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);margin-bottom:.4rem;display:flex;align-items:center;gap:8px}
+.fsx-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.fsr{display:flex;align-items:baseline;gap:5px;padding:1.5px 0;font-size:12.5px}
+.fsk{font-family:'DM Mono',monospace;font-size:12px;color:var(--ac);white-space:nowrap;background:none;padding:0;border:none}
+.fseq{color:var(--mu);font-size:12px;flex-shrink:0}
+.fsv{color:var(--tx);font-size:12px}
 </style>
 </head>
 <body>
@@ -365,7 +410,8 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Elastic strain energy density</td><td>$$U = \frac{1}{2}\sigma\varepsilon$$</td><td>Area under the linear part of the σ–ε curve</td></tr>
     <tr><td>Total work (trapezium rule)</td><td>$$W = \sum_i \frac{F_i + F_{i+1}}{2}\,(e_{i+1}-e_i)$$</td><td>1 kN·mm = 1 J</td></tr>
     <tr><td>True stress / true strain</td><td>$$\sigma_\text{true}=\sigma_\text{nom}(1+\varepsilon),\quad \varepsilon_\text{true}=\ln(1+\varepsilon)$$</td><td>Accounts for actual reduced area</td></tr>
-  </table>
+  </table><div class="sk-grid"><div class="sk-row"><code class="sk-k">σ</code><span class="sk-eq">=</span><span class="sk-v">stress = F/A (Pa, MPa, N/mm²)</span></div><div class="sk-row"><code class="sk-k">F</code><span class="sk-eq">=</span><span class="sk-v">applied force (N)</span></div><div class="sk-row"><code class="sk-k">A</code><span class="sk-eq">=</span><span class="sk-v">cross-section area (m² or mm²)</span></div><div class="sk-row"><code class="sk-k">ε</code><span class="sk-eq">=</span><span class="sk-v">strain = ΔL/L — dimensionless</span></div><div class="sk-row"><code class="sk-k">ΔL</code><span class="sk-eq">=</span><span class="sk-v">extension / change in length</span></div><div class="sk-row"><code class="sk-k">L</code><span class="sk-eq">=</span><span class="sk-v">original length</span></div><div class="sk-row"><code class="sk-k">E</code><span class="sk-eq">=</span><span class="sk-v">Young's modulus — slope of elastic region (GPa)</span></div><div class="sk-row"><code class="sk-k">ν</code><span class="sk-eq">=</span><span class="sk-v">Poisson's ratio ≈ 0.25–0.35 — dimensionless</span></div><div class="sk-row"><code class="sk-k">Δd</code><span class="sk-eq">=</span><span class="sk-v">lateral change in diameter</span></div><div class="sk-row"><code class="sk-k">G</code><span class="sk-eq">=</span><span class="sk-v">shear modulus = E/2(1+ν) (GPa)</span></div><div class="sk-row"><code class="sk-k">τ</code><span class="sk-eq">=</span><span class="sk-v">shear stress (Pa, MPa)</span></div><div class="sk-row"><code class="sk-k">γ</code><span class="sk-eq">=</span><span class="sk-v">shear strain — dimensionless</span></div><div class="sk-row"><code class="sk-k">U_d</code><span class="sk-eq">=</span><span class="sk-v">strain energy density = area under σ–ε curve (J/m³)</span></div><div class="sk-row"><code class="sk-k">W</code><span class="sk-eq">=</span><span class="sk-v">total strain energy (J); 1 kN·mm = 1 J</span></div></div></div>
+
 </div>
 
 <!-- ANIMATION 1: Proof stress construction -->
@@ -486,7 +532,7 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Finding $n$ from two tests</td><td>$$n = \frac{\log\!\left(\dot\varepsilon_1/\dot\varepsilon_2\right)}{\log\!\left(\sigma_1/\sigma_2\right)}$$</td><td>Divide the two rate equations to cancel $C$</td></tr>
     <tr><td>Finding $C$</td><td>$$C = \frac{\dot\varepsilon}{\sigma^n}$$</td><td>Substitute known $n$ back into either equation</td></tr>
     <tr><td>Time to reach target strain</td><td>$$t = \frac{\varepsilon_\text{creep}}{\dot\varepsilon}$$</td><td>Assumes constant secondary creep rate</td></tr>
-  </table>
+  </table><div class="sk-grid"><div class="sk-row"><code class="sk-k">σ</code><span class="sk-eq">=</span><span class="sk-v">applied stress — held constant during creep (MPa)</span></div><div class="sk-row"><code class="sk-k">E</code><span class="sk-eq">=</span><span class="sk-v">Young's modulus (GPa)</span></div><div class="sk-row"><code class="sk-k">ε_e</code><span class="sk-eq">=</span><span class="sk-v">elastic strain = σ/E — immediate, recoverable</span></div><div class="sk-row"><code class="sk-k">ε_creep</code><span class="sk-eq">=</span><span class="sk-v">creep strain — time-dependent, permanent</span></div><div class="sk-row"><code class="sk-k">φ</code><span class="sk-eq">=</span><span class="sk-v">creep coefficient = ε_creep / ε_e — dimensionless</span></div><div class="sk-row"><code class="sk-k">E_eff</code><span class="sk-eq">=</span><span class="sk-v">effective modulus = σ/ε_total; always < E</span></div><div class="sk-row"><code class="sk-k">C</code><span class="sk-eq">=</span><span class="sk-v">material creep constant</span></div><div class="sk-row"><code class="sk-k">n</code><span class="sk-eq">=</span><span class="sk-v">stress exponent — from two-test log-log plot</span></div><div class="sk-row"><code class="sk-k">dε/dt</code><span class="sk-eq">=</span><span class="sk-v">secondary creep rate (s⁻¹ or per day)</span></div><div class="sk-row"><code class="sk-k">t</code><span class="sk-eq">=</span><span class="sk-v">time (must be consistent: s, days, years)</span></div><div class="sk-row"><code class="sk-k">0.1%</code><span class="sk-eq">=</span><span class="sk-v">= 0.001 strain; 1 microstrain = 10⁻⁶</span></div></div></div>
   <div class="ib am" style="margin-top:.75rem"><b>Critical unit conversions — always convert before substituting:</b><br>
   1200 microstrain $= 1200\times10^{-6} = 0.0012$<br>
   $0.25\% = 0.25/100 = 0.0025$<br>
@@ -554,7 +600,8 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Time to failure</td><td>$$t = \frac{N}{f}$$</td><td>$f$ = frequency in Hz</td></tr>
     <tr><td>Using period</td><td>$$t = N \cdot T$$</td><td>$T$ = period of one cycle in seconds</td></tr>
   </table>
-</div>
+</div><div class="sk-grid"><div class="sk-row"><code class="sk-k">S</code><span class="sk-eq">=</span><span class="sk-v">stress range = σ_max − σ_min (MPa)</span></div><div class="sk-row"><code class="sk-k">σ_max</code><span class="sk-eq">=</span><span class="sk-v">maximum stress in cycle (MPa)</span></div><div class="sk-row"><code class="sk-k">σ_min</code><span class="sk-eq">=</span><span class="sk-v">minimum stress — can be negative (MPa)</span></div><div class="sk-row"><code class="sk-k">N</code><span class="sk-eq">=</span><span class="sk-v">cycles to failure at S — from S–N curve</span></div><div class="sk-row"><code class="sk-k">n</code><span class="sk-eq">=</span><span class="sk-v">cycles actually applied at that stress</span></div><div class="sk-row"><code class="sk-k">D</code><span class="sk-eq">=</span><span class="sk-v">Miner damage = Σ(n/N); failure when D = 1</span></div><div class="sk-row"><code class="sk-k">f</code><span class="sk-eq">=</span><span class="sk-v">cyclic frequency (Hz)</span></div><div class="sk-row"><code class="sk-k">T</code><span class="sk-eq">=</span><span class="sk-v">period = 1/f (s)</span></div><div class="sk-row"><code class="sk-k">t</code><span class="sk-eq">=</span><span class="sk-v">time to failure = N/f (s)</span></div></div></div>
+
 
 <!-- ANIMATION 3: Stress cycle and S-N -->
 <div class="anim-box">
@@ -606,7 +653,8 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Timber (5% failure)</td><td>$$\sigma_k = \bar{\sigma} - 1.64\,s$$</td><td>Standard for timber grading</td></tr>
     <tr><td>Design stress</td><td>$$\sigma_d = \frac{\sigma_k}{\gamma_m}$$</td><td>$\gamma_m$: steel 1.15, concrete 1.6</td></tr>
     <tr><td>Design load</td><td>$$F_d = \gamma_f \cdot F_k$$</td><td>$\gamma_f$: dead load 1.2, live 1.6</td></tr>
-  </table>
+  </table><div class="sk-grid"><div class="sk-row"><code class="sk-k">σ̄</code><span class="sk-eq">=</span><span class="sk-v">mean strength = average of all test results (MPa)</span></div><div class="sk-row"><code class="sk-k">s</code><span class="sk-eq">=</span><span class="sk-v">standard deviation of test results (MPa)</span></div><div class="sk-row"><code class="sk-k">n</code><span class="sk-eq">=</span><span class="sk-v">number of test specimens</span></div><div class="sk-row"><code class="sk-k">σ_k</code><span class="sk-eq">=</span><span class="sk-v">characteristic strength = σ̄ − k·s (MPa)</span></div><div class="sk-row"><code class="sk-k">k</code><span class="sk-eq">=</span><span class="sk-v">1.28 → 10%, 1.65 → 5%, 2.33 → 1% failure probability</span></div><div class="sk-row"><code class="sk-k">γ_m</code><span class="sk-eq">=</span><span class="sk-v">material partial safety factor: steel 1.15, concrete 1.6</span></div><div class="sk-row"><code class="sk-k">γ_f</code><span class="sk-eq">=</span><span class="sk-v">load partial safety factor: dead 1.2, live/imposed 1.6</span></div><div class="sk-row"><code class="sk-k">σ_d</code><span class="sk-eq">=</span><span class="sk-v">design strength = σ_k / γ_m</span></div><div class="sk-row"><code class="sk-k">F_d</code><span class="sk-eq">=</span><span class="sk-v">design load = F_k × γ_f</span></div></div></div>
+</div></div>
   <div class="ib bl" style="margin-top:.75rem"><b>$k$ values to memorise:</b><br>
   10% failure → $k = 1.28$ &nbsp;|&nbsp; 5% (1 in 20) → $k = 1.64$ &nbsp;|&nbsp; 2% (1 in 50) → $k = 1.96$ &nbsp;|&nbsp; 1% → $k = 2.33$</div>
 </div>
@@ -645,7 +693,9 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>BCC lattice parameter</td><td>$$a = \frac{4r}{\sqrt{3}}$$</td><td>Atoms touch along body diagonal: $a\sqrt{3}=4r$</td></tr>
     <tr><td>Unit cell volume</td><td>$$V_c = a^3$$</td><td>All cubic structures</td></tr>
     <tr><td>Atomic packing factor</td><td>$$\text{APF} = \frac{n\cdot\tfrac{4}{3}\pi r^3}{a^3}$$</td><td>FCC = HCP = 0.74, BCC = 0.68, SC = 0.52</td></tr>
-  </table>
+  </table><div class="sk-grid"><div class="sk-row"><code class="sk-k">ρ</code><span class="sk-eq">=</span><span class="sk-v">theoretical density (g/cm³)</span></div><div class="sk-row"><code class="sk-k">n</code><span class="sk-eq">=</span><span class="sk-v">atoms per unit cell: FCC=4, BCC=2, SC=1, HCP=6</span></div><div class="sk-row"><code class="sk-k">A</code><span class="sk-eq">=</span><span class="sk-v">atomic weight (g/mol — given in question)</span></div><div class="sk-row"><code class="sk-k">N_A</code><span class="sk-eq">=</span><span class="sk-v">Avogadro's number = 6.023×10²³ atoms/mol</span></div><div class="sk-row"><code class="sk-k">V_c</code><span class="sk-eq">=</span><span class="sk-v">unit cell volume = a³ — must be in cm³</span></div><div class="sk-row"><code class="sk-k">a</code><span class="sk-eq">=</span><span class="sk-v">lattice parameter = side of cubic unit cell (cm)</span></div><div class="sk-row"><code class="sk-k">r</code><span class="sk-eq">=</span><span class="sk-v">atomic radius — convert nm to cm: × 10⁻⁷</span></div><div class="sk-row"><code class="sk-k">APF</code><span class="sk-eq">=</span><span class="sk-v">atomic packing factor = fraction of cell occupied</span></div><div class="sk-row"><code class="sk-k">FCC: a</code><span class="sk-eq">=</span><span class="sk-v">= 2√2·r (atoms touch along face diagonal)</span></div><div class="sk-row"><code class="sk-k">BCC: a</code><span class="sk-eq">=</span><span class="sk-v">= 4r/√3 (atoms touch along body diagonal)</span></div></div></div>
+
+</div></div>
   <div class="ib am" style="margin-top:.75rem"><b>Critical unit conversion:</b> $r$ given in nm → convert to cm before computing $V_c$.<br>Example: $r = 0.128\;\text{nm} = 0.128\times10^{-7}\;\text{cm} = 1.28\times10^{-8}\;\text{cm}$<br>Then $V_c = a^3$ is in cm³, and with $A$ in g/mol, $\rho$ comes out in g/cm³.</div>
 </div>
 <div class="card">
@@ -690,7 +740,8 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Elastic modulus from bending</td><td>$$E = \frac{P\,L^3}{48\,\delta\,I}$$</td><td>3-point bending; $\delta$ = midspan deflection, $I = bh^3/12$</td></tr>
     <tr><td>Strength class example</td><td>$$\text{C24}: \sigma_{\text{char},\text{bend}} = 24\;\text{MPa}$$</td><td>Number = characteristic bending strength in MPa</td></tr>
   </table>
-</div>
+</div><div class="sk-grid"><div class="sk-row"><code class="sk-k">m/c</code><span class="sk-eq">=</span><span class="sk-v">moisture content (%) = (w_m − w₀)/w₀ × 100</span></div><div class="sk-row"><code class="sk-k">w_m</code><span class="sk-eq">=</span><span class="sk-v">mass of moist timber</span></div><div class="sk-row"><code class="sk-k">w₀</code><span class="sk-eq">=</span><span class="sk-v">oven-dry mass (105°C until constant weight)</span></div><div class="sk-row"><code class="sk-k">FSP</code><span class="sk-eq">=</span><span class="sk-v">fibre saturation point ≈ 25%; below this → strength increases with drying</span></div><div class="sk-row"><code class="sk-k">E</code><span class="sk-eq">=</span><span class="sk-v">modulus of elasticity from machine grading (GPa)</span></div><div class="sk-row"><code class="sk-k">σ_char</code><span class="sk-eq">=</span><span class="sk-v">characteristic bending strength (MPa) — 5th percentile</span></div><div class="sk-row"><code class="sk-k">C24</code><span class="sk-eq">=</span><span class="sk-v">softwood: characteristic bending = 24 MPa</span></div><div class="sk-row"><code class="sk-k">D40</code><span class="sk-eq">=</span><span class="sk-v">hardwood: characteristic bending = 40 MPa</span></div><div class="sk-row"><code class="sk-k">γ_m</code><span class="sk-eq">=</span><span class="sk-v">material safety factor for timber ≈ 1.3</span></div></div></div>
+
 
 <!-- ANIMATION 4: Dislocation movement -->
 <div class="anim-box">
@@ -778,6 +829,7 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Specific strength</td><td>$$\sigma_\text{spec} = \frac{\sigma}{\rho g}$$</td><td>Used to compare lightweight materials</td></tr>
     <tr><td>Specific modulus</td><td>$$E_\text{spec} = \frac{E}{\rho g}$$</td><td>—</td></tr>
   </table>
+<div class="sk-grid"><div class="sk-row"><code class="sk-k">APF</code><span class="sk-eq">=</span><span class="sk-v">atomic packing factor — fraction of unit cell volume filled</span></div><div class="sk-row"><code class="sk-k">σ_spec</code><span class="sk-eq">=</span><span class="sk-v">specific strength = strength/ρg — strength per unit weight</span></div><div class="sk-row"><code class="sk-k">E_spec</code><span class="sk-eq">=</span><span class="sk-v">specific modulus = E/ρg — stiffness per unit weight</span></div><div class="sk-row"><code class="sk-k">ρ</code><span class="sk-eq">=</span><span class="sk-v">density (kg/m³)</span></div><div class="sk-row"><code class="sk-k">Dislocation</code><span class="sk-eq">=</span><span class="sk-v">line defect — extra half-plane of atoms</span></div><div class="sk-row"><code class="sk-k">Slip plane</code><span class="sk-eq">=</span><span class="sk-v">plane on which dislocations glide under shear stress</span></div><div class="sk-row"><code class="sk-k">Grain</code><span class="sk-eq">=</span><span class="sk-v">region of uniform crystal orientation in a metal</span></div><div class="sk-row"><code class="sk-k">Grain boundary</code><span class="sk-eq">=</span><span class="sk-v">interface blocking dislocation motion</span></div><div class="sk-row"><code class="sk-k">Interstitial</code><span class="sk-eq">=</span><span class="sk-v">small solute atom between host atoms (e.g. C in Fe)</span></div><div class="sk-row"><code class="sk-k">Substitutional</code><span class="sk-eq">=</span><span class="sk-v">solute atom replacing host atom of similar size</span></div></div></div>
 </div>
 <div class="card">
   <div class="ctit">Worked example — edge dislocation and plastic deformation (2024/25 Q4b)</div>
@@ -827,7 +879,9 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Viscosity definition</td><td>$$\mu = \frac{\tau}{\dot\gamma} = \frac{\text{shear stress}}{\text{shear rate}}$$</td><td>Pa·s; higher $\mu$ → slower flow</td></tr>
     <tr><td>Penetration (hardness test)</td><td>$$P = \text{depth (1/10 mm) at } 25°C,\;100\,\text{g},\;5\,\text{s}$$</td><td>Higher $P$ = softer bitumen</td></tr>
     <tr><td>Viscoelastic total strain</td><td>$$\varepsilon_\text{total} = \underbrace{\varepsilon_e}_{\text{elastic (recoverable)}} + \underbrace{\varepsilon_v}_{\text{viscous (permanent)}}$$</td><td>Hot/slow → viscous dominates; cold/fast → elastic dominates</td></tr>
-  </table>
+  </table><div class="sk-grid"><div class="sk-row"><code class="sk-k">μ</code><span class="sk-eq">=</span><span class="sk-v">dynamic viscosity (Pa·s) — higher = thicker, slower-flowing</span></div><div class="sk-row"><code class="sk-k">τ</code><span class="sk-eq">=</span><span class="sk-v">shear stress (Pa)</span></div><div class="sk-row"><code class="sk-k">dγ/dt</code><span class="sk-eq">=</span><span class="sk-v">shear strain rate (s⁻¹)</span></div><div class="sk-row"><code class="sk-k">Penetration</code><span class="sk-eq">=</span><span class="sk-v">needle depth in 0.1 mm at 25°C, 100g, 5s; high P = soft</span></div><div class="sk-row"><code class="sk-k">ε_e</code><span class="sk-eq">=</span><span class="sk-v">elastic strain — immediate and recoverable</span></div><div class="sk-row"><code class="sk-k">ε_v</code><span class="sk-eq">=</span><span class="sk-v">viscous strain — time-dependent, permanent</span></div><div class="sk-row"><code class="sk-k">Asphaltenes</code><span class="sk-eq">=</span><span class="sk-v">high MW polar fraction; more → harder, more viscous</span></div><div class="sk-row"><code class="sk-k">Aromatics</code><span class="sk-eq">=</span><span class="sk-v">largest fraction ~50%; oxidise to asphaltenes over time</span></div><div class="sk-row"><code class="sk-k">Rutting</code><span class="sk-eq">=</span><span class="sk-v">permanent groove under wheel at high temperature</span></div><div class="sk-row"><code class="sk-k">Fatigue</code><span class="sk-eq">=</span><span class="sk-v">crack growth under repeated loading + ageing</span></div><div class="sk-row"><code class="sk-k">Low-T crack</code><span class="sk-eq">=</span><span class="sk-v">brittle fracture in cold: bitumen contracts, tensile stress → crack</span></div></div></div>
+
+</div></div>
   <div class="ib am" style="margin-top:.75rem"><b>Three failure modes — memory shortcut:</b><br>
   Hot weather → <em>Rutting</em> (permanent deformation) &nbsp;|&nbsp; Repeated loads → <em>Fatigue cracking</em> &nbsp;|&nbsp; Cold → <em>Brittle low-temperature cracking</em></div>
 </div>
@@ -882,7 +936,7 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Knudsen number</td><td>$$Kn = \frac{\lambda}{L} \ll 1$$</td><td>Justifies treating fluid as continuum</td></tr>
   </table>
 </div>
-
+</div></div>
 <!-- ANIMATION: Viscosity — Newton's law visualised -->
 <div class="anim-box">
   <div class="anim-header">
@@ -976,7 +1030,9 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Inclined manometer</td><td>$$P - P_a = \rho g\, l\sin\alpha$$</td><td>$l$ = length along tube, $\alpha$ = inclination</td></tr>
     <tr><td>Differential manometer</td><td>$$\Delta P = (\rho_2 - \rho_1)g h$$</td><td>Two different fluids</td></tr>
   </table>
-</div>
+</div><div class="sk-grid"><div class="sk-row"><code class="sk-k">P</code><span class="sk-eq">=</span><span class="sk-v">pressure (Pa); gauge unless stated absolute</span></div><div class="sk-row"><code class="sk-k">ρ</code><span class="sk-eq">=</span><span class="sk-v">fluid density (kg/m³)</span></div><div class="sk-row"><code class="sk-k">g</code><span class="sk-eq">=</span><span class="sk-v">9.81 m/s²</span></div><div class="sk-row"><code class="sk-k">h</code><span class="sk-eq">=</span><span class="sk-v">depth below free surface (m)</span></div><div class="sk-row"><code class="sk-k">z</code><span class="sk-eq">=</span><span class="sk-v">vertical coordinate upward (m)</span></div><div class="sk-row"><code class="sk-k">P_gauge</code><span class="sk-eq">=</span><span class="sk-v">= P_abs − P_atm</span></div><div class="sk-row"><code class="sk-k">P_atm</code><span class="sk-eq">=</span><span class="sk-v">≈ 101.3 kPa</span></div><div class="sk-row"><code class="sk-k">B</code><span class="sk-eq">=</span><span class="sk-v">buoyancy force (N) — upward</span></div><div class="sk-row"><code class="sk-k">V_disp</code><span class="sk-eq">=</span><span class="sk-v">volume of displaced fluid (m³)</span></div><div class="sk-row"><code class="sk-k">F</code><span class="sk-eq">=</span><span class="sk-v">resultant force on surface (N)</span></div><div class="sk-row"><code class="sk-k">H</code><span class="sk-eq">=</span><span class="sk-v">wall height / fluid depth (m)</span></div><div class="sk-row"><code class="sk-k">b</code><span class="sk-eq">=</span><span class="sk-v">width of surface (m)</span></div><div class="sk-row"><code class="sk-k">x_F</code><span class="sk-eq">=</span><span class="sk-v">distance of F from base = H/3 for triangular load</span></div><div class="sk-row"><code class="sk-k">l sinα</code><span class="sk-eq">=</span><span class="sk-v">vertical equivalent for inclined manometer</span></div></div></div>
+
+</div></div>
 
 
 <div class="card">
@@ -1260,7 +1316,9 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Fluid particle acceleration</td><td>$$a = \frac{\partial U}{\partial t} + U\frac{\partial U}{\partial x}$$</td><td>Temporal + convective parts</td></tr>
     <tr><td>Curved streamline</td><td>$$\frac{dP}{dr} = \frac{\rho V^2}{r}$$</td><td>Centripetal force from pressure gradient</td></tr>
   </table>
-</div>
+</div><div class="sk-grid"><div class="sk-row"><code class="sk-k">Q</code><span class="sk-eq">=</span><span class="sk-v">volumetric flow rate = AU (m³/s)</span></div><div class="sk-row"><code class="sk-k">A</code><span class="sk-eq">=</span><span class="sk-v">pipe cross-section area (m²)</span></div><div class="sk-row"><code class="sk-k">U</code><span class="sk-eq">=</span><span class="sk-v">mean velocity (m/s)</span></div><div class="sk-row"><code class="sk-k">ṁ</code><span class="sk-eq">=</span><span class="sk-v">mass flow rate = ρAU (kg/s)</span></div><div class="sk-row"><code class="sk-k">ρ</code><span class="sk-eq">=</span><span class="sk-v">density (kg/m³)</span></div><div class="sk-row"><code class="sk-k">∂U/∂t</code><span class="sk-eq">=</span><span class="sk-v">temporal acceleration — change at fixed location over time</span></div><div class="sk-row"><code class="sk-k">U·∂U/∂x</code><span class="sk-eq">=</span><span class="sk-v">convective acceleration — due to velocity varying along path</span></div><div class="sk-row"><code class="sk-k">r</code><span class="sk-eq">=</span><span class="sk-v">radius of curvature of streamline (m)</span></div><div class="sk-row"><code class="sk-k">subscript 1</code><span class="sk-eq">=</span><span class="sk-v">inlet / upstream</span></div><div class="sk-row"><code class="sk-k">subscript 2</code><span class="sk-eq">=</span><span class="sk-v">outlet / downstream</span></div></div></div>
+
+</div></div>
 
 
 <div class="card">
@@ -1467,6 +1525,9 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Reynolds number</td><td>$$Re = \frac{\rho U L}{\mu} = \frac{UL}{\nu}$$</td><td>Large $Re$ → Bernoulli may apply away from walls</td></tr>
     <tr><td>Pressure coefficient</td><td>$$C_p = \frac{P - P_\infty}{\tfrac{1}{2}\rho U_\infty^2}$$</td><td>$C_p = 1$ at stagnation point</td></tr>
   </table>
+<div class="sk-grid"><div class="sk-row"><code class="sk-k">P</code><span class="sk-eq">=</span><span class="sk-v">static pressure at a point (Pa)</span></div><div class="sk-row"><code class="sk-k">ρ</code><span class="sk-eq">=</span><span class="sk-v">fluid density — constant for incompressible flow (kg/m³)</span></div><div class="sk-row"><code class="sk-k">U</code><span class="sk-eq">=</span><span class="sk-v">local velocity (m/s)</span></div><div class="sk-row"><code class="sk-k">z</code><span class="sk-eq">=</span><span class="sk-v">elevation above datum (m)</span></div><div class="sk-row"><code class="sk-k">H</code><span class="sk-eq">=</span><span class="sk-v">total head = P/ρg + U²/2g + z (m); constant along streamline</span></div><div class="sk-row"><code class="sk-k">P/ρg</code><span class="sk-eq">=</span><span class="sk-v">pressure head (m) — pressure expressed as fluid column height</span></div><div class="sk-row"><code class="sk-k">U²/2g</code><span class="sk-eq">=</span><span class="sk-v">velocity head (m) — kinetic energy as equivalent height</span></div><div class="sk-row"><code class="sk-k">P₀</code><span class="sk-eq">=</span><span class="sk-v">stagnation pressure — P when flow stops (Pa)</span></div><div class="sk-row"><code class="sk-k">½ρU²</code><span class="sk-eq">=</span><span class="sk-v">dynamic pressure (Pa)</span></div><div class="sk-row"><code class="sk-k">C_p</code><span class="sk-eq">=</span><span class="sk-v">pressure coefficient = (P−P∞)/(½ρU∞²); = 1 at stagnation point</span></div><div class="sk-row"><code class="sk-k">Re</code><span class="sk-eq">=</span><span class="sk-v">Reynolds number = UL/ν; large Re → Bernoulli applicable outside boundary layers</span></div><div class="sk-row"><code class="sk-k">4 conditions</code><span class="sk-eq">=</span><span class="sk-v">Steady · Inviscid · Incompressible · Along one streamline</span></div></div></div>
+
+</div></div>
   <div class="ib am" style="margin-top:.75rem"><b>Bernoulli's four assumptions — must state these in exams:</b> (1) Steady flow (2) Inviscid (no friction) (3) Incompressible (4) Along a single streamline</div>
 </div>
 
@@ -1573,7 +1634,8 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Rectangular weir</td><td>$$Q = C_d\,\tfrac{2}{3}\sqrt{2g}\,b\,h^{3/2}$$</td><td>$b$ = width, $h$ = head above crest</td></tr>
     <tr><td>V-notch weir</td><td>$$Q = C_d\,\tfrac{8}{15}\tan\alpha\sqrt{2g}\,h^{5/2}$$</td><td>$\alpha$ = half-angle; very sensitive to $h$</td></tr>
   </table>
-</div>
+</div><div class="sk-grid"><div class="sk-row"><code class="sk-k">P₀</code><span class="sk-eq">=</span><span class="sk-v">stagnation pressure — at point where flow is stopped (Pa)</span></div><div class="sk-row"><code class="sk-k">P</code><span class="sk-eq">=</span><span class="sk-v">static (free-stream) pressure (Pa)</span></div><div class="sk-row"><code class="sk-k">ρ</code><span class="sk-eq">=</span><span class="sk-v">density of the FLOWING fluid (not manometer fluid)</span></div><div class="sk-row"><code class="sk-k">Q</code><span class="sk-eq">=</span><span class="sk-v">volumetric flow rate (m³/s)</span></div><div class="sk-row"><code class="sk-k">A₁</code><span class="sk-eq">=</span><span class="sk-v">large section area (m²)</span></div><div class="sk-row"><code class="sk-k">A₂</code><span class="sk-eq">=</span><span class="sk-v">throat area (m²)</span></div><div class="sk-row"><code class="sk-k">C_d</code><span class="sk-eq">=</span><span class="sk-v">discharge coefficient: accounts for losses (0.6–0.99)</span></div><div class="sk-row"><code class="sk-k">C_v</code><span class="sk-eq">=</span><span class="sk-v">velocity coefficient ≈ 0.97</span></div><div class="sk-row"><code class="sk-k">C_c</code><span class="sk-eq">=</span><span class="sk-v">contraction coefficient ≈ 0.64; C_d = C_v × C_c</span></div><div class="sk-row"><code class="sk-k">h</code><span class="sk-eq">=</span><span class="sk-v">head above orifice / weir crest (m)</span></div><div class="sk-row"><code class="sk-k">b</code><span class="sk-eq">=</span><span class="sk-v">weir width (m)</span></div><div class="sk-row"><code class="sk-k">α</code><span class="sk-eq">=</span><span class="sk-v">V-notch half-angle (°)</span></div><div class="sk-row"><code class="sk-k">D</code><span class="sk-eq">=</span><span class="sk-v">tank diameter; d = orifice diameter</span></div><div class="sk-row"><code class="sk-k">T</code><span class="sk-eq">=</span><span class="sk-v">tank emptying time (s)</span></div></div></div>
+
 
 
 <div class="card">
@@ -1857,8 +1919,10 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Series pipes</td><td>$$h_{f,\text{total}} = \sum h_i = Q^2\sum \kappa_i$$</td><td>Same $Q$, losses add</td></tr>
     <tr><td>Parallel pipes</td><td>$$Q = \sum Q_i,\quad \kappa_i Q_i^2 = h_f$$</td><td>Same head loss, flows add</td></tr>
     <tr><td>Wall shear stress balance</td><td>$$\frac{\pi d^2}{4}(P_1-P_2) = \pi d L\,\tau_w$$</td><td>Pressure force = wall friction force</td></tr>
-  </table>
+  </table><div class="sk-grid"><div class="sk-row"><code class="sk-k">H</code><span class="sk-eq">=</span><span class="sk-v">total head = P/ρg + U²/2g + z (m)</span></div><div class="sk-row"><code class="sk-k">ΔH</code><span class="sk-eq">=</span><span class="sk-v">pump head added (m); positive for pump</span></div><div class="sk-row"><code class="sk-k">h_f</code><span class="sk-eq">=</span><span class="sk-v">head loss (m); always positive</span></div><div class="sk-row"><code class="sk-k">d</code><span class="sk-eq">=</span><span class="sk-v">pipe internal diameter (m)</span></div><div class="sk-row"><code class="sk-k">L</code><span class="sk-eq">=</span><span class="sk-v">pipe length (m)</span></div><div class="sk-row"><code class="sk-k">f</code><span class="sk-eq">=</span><span class="sk-v">Fanning friction factor; this course: 4f convention</span></div><div class="sk-row"><code class="sk-k">Re</code><span class="sk-eq">=</span><span class="sk-v">= Ud/ν; <2000 laminar, >4000 turbulent</span></div><div class="sk-row"><code class="sk-k">k</code><span class="sk-eq">=</span><span class="sk-v">wall roughness height (m)</span></div><div class="sk-row"><code class="sk-k">k/d</code><span class="sk-eq">=</span><span class="sk-v">relative roughness — horizontal axis of Moody diagram</span></div><div class="sk-row"><code class="sk-k">K_f</code><span class="sk-eq">=</span><span class="sk-v">pipe resistance coefficient = 4fL/d</span></div><div class="sk-row"><code class="sk-k">K_i</code><span class="sk-eq">=</span><span class="sk-v">minor loss coefficient — bends, valves, fittings</span></div><div class="sk-row"><code class="sk-k">κ</code><span class="sk-eq">=</span><span class="sk-v">system resistance: h_f = κQ²</span></div><div class="sk-row"><code class="sk-k">ν</code><span class="sk-eq">=</span><span class="sk-v">kinematic viscosity (m²/s); water ≈ 10⁻⁶</span></div><div class="sk-row"><code class="sk-k">τ_w</code><span class="sk-eq">=</span><span class="sk-v">wall shear stress (Pa)</span></div><div class="sk-row"><code class="sk-k">A</code><span class="sk-eq">=</span><span class="sk-v">pipe area = πd²/4 (m²)</span></div></div></div>
+
 </div>
+</div></div>
 
 
 <div class="card">
@@ -2149,8 +2213,9 @@ footer{border-top:1px solid var(--bdr);padding:1.5rem clamp(1rem,4vw,2rem);text-
     <tr><td>Operating point</td><td>$$\Delta H_\text{pump}(Q) = \Delta H_\text{sys}(Q)$$</td><td>Intersection of pump and system curves</td></tr>
     <tr><td>Three-reservoir junction</td><td>$$z_1 - H_0 = \kappa_1 Q_1^2,\quad Q_1 = Q_2 + Q_3$$</td><td>Guess $H_0$, iterate for continuity</td></tr>
   </table>
-</div>
+</div><div class="sk-grid"><div class="sk-row"><code class="sk-k">P_w</code><span class="sk-eq">=</span><span class="sk-v">water (useful) power = ρgQΔH (W or kW)</span></div><div class="sk-row"><code class="sk-k">P_s</code><span class="sk-eq">=</span><span class="sk-v">shaft (input) power from motor (W)</span></div><div class="sk-row"><code class="sk-k">η</code><span class="sk-eq">=</span><span class="sk-v">efficiency = P_w / P_s</span></div><div class="sk-row"><code class="sk-k">ΔH</code><span class="sk-eq">=</span><span class="sk-v">pump head — net energy added per unit weight (m)</span></div><div class="sk-row"><code class="sk-k">Q</code><span class="sk-eq">=</span><span class="sk-v">flow rate (m³/s)</span></div><div class="sk-row"><code class="sk-k">H₀</code><span class="sk-eq">=</span><span class="sk-v">static head = elevation difference to overcome (m)</span></div><div class="sk-row"><code class="sk-k">κ</code><span class="sk-eq">=</span><span class="sk-v">system resistance: H_sys = H₀ + κQ²</span></div><div class="sk-row"><code class="sk-k">H_pump</code><span class="sk-eq">=</span><span class="sk-v">head the pump delivers at flow rate Q (m)</span></div><div class="sk-row"><code class="sk-k">H_sys</code><span class="sk-eq">=</span><span class="sk-v">head the system demands at flow rate Q (m)</span></div><div class="sk-row"><code class="sk-k">Q*, H*</code><span class="sk-eq">=</span><span class="sk-v">operating point = intersection of pump and system curves</span></div></div></div>
 
+</div></div>
 <!-- ANIMATION: Pump operating point -->
 <div class="anim-box">
   <div class="anim-header">
@@ -3043,6 +3108,144 @@ window.addEventListener('load',()=>{
 /* ── Debounced resize ── */
 let resizeTimer;
 window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{proofDraw(proofT);creepDraw(creepT);fatigueDraw(fatigueT);dislocDraw();viscDraw();hydroDraw();contInitParticles();contDraw();bernInitParticles();bernDraw();venturiInitP();venturiDraw();flowInitParticles();flowDraw();pumpDraw();},150);});
+
+/* ── Formula click-to-expand symbol definitions ── */
+const FSYMS={
+"Cross-section area (circle)":[["A","cross-section area (m² or mm²)"],["d","diameter (m or mm)"],["π/4","≈ 0.7854"]],
+"Normal stress":[["σ","normal stress (Pa, MPa, N/mm²)"],["F","axial force (N)"],["A","cross-section area (m² or mm²)"]],
+"Axial strain":[["ε","axial strain — dimensionless; 0.001 = 0.1% (not 0.1!)"],["ΔL","change in length (m or mm)"],["L","original gauge length (m or mm)"]],
+"Young's modulus":[["E","Young's (elastic) modulus — slope of linear region (GPa)"],["σ","stress (MPa)"],["ε","strain (dimensionless)"],["1 GPa","= 1000 MPa = 1000 N/mm²"]],
+"Poisson's ratio":[["ν","Poisson's ratio — dimensionless (typically 0.25–0.35)"],["ε_lateral","transverse strain (negative for axial tension)"],["ε_axial","axial strain in load direction"]],
+"Diameter change":[["Δd","lateral change in diameter (m or mm)"],["ν","Poisson's ratio"],["ε","axial strain"],["d","original diameter"]],
+"E–G–ν relationship":[["E","Young's modulus (GPa)"],["G","shear modulus (GPa)"],["ν","Poisson's ratio"],["G = E/2(1+ν)","links the three elastic constants"]],
+"Shear stress":[["τ","shear stress (Pa or MPa)"],["F_τ","tangential (shearing) force (N)"],["A","shear area (m² or mm²)"]],
+"Shear modulus":[["G","shear (rigidity) modulus (GPa)"],["τ","shear stress (Pa)"],["γ","shear strain — dimensionless"]],
+"Secant modulus":[["E_sec","secant modulus = chord from origin to point (MPa)"],["σ","stress at chosen point (MPa)"],["ε","strain at same point"]],
+"Elastic strain energy density":[["U_d","strain energy per unit volume (J/m³)"],["σ","stress (Pa)"],["ε","strain (dimensionless)"]],
+"Total work (trapezium rule)":[["W","total work / energy stored (J); 1 kN·mm = 1 J"],["F₁,F₂","loads at interval ends (N or kN)"],["δ₁,δ₂","extensions at those loads (m or mm)"]],
+"True stress / true strain":[["σ_true","stress using actual current area (MPa)"],["σ_nom","stress using original area (MPa)"],["ε_true","true strain = ln(1 + ε_nom)"],["ε_nom","nominal strain = ΔL/L"]],
+"Initial elastic strain":[["ε_e","instantaneous elastic strain = σ/E — fully recoverable"],["σ","applied constant stress (MPa)"],["E","Young's modulus (GPa or MPa)"]],
+"Creep coefficient":[["φ","creep coefficient = ε_creep/ε_e — dimensionless"],["ε_creep","accumulated creep strain"],["ε_e","initial elastic strain"]],
+"Total strain":[["ε_total","total = elastic + creep components"],["ε_e","elastic strain = σ/E"],["ε_creep","creep strain = φ·ε_e"]],
+"Effective modulus":[["E_eff","effective modulus = σ/ε_total; always < E (GPa)"],["σ","applied constant stress"],["ε_total","total strain including creep"]],
+"Secondary creep rate law":[["dε/dt","steady-state creep rate (s⁻¹ or /day)"],["C","material creep constant (depends on material and environment)"],["σ","applied stress (MPa)"],["n","stress exponent — from log-log plot of two test results"]],
+"Finding $n$ from two tests":[["n","= (log ε̇₁ − log ε̇₂) / (log σ₁ − log σ₂)"],["ε̇₁,ε̇₂","secondary creep rates from two tests"],["σ₁,σ₂","stresses applied in those two tests"]],
+"Finding $C$":[["C","= ε̇ / σⁿ — rearranged from creep rate law"],["ε̇","known creep rate"],["σ","known stress"],["n","already determined from two-test method"]],
+"Time to reach target strain":[["t","time to reach target creep strain"],["ε_creep","target strain"],["dε/dt","secondary creep rate (constant in secondary stage)"]],
+"Stress range":[["S","stress range = σ_max − σ_min (MPa) — full peak-to-trough"],["σ_max","maximum stress in cycle (MPa)"],["σ_min","minimum — can be negative (compressive)"]],
+"Mean stress":[["σ_mean","mean = (σ_max + σ_min)/2 (MPa)"],["σ_max","maximum"],["σ_min","minimum"]],
+"Miner's rule (damage sum)":[["D","cumulative damage — failure when D = 1"],["nᵢ","cycles applied at stress range Sᵢ"],["Nᵢ","cycles to failure at Sᵢ — read from S–N curve"]],
+"Time to failure":[["t","time to failure (s)"],["N","cycles to failure"],["f","cyclic frequency (Hz)"]],
+"Using period":[["t","time to failure (s)"],["N","cycles to failure"],["T","period = 1/f (s)"]],
+"Mean strength":[["σ̄","mean = Σσᵢ/n (MPa)"],["σᵢ","individual result"],["n","number of specimens"]],
+"Standard deviation":[["s","standard deviation — measure of scatter (MPa)"],["σᵢ","individual result"],["σ̄","mean"],["n","number of specimens"]],
+"Characteristic strength":[["σ_k","= σ̄ − k·s (MPa)"],["σ̄","mean strength"],["k","1.28→10% fail | 1.65→5% | 2.33→1%"],["s","standard deviation"]],
+"Timber (5% failure)":[["σ_k","= σ̄ − 1.65s for timber"],["1.65","k value for 5% lower tail"],["σ̄","mean (MPa)"],["s","std dev (MPa)"]],
+"Design stress":[["σ_d","= σ_k / γ_m (MPa)"],["σ_k","characteristic strength"],["γ_m","material factor: steel 1.15, concrete 1.6, timber 1.3"]],
+"Design load":[["F_d","= F_k × γ_f (N or kN)"],["F_k","characteristic (unfactored) load"],["γ_f","dead 1.2 | imposed/live 1.6"]],
+"Theoretical density":[["ρ","theoretical density (g/cm³)"],["n","atoms per unit cell: FCC=4, BCC=2, SC=1, HCP=6"],["A","atomic weight (g/mol)"],["N_A","Avogadro = 6.023×10²³ mol⁻¹"],["V_c","unit cell volume = a³ — MUST be in cm³ not nm³"]],
+"FCC atoms per cell":[["n=4","8 corners×⅛ + 6 faces×½ = 4"],["Corner","shared by 8 cells → ⅛ contribution"],["Face","shared by 2 cells → ½ contribution"]],
+"BCC atoms per cell":[["n=2","8 corners×⅛ + 1 centre×1 = 2"],["Centre","entirely inside → full 1 contribution"]],
+"FCC lattice parameter":[["a","= 2√2·r"],["r","atomic radius (nm → cm: ×10⁻⁷)"],["4r = a√2","atoms touch along face diagonal"]],
+"BCC lattice parameter":[["a","= 4r/√3"],["r","atomic radius"],["4r = a√3","atoms touch along body diagonal"]],
+"Unit cell volume":[["V_c","= a³ (cm³) — unit must be cm, not nm"],["a","lattice parameter (cm)"],["⚠","nm³ × 10⁻²¹ = cm³ — easy to get wrong"]],
+"Atomic packing factor":[["APF","fraction of cell volume filled (dimensionless)"],["n","atoms per cell"],["r","atomic radius (same units as a)"],["FCC/HCP","APF = 0.74 — densest packing"],["BCC","APF = 0.68"],["SC","APF = 0.52"]],
+"Moisture content":[["m/c","moisture content (%)"],["w_m","moist mass"],["w₀","oven-dry mass at 105°C"]],
+"FSP":[["FSP","fibre saturation point ≈ 25%"],["Above FSP","free water in cell cavities — strength similar to green wood"],["Below FSP","bound water leaving cell walls — strength/stiffness improve"]],
+"Elastic modulus from bending":[["E","from 3-point bending (GPa)"],["P","central load (N)"],["L","span (m or mm)"],["δ","midspan deflection (m or mm)"],["I","second moment = bh³/12 (mm⁴)"]],
+"Strength class example":[["C24","softwood, char. bending = 24 MPa"],["D40","hardwood, char. bending = 40 MPa"],["Number","= characteristic bending strength in MPa"]],
+"Specific strength":[["σ_spec","strength/ρg — useful for comparing materials on a weight basis"],["UTS or σ_k","strength (Pa)"],["ρ","density (kg/m³)"],["g","9.81 m/s²"]],
+"Specific modulus":[["E_spec","E/ρg — stiffness per unit weight"],["E","Young's modulus (Pa)"],["ρ","density (kg/m³)"],["g","9.81 m/s²"]],
+"Viscosity definition":[["μ","dynamic viscosity (Pa·s); high μ = thicker/slower"],["τ","shear stress (Pa)"],["dγ/dt","shear strain rate (s⁻¹)"]],
+"Penetration (hardness test)":[["P","penetration (0.1 mm) at 25°C, 100g, 5s"],["High P","soft (200 = very soft)"],["Low P","hard (10 = very hard)"]],
+"Viscoelastic total strain":[["ε_total","= ε_e + ε_v"],["ε_e","elastic — immediate, recoverable"],["ε_v","viscous — time-dependent, permanent"],["Hot/slow","viscous dominates"],["Cold/fast","elastic dominates"]],
+"Density":[["ρ","density (kg/m³); water=1000, air=1.2, mercury=13600"],["m","mass (kg)"],["V","volume (m³)"]],
+"Pressure":[["P","pressure (Pa = N/m²); 1 kPa=1000 Pa"],["F_n","normal (perpendicular) force (N)"],["A","area (m²)"]],
+"Shear stress":[["τ","shear stress (Pa) — tangential force per area"],["F_τ","tangential force (N)"],["A","area (m²)"]],
+"Newton's viscosity law":[["τ","shear stress (Pa)"],["μ","dynamic viscosity (Pa·s); water≈10⁻³, air≈1.8×10⁻⁵"],["u","velocity parallel to wall (m/s)"],["y","distance from wall (m)"],["du/dy","velocity gradient (s⁻¹)"]],
+"Kinematic viscosity":[["ν","kinematic viscosity = μ/ρ (m²/s); water≈10⁻⁶"],["μ","dynamic viscosity (Pa·s)"],["ρ","density (kg/m³)"]],
+"Mach number":[["M","Mach number; M≪1 → incompressible assumption valid"],["v","flow velocity (m/s)"],["c","speed of sound (m/s); air≈340, water≈1500"]],
+"Knudsen number":[["Kn","= λ/L; Kn≪1 → continuum model valid"],["λ","molecular mean free path (m)"],["L","characteristic problem length (m)"]],
+"Hydrostatic gradient":[["dP/dz","pressure change per unit height (Pa/m)"],["z","upward vertical coordinate"],["Negative sign","pressure decreases going UP (increases going down)"]],
+"Pressure at depth $h$":[["P","gauge pressure at depth h (Pa or kPa)"],["ρ","fluid density (kg/m³)"],["g","9.81 m/s²"],["h","depth below free surface — positive downward (m)"],["Gauge","relative to atmosphere; absolute = gauge + 101.3 kPa"]],
+"Gauge vs absolute":[["P_gauge","= P_abs − P_atm (Pa)"],["P_abs","total absolute pressure (Pa)"],["P_atm","≈ 101 325 Pa ≈ 101.3 kPa"]],
+"Pressure head":[["h","head (m) = pressure expressed as fluid column height"],["P","pressure (Pa)"],["ρ","density (kg/m³)"],["g","9.81 m/s²"]],
+"Buoyancy force":[["B","buoyancy force (N) — upward"],["ρ_f","density of SURROUNDING fluid (not the body)"],["g","9.81 m/s²"],["V_disp","displaced volume = submerged volume of body (m³)"]],
+"Float condition":[["B=W","floats when buoyancy = weight"],["ρ_f","fluid density"],["V_sub","submerged volume"],["m","body mass (kg)"]],
+"Uniform load on wall":[["F","resultant = P×L×b (N)"],["P","uniform pressure (Pa)"],["L","wall height (m)"],["b","wall width (m)"],["x_F","= L/2 — midpoint of rectangle"]],
+"Triangular load on wall":[["F","= ½ × P_base × H × b (N)"],["P_base","max pressure at base = ρgH (Pa)"],["H","wall height / fluid depth (m)"],["b","width (m)"],["x_F","= H/3 from base — centroid of triangle is ⅓ from largest side"]],
+"Manometer":[["P","pressure at tapping (Pa)"],["P_a","reference pressure (Pa)"],["ρ","manometer fluid density (kg/m³)"],["h","vertical height difference (m)"]],
+"Inclined manometer":[["P−P_a","pressure difference (Pa)"],["ρ","manometer fluid density (kg/m³)"],["l","length along tube (m)"],["α","angle from horizontal (°)"],["Sensitivity","1/sinα amplification — small ΔP gives large l reading"]],
+"Differential manometer":[["ΔP","pressure difference between two tappings (Pa)"],["ρ₂","denser fluid density (kg/m³)"],["ρ₁","pipe fluid density (kg/m³)"],["h","height difference between surfaces (m)"]],
+"Volumetric flow rate":[["Q","volume per second (m³/s)"],["A","cross-section area (m²)"],["U","mean velocity (m/s)"]],
+"Mass flow rate":[["ṁ","mass per second (kg/s)"],["ρ","density (kg/m³)"],["Q","volumetric flow rate (m³/s)"]],
+"Continuity (general)":[["ρ₁A₁U₁","mass flux in = mass/s entering"],["ρ₂A₂U₂","mass flux out"],["Conservation","steady flow → no accumulation → in = out"]],
+"Continuity (incompressible)":[["A₁U₁","= A₂U₂ = Q = constant"],["Incompressible","ρ constant → cancels → AU = const"],["Narrower pipe","smaller A → larger U; wider pipe → smaller U"]],
+"Fluid particle acceleration":[["a","total acceleration (m/s²)"],["∂U/∂t","temporal — change at fixed point over time (= 0 if steady)"],["U·∂U/∂x","convective — due to velocity varying along path"],["Steady flow","∂U/∂t = 0 but a ≠ 0 if pipe narrows"]],
+"Curved streamline":[["dP/dr","radial pressure gradient (Pa/m)"],["ρ","density (kg/m³)"],["V","velocity (m/s)"],["r","radius of curvature (m)"],["Meaning","curved flow needs centripetal force — provided by pressure gradient"]],
+"Bernoulli (pressure form)":[["P","static pressure (Pa)"],["ρ","density — constant, incompressible (kg/m³)"],["U","velocity (m/s)"],["½ρU²","dynamic pressure (Pa)"],["ρgZ","potential term"],["= const","along ONE streamline only"]],
+"Between two points":[["P₁,P₂","pressures at sections 1 and 2 (Pa)"],["U₁,U₂","velocities (m/s)"],["Z₁,Z₂","elevations (m)"],["Horizontal","Z₁=Z₂ → elevation cancels"],["4 conditions","steady · inviscid · incompressible · same streamline"]],
+"Bernoulli (head form)":[["H","total head (m) — constant along streamline"],["P/ρg","pressure head (m)"],["U²/2g","velocity head (m)"],["Z","elevation head (m)"]],
+"Stagnation pressure":[["P₀","stagnation pressure = P + ½ρU² (Pa)"],["P","static pressure (Pa)"],["½ρU²","dynamic pressure — added when flow stops (Pa)"]],
+"Reynolds number":[["Re","inertia/viscosity ratio — dimensionless"],["ρ","density (kg/m³)"],["U","velocity (m/s)"],["L","characteristic length (m)"],["μ","dynamic viscosity (Pa·s)"],["ν","kinematic viscosity = μ/ρ (m²/s)"]],
+"Pressure coefficient":[["C_p","dimensionless pressure (no units)"],["P","local pressure (Pa)"],["P∞","free-stream pressure (Pa)"],["½ρU∞²","dynamic pressure of free stream"],["C_p=0","at free stream"],["C_p=1","at stagnation point"],["C_p<0","in accelerated (low pressure) regions"]],
+"Pitot tube velocity":[["U","flow velocity (m/s)"],["P₀","stagnation pressure — front nose hole (Pa)"],["P","static pressure — side holes (Pa)"],["ρ","density of FLOWING fluid — NOT manometer fluid"],["⚠","manometer may use water but formula uses air/water density of the FLOW"]],
+"Venturi (ideal)":[["Q_ideal","theoretical flow assuming no losses (m³/s)"],["A₁","large section area (m²)"],["A₂","throat area (m²)"],["P₁","large-section pressure (Pa)"],["P₂","throat pressure; P₂ < P₁ (Pa)"],["ρ","fluid density (kg/m³)"]],
+"Venturi (real)":[["Q","actual flow (m³/s)"],["C_d","discharge coefficient 0.92–0.99 for Venturi"],["Q_ideal","from Bernoulli formula"]],
+"Sharp orifice discharge":[["Q","actual discharge (m³/s)"],["C_d","≈ 0.6 for sharp-edged orifice"],["d","orifice diameter (m)"],["h","head above orifice centre (m)"]],
+"Discharge coefficients":[["C_d","overall discharge coeff = C_v × C_c"],["C_v","velocity coeff ≈ 0.97 — accounts for friction"],["C_c","contraction coeff ≈ 0.64 — accounts for vena contracta"],["Vena contracta","smallest jet section, just past orifice"]],
+"Tank emptying time":[["T","emptying time (s)"],["C_d","discharge coefficient"],["D","tank diameter"],["d","orifice diameter"],["H","initial head above orifice (m)"]],
+"Rectangular weir":[["Q","discharge (m³/s)"],["C_d","≈ 0.6 (depends on h/b)"],["b","weir width (m)"],["h","head above crest — measured upstream (m)"],["h^(3/2)","doubling h → Q × 2√2 ≈ 2.83"]],
+"V-notch weir":[["Q","discharge (m³/s)"],["α","half-angle of notch (°)"],["h","head above vertex (m)"],["h^(5/2)","very sensitive — small h error → large Q error"],["Advantage","accurate at low flows"]],
+"Total head":[["H","total energy per unit weight (m)"],["P/ρg","pressure head"],["U²/2g","velocity head"],["z","elevation head"],["Open reservoir","P=0, U≈0 → H = z"]],
+"SFEE":[["H₁","inlet total head (m)"],["H₂","outlet total head (m)"],["ΔH","pump head added; + for pump, − for turbine (m)"],["h_f","head loss; always positive (m)"]],
+"Horizontal pipe loss":[["P₁−P₂","pressure drop (Pa)"],["ρ","density (kg/m³)"],["g","9.81 m/s²"],["h_f","head loss (m)"],["Horizontal only","when z₁=z₂"]],
+"Reynolds number (pipe)":[["Re","= Ud/ν"],["U","mean velocity = Q/A (m/s)"],["d","internal diameter (m)"],["ν","kinematic viscosity (m²/s); water≈10⁻⁶"],["<2000","laminar"],["2000–4000","transition — no reliable formula"],[">4000","turbulent — use Moody"]],
+"Friction factor (laminar)":[["f","Fanning friction factor (dimensionless)"],["Re","Reynolds number"],["f=16/Re","laminar only (Re<2000)"],["⚠","this course uses 4f — some books use f_D = 4×f_Fanning"]],
+"Darcy equation":[["h_f","head loss (m)"],["4f","4 × Fanning friction factor (this course convention)"],["L","pipe length (m)"],["d","diameter (m)"],["U","mean velocity (m/s)"],["2g","= 2×9.81 = 19.62 m/s²"]],
+"Loss coefficient":[["h_i","head loss for fitting (m)"],["K_i","loss coefficient: entry≈0.5, exit≈1.0, bend≈0.5–1.5"],["U","velocity (m/s)"],["2g","19.62"]],
+"Pipe friction coefficient":[["K_f","= 4fL/d (dimensionless)"],["h_f","= K_f × U²/(2g)"]],
+"Poiseuille (laminar)":[["Q","laminar flow rate ∝ ΔP/L (m³/s)"],["R","radius (m)"],["d","diameter (m)"],["ΔP","pressure drop over L (Pa)"],["μ","dynamic viscosity (Pa·s)"],["L","pipe length (m)"],["Q ∝ d⁴","quadrupling d → 256× flow"]],
+"Series pipes":[["Same Q","same flow through all pipes"],["h_f_total","= Σ individual losses"],["κᵢ","resistance of pipe i; h_fi = κᵢQ²"]],
+"Parallel pipes":[["Q_total","= Q₁ + Q₂ (flows add)"],["h_f","same for all branches (A and B at same head)"],["Solve","κ₁Q₁² = κ₂Q₂² = h_f and Q₁+Q₂ = Q"]],
+"Wall shear stress balance":[["τ_w","wall shear stress (Pa)"],["d","pipe diameter (m)"],["P₁−P₂","pressure drop (Pa)"],["L","pipe length (m)"]],
+"Pump water power":[["P_w","useful power to fluid (W or kW)"],["ρ","density (kg/m³)"],["g","9.81 m/s²"],["Q","flow rate (m³/s)"],["ΔH","pump head (m)"]],
+"Pump efficiency":[["η","efficiency = P_w / P_s (0–1)"],["P_w","water power (W)"],["P_s","shaft/input power from motor (W)"],["Typical","0.6–0.85 for centrifugal pumps"]],
+"Pump external head":[["ΔH","pump head (m) from power ÷ (ρgQ)"],["P","power (W)"],["ρ","density"],["g","9.81"],["Q","flow rate"]],
+"System curve":[["H_sys","head demand at flow Q (m) — parabola"],["H₀","static head = elevation to overcome (m)"],["κ","resistance coeff: larger valve restriction → larger κ"],["κQ²","dynamic friction loss term"]],
+"Operating point":[["Q*, H*","actual operating flow and head"],["Pump curve","H decreases as Q increases"],["System curve","H increases as Q increases"],["Intersection","= operating point"],["More resistance","κ↑ → system steeper → Q↓, H↑"]],
+"Three-reservoir junction":[["H₀","junction head — guess and iterate (m)"],["z₁,z₂,z₃","reservoir surface elevations (m)"],["κ₁,κ₂,κ₃","pipe resistances"],["Continuity","Q₁ = Q₂ + Q₃ at junction"]]
+};
+
+function initFormulaExpand(){
+  document.querySelectorAll('.ftbl').forEach(tbl=>{
+    tbl.querySelectorAll('tr').forEach(row=>{
+      if(row.classList.contains('fsx')) return;
+      const cells=row.querySelectorAll('td');
+      if(!cells.length) return;
+      const key=cells[0].textContent.trim().replace(/\s+/g,' ');
+      if(!FSYMS[key]) return;
+      row.style.cursor='pointer';
+      row.setAttribute('title','Click to see symbol definitions');
+      row.addEventListener('click',function(e){
+        const next=this.nextElementSibling;
+        if(next&&next.classList.contains('fsx')){next.remove();this.classList.remove('frow-open');return;}
+        document.querySelectorAll('.fsx').forEach(r=>{r.previousElementSibling?.classList.remove('frow-open');r.remove();});
+        const syms=FSYMS[key];if(!syms)return;
+        this.classList.add('frow-open');
+        const exp=document.createElement('tr');exp.className='fsx';
+        const td=document.createElement('td');td.colSpan=Math.max(cells.length,3);
+        const inner=document.createElement('div');inner.className='fsx-inner';
+        inner.innerHTML='<div class="fsx-title">Symbol key — '+key+'</div>'+
+          syms.map(([k,v])=>`<div class="fsr"><code class="fsk">${k}</code><span class="fseq">=</span><span class="fsv">${v}</span></div>`).join('');
+        td.appendChild(inner);exp.appendChild(td);
+        this.insertAdjacentElement('afterend',exp);
+        if(window.MathJax)MathJax.typesetPromise([inner]);
+      });
+    });
+  });
+}
+window.addEventListener('load',()=>setTimeout(initFormulaExpand,600));
 </script>
 </body>
 </html>
